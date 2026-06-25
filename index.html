@@ -39,13 +39,13 @@
   details[open] .chev{transform:rotate(90deg)}
   .bar{height:4px;border-radius:3px;background:rgba(230,200,150,0.08);margin:0 18px 0 33px;position:relative}
   .bar > i{position:absolute;inset:0;border-radius:3px;background:repeating-linear-gradient(90deg,var(--grain-deep) 0 2px,transparent 2px 5px),var(--grain);opacity:.9}
-  .subs{padding:6px 18px 18px 33px}
-  .sub{display:flex;align-items:center;gap:12px;padding:9px 0;border-top:1px solid var(--line)}
-  .sub:first-child{border-top:none}
-  .sub .sname{flex:1;font-size:14px;color:#d8cfbe}
-  .sub .sg{font-family:var(--mono);font-size:11.5px;color:var(--muted);width:40px;text-align:right}
-  .sub .sbar{flex:none;width:90px;height:3px;border-radius:2px;background:rgba(230,200,150,0.08)}
-  .sub .sbar > i{display:block;height:100%;border-radius:2px;background:var(--grain)}
+  .subs{padding:8px 18px 18px 33px}
+  .item{display:flex;align-items:baseline;gap:14px;padding:12px 0;border-top:1px solid var(--line)}
+  .item:first-child{border-top:none}
+  .ibody{flex:1;min-width:0}
+  .item .sname{font-size:14.5px;font-weight:500;color:var(--bone);line-height:1.4;letter-spacing:0;text-transform:none}
+  .item .sdetail{font-size:13px;color:var(--muted);line-height:1.55;margin-top:3px;letter-spacing:0;text-transform:none}
+  .item .sg{font-family:var(--mono);font-size:11.5px;color:var(--faint);flex:none;width:34px;text-align:right}
   .bridge .dot{background:var(--bridge)}
   .foot{font-family:var(--mono);font-size:11px;color:var(--faint);margin-top:30px;text-align:center;letter-spacing:0.05em}
   @media (prefers-reduced-motion: no-preference){
@@ -95,9 +95,14 @@
       html += '<div class="bar"><i style="width:' + clamp(c._total) + '%"></i></div>';
       html += '<div class="subs">';
       (c.items || []).forEach(function (it) {
-        html += '<div class="sub"><span class="sname">' + esc(it.name) + "</span>"
-              + '<span class="sbar"><i style="width:' + clamp(it.shards || 0) + '%"></i></span>'
-              + '<span class="sg">' + (it.shards || 0) + "</span></div>";
+        // Split "Label — detail" into a bold label + a muted detail line (first dash only).
+        var m = String(it.name).match(/^([\s\S]*?)\s+[—–]\s+([\s\S]*)$/);
+        var label = esc(m ? m[1] : it.name);
+        var detail = m ? esc(m[2]) : "";
+        html += '<div class="item"><div class="ibody">'
+              + '<div class="sname">' + label + "</div>"
+              + (detail ? '<div class="sdetail">' + detail + "</div>" : "")
+              + '</div><span class="sg">' + (it.shards || 0) + "</span></div>";
       });
       html += "</div></details>";
     });
