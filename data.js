@@ -100,6 +100,14 @@ const COLONY_DATA = {
       ],
     },
     {
+      name: "Onboarding / first run",
+      desc: "the day-one empty desktop — the colony invites itself in",
+      items: [
+        { name: 'First-run questionnaire — warm hello + safety promise (never delete · reversible · opt-in) · "where may we forage?" folder consent as granting territory (sandbox-only start) · "how should we live here?" startup · multi-monitor · wallpaper · soft landing that becomes the first descent', shards: 6 },
+        { name: '"How did you come to hold this?" — piracy welcomed, nothing detected · asked at start, cashed out late as the colony\'s deepest tribute · branches: bought → real price · key → noted · took it → warmest line · won\'t say → nil · optional · frictionless · never gated · never re-asked · (voice fork open: dev fourth-wall vs codex)', shards: 6 },
+      ],
+    },
+    {
       name: "Build & tech",
       desc: "web → Electron overlay, safety, a prototype that runs",
       items: [
