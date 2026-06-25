@@ -40,12 +40,15 @@
   .bar{height:4px;border-radius:3px;background:rgba(230,200,150,0.08);margin:0 18px 0 33px;position:relative}
   .bar > i{position:absolute;inset:0;border-radius:3px;background:repeating-linear-gradient(90deg,var(--grain-deep) 0 2px,transparent 2px 5px),var(--grain);opacity:.9}
   .subs{padding:8px 18px 18px 33px}
-  .item{display:flex;align-items:baseline;gap:14px;padding:12px 0;border-top:1px solid var(--line)}
+  .item{display:flex;align-items:flex-start;gap:14px;padding:12px 0;border-top:1px solid var(--line)}
   .item:first-child{border-top:none}
   .ibody{flex:1;min-width:0}
   .item .sname{font-size:14.5px;font-weight:500;color:var(--bone);line-height:1.4;letter-spacing:0;text-transform:none}
   .item .sdetail{font-size:13px;color:var(--muted);line-height:1.55;margin-top:3px;letter-spacing:0;text-transform:none}
-  .item .sg{font-family:var(--mono);font-size:11.5px;color:var(--faint);flex:none;width:34px;text-align:right}
+  .smeta{flex:none;display:flex;flex-direction:column;align-items:flex-end;gap:5px;padding-top:2px}
+  .smeta .sg{font-family:var(--mono);font-size:11.5px;color:var(--faint);text-align:right}
+  .sbar{width:60px;height:3px;border-radius:2px;background:rgba(230,200,150,0.08);overflow:hidden}
+  .sbar > i{display:block;height:100%;border-radius:2px}
   .bridge .dot{background:var(--bridge)}
   .foot{font-family:var(--mono);font-size:11px;color:var(--faint);margin-top:30px;text-align:center;letter-spacing:0.05em}
   @media (prefers-reduced-motion: no-preference){
@@ -67,13 +70,24 @@
       return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
     };
     var clamp = function (n) { return Math.max(0, Math.min(100, n)); };
+    var clamp01 = function (x) { return Math.max(0, Math.min(1, x)); };
+    var lerp = function (a, b, t) { return Math.round(a + (b - a) * t); };
+    // depth heat ramp: faint brown (shallow) -> amber -> bright gold (deep)
+    var heat = function (t) {
+      var c0 = [111, 103, 84], c1 = [224, 168, 90], c2 = [255, 216, 138], a, b, u;
+      if (t < 0.5) { a = c0; b = c1; u = t / 0.5; } else { a = c1; b = c2; u = (t - 0.5) / 0.5; }
+      return "rgb(" + lerp(a[0], b[0], u) + "," + lerp(a[1], b[1], u) + "," + lerp(a[2], b[2], u) + ")";
+    };
 
     var chambers = d.chambers || [];
-    var total = 0;
+    var total = 0, maxItem = 0, maxChamber = 0;
     chambers.forEach(function (c) {
       c._total = (c.items || []).reduce(function (a, it) { return a + (it.shards || 0); }, 0);
       total += c._total;
+      if (c._total > maxChamber) maxChamber = c._total;
+      (c.items || []).forEach(function (it) { if ((it.shards || 0) > maxItem) maxItem = it.shards || 0; });
     });
+    var itemScale = Math.max(12, maxItem); // deepest item = hot end of the ramp
 
     var html = "";
     html += '<p class="eyebrow">' + esc(d.eyebrow) + "</p>";
@@ -91,7 +105,8 @@
       html += '<summary><span class="' + dotClass + '"></span>'
             + '<span class="head"><div class="name">' + esc(c.name) + "</div>"
             + '<div class="desc">' + esc(c.desc) + "</div></span>"
-            + '<span class="g">' + c._total + ' ▽</span><span class="chev">›</span></summary>';
+            + '<span class="g" style="color:' + heat(maxChamber ? c._total / maxChamber : 0) + '">'
+            + c._total + ' ▽</span><span class="chev">›</span></summary>';
       html += '<div class="bar"><i style="width:' + clamp(c._total) + '%"></i></div>';
       html += '<div class="subs">';
       (c.items || []).forEach(function (it) {
@@ -99,10 +114,17 @@
         var m = String(it.name).match(/^([\s\S]*?)\s+[—–]\s+([\s\S]*)$/);
         var label = esc(m ? m[1] : it.name);
         var detail = m ? esc(m[2]) : "";
+        var s = it.shards || 0;
+        var t = clamp01(s / itemScale);   // depth, 0..1
+        var col = heat(t);
+        var w = Math.max(6, Math.round(t * 100)); // min nub so shallow items still read
         html += '<div class="item"><div class="ibody">'
               + '<div class="sname">' + label + "</div>"
               + (detail ? '<div class="sdetail">' + detail + "</div>" : "")
-              + '</div><span class="sg">' + (it.shards || 0) + "</span></div>";
+              + '</div><div class="smeta">'
+              + '<span class="sg" style="color:' + col + '">' + s + "</span>"
+              + '<span class="sbar"><i style="width:' + w + '%;background:' + col + '"></i></span>'
+              + "</div></div>";
       });
       html += "</div></details>";
     });
