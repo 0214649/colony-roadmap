@@ -84,10 +84,10 @@ const COLONY_DATA = {
       items: [
         { name: "Old matter/dew/signal/lumen table — scrapped (god-first restart)", shards: 1 },
         { name: "Minting — 3 commodity ledgers: it owneth→shards ▽, it yerveth→marrow ≣, it spreoteth→seeds ⁘", shards: 9 },
-        { name: "God-tributes outside the ledgers — it yoketh→$, it redeth→max_pheromone, it sootheth→honey", shards: 7 },
+        { name: "God-tributes outside the ledgers — it yoketh→$, it redeth→pheromone ⌇, it sootheth→honey", shards: 7 },
         { name: "seeds ⁘ — food/life ledger founted (it spreoteth); forage wild + farm bonus; spent to plant", shards: 7 },
         { name: "honey ⬡ — it sootheth tribute; premium glue + production catalyst + healing; leaning on it = synthetic drift", shards: 6 },
-        { name: "max_pheromone — it redeth tribute; interface/legibility budget (capacity, not a pool)", shards: 6 },
+        { name: "pheromone ⌇ — it redeth tribute; spend to lay roads/markers; max_pheromone = capacity cap (how much at once)", shards: 6 },
         { name: "Yields (not minted) — crop · spore · fruit · algae; one biomass number / four feedstocks", shards: 5 },
         { name: "marrow ≣ — genetics unit; spent on brood + mutations", shards: 6 },
         { name: "shards ▽ — harvest = nibble empty folders (real cleanup + spawned tide), not bedrock", shards: 7 },
@@ -132,7 +132,7 @@ const COLONY_DATA = {
       name: "Desktop & explorer",
       desc: "the playfield — your real files, made alive",
       items: [
-        { name: "Pheromone interface — guide-point → roads → command verbs (build/tidy/forage/attack/avoid); the primary control, multi-genre", shards: 8 },
+        { name: "Pheromone ⌇ interface — guide-point → roads → command verbs (build/tidy/forage/attack/avoid); the primary control, multi-genre", shards: 8 },
         { name: "Living production layer (idle-form) — trails self-organize; disk speed = belt, ant count = bandwidth; god-gated tech ladder", shards: 7 },
         { name: "Desktop layer + access — summon, frosted glass, taskbar-augment", shards: 12 },
         { name: "Navigation & actions — descend, type-to-jump, drag, midden", shards: 12 },
