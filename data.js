@@ -181,6 +181,8 @@ const COLONY_DATA = {
         { name: "Engine path — web stack → Electron / Tauri", shards: 12 },
         { name: "Transparent / frosted overlay + sandbox safety", shards: 10 },
         { name: "Prototype 001 — wandering ants + trails", shards: 7 },
+        { name: "Prototypes 002–003 — trail-following (dual pheromone, roads form) + slow ground (HDD vs SSD drag)", shards: 8 },
+        { name: "Prototype 004 (built, unrun) — the colony meets a real SANDBOXED folder: first Electron app (colony-game/app); lists a folder, nibbles an empty folder → shard ▽ via the midden (MOVE not delete) + undo + spawn-influx + log; proves the §9 safety model end-to-end (FS in main process, path-guarded, sandboxed renderer). Windows-only to run", shards: 6 },
         { name: "Low-resource idle background", shards: 4 },
         { name: "Learning path", shards: 3 },
       ],
