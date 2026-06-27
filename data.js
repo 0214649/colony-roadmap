@@ -157,6 +157,7 @@ const COLONY_DATA = {
         { name: "Living production layer (idle-form) — trails self-organize; disk speed = belt, ant count = bandwidth; god-gated tech ladder", shards: 7 },
         { name: "Desktop layer + access — summon, frosted glass, taskbar-augment", shards: 12 },
         { name: "Navigation & actions — descend, type-to-jump, drag, midden", shards: 12 },
+        { name: "VIEW TOGGLE (Tab) — one keypress flips ICON/DESKTOP view (ambient: medium icons + names + ants crawling/hauling = the terrarium) ⇄ VERTICAL FILE-TREE view (dive-in: fast hierarchical tree, keyboard nav + search, function-first, ants recede). 'Play with the colony' ⇄ 'manage files fast', a shortcut apart — the BumpTop-trap killer (pretty AND beats Explorer). Same data, two skins", shards: 5 },
         { name: "The hub — mission control (processing, portals, meta, storage)", shards: 14 },
         { name: "Biomes — themed folders · SSD vs HDD skins", shards: 9 },
         { name: "File influx & cleanup — god-seeding, forbidden expeditions", shards: 9 },
