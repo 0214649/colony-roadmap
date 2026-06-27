@@ -35,6 +35,7 @@ const COLONY_DATA = {
         { name: "Loop: forage → grow → expand → descend", shards: 8 },
         { name: "Work model — big file = more ants + longer haul", shards: 4 },
         { name: "Pacing + paliers (seeded) — slow ambient-first curve (1 ant → ~10 in ~6h); global anti-snowball palier ladder gated by broad checklists, not thresholds; play alongside your PC over weeks", shards: 1 },
+        { name: "LOW-RESOURCE = a PILLAR (non-negotiable) — runs for WEEKS alongside your real work, so idle-cheap is a design law, not a later optimization; the ambient 'it lives on your PC' promise depends on it. Sim is light by nature (throttled canvas, ~tens of ants); the cost to police = Electron's ~150–300 MB baseline + wasted render cycles. HARD RULES: stop rendering when hidden/minimized → cheap tick-based (or paused) sim, paint only when visible (OWED, not built); tray/background mode; debounced FS (never hot-poll real dirs); no O(n²) at scale (spatial partitioning before ant counts climb); Tauri/native as the escape hatch if Electron's floor bites", shards: 2 },
       ],
     },
     {
