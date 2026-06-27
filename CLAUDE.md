@@ -2,7 +2,7 @@
 
 Live **public** roadmap for the game COLONY. Served via GitHub Pages at
 https://0214649.github.io/colony-roadmap/ (branch `main`, root). Local clone:
-`~/github/colony-roadmap`.
+`~/colony/colony-roadmap`.
 
 Claude owns updates here: when dirty rat asks for a roadmap change, make it and
 **commit + push without asking** (same convention as the `claude-setup` repo).
