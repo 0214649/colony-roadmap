@@ -110,7 +110,7 @@ const COLONY_DATA = {
         { name: "pheromone ⌇ — it redeth tribute; spend to lay roads/markers; max_pheromone = capacity cap (how much at once)", shards: 6 },
         { name: "Yields (not minted) — crop · spore · fruit · algae; one biomass number / four feedstocks", shards: 5 },
         { name: "marrow ≣ — genetics unit; spent on brood + mutations", shards: 6 },
-        { name: "shards ▽ — harvest = nibble empty folders (real cleanup + spawned tide), not bedrock", shards: 7 },
+        { name: "shards ▽ — harvest = the FORAGING LOOP: ants CHIP empty folders into shards (a renewable SOURCE, not a one-shot) & HAUL them along player-laid pheromone ROADS to the HUB; fully-chipped folders are unmade → it sootheth heals them back. Player control = roads (WHERE) + per-species behavior (HOW), NEVER per-folder/per-ant. Founts: real empty dirs (finite cleanup) + spawned/healed (renewable). NOT bedrock", shards: 8 },
         { name: "Folders are tunnels — empty = dead-end, not-empty = live tunnel; start in the main folders", shards: 6 },
         { name: "Tidying exposes ground → cleanup pays in shards", shards: 5 },
         { name: "Lifetime shards = depth (climbs only) · current = spendable", shards: 4 },
@@ -156,6 +156,7 @@ const COLONY_DATA = {
       items: [
         { name: "Pheromone ⌇ interface — guide-point → roads → command verbs (build/tidy/forage/attack/avoid); the primary control, multi-genre", shards: 8 },
         { name: "Behavior menu (the yoke menu) — per-species TEMPERAMENT policy (set once, every member self-executes; never per-ant). Completes the command language: pheromones/roads = WHERE, behavior menu = HOW-TO-BE. Diegetic = clean-minimalist 'it's a file explorer'; mystery by OMISSION (shows what a creature does, withholds why it knows). NO override currency — nature is a hard floor (choose among permitted behaviors); the bending lives in BREEDING (god-crossing authors obedient natures). The it yoketh touch-reveal lives here (the reins run back to your hand)", shards: 5 },
+        { name: "Foraging loop (the core gameplay, proto-005) — lay a pheromone ROAD from the HUB to an empty folder → ants travel it, CHIP shards off the folder & HAUL them home to the hub → folder depletes, is unmade, sootheth heals it back. Player only lays roads + tunes per-species behavior; the colony self-executes (idle thesis, never per-ant). This is prototype-002's trail-foraging applied to shards + a hub", shards: 6 },
         { name: "Living production layer (idle-form) — trails self-organize; disk speed = belt, ant count = bandwidth; god-gated tech ladder", shards: 7 },
         { name: "Desktop layer + access — summon, frosted glass, taskbar-augment", shards: 12 },
         { name: "Navigation & actions — descend, type-to-jump, drag, midden", shards: 12 },
@@ -175,6 +176,7 @@ const COLONY_DATA = {
       desc: "the day-one empty desktop — the colony invites itself in",
       items: [
         { name: 'First-run questionnaire — warm hello + safety promise (never delete · reversible · opt-in) · "where may we forage?" folder consent as granting territory (sandbox-only start) · "how should we live here?" startup · multi-monitor · wallpaper · soft landing that becomes the first descent', shards: 6 },
+        { name: "SKEPTIC GUARD — the game opens in its OWN bundled folder by DEFAULT (forages its own files; morally clean, zero-consent), shows the whole loop, THEN prompts for the player's folders (opt-in expansion). Covers the won't-grant-anything / sparse-machine player (can stay in the game's files forever & still play fully — 'if you won't feed it, it brings its own'). The bundle doubles as tutorial: tidy = demo the goal, messy = the lesson", shards: 5 },
         { name: '"How did you come to hold this?" — piracy welcomed, nothing detected · asked at start, cashed out late as the colony\'s deepest tribute · branches: bought → real price · key → noted · took it → warmest line · won\'t say → nil · optional · frictionless · never gated · never re-asked · (voice fork open: dev fourth-wall vs codex)', shards: 6 },
       ],
     },
@@ -183,10 +185,12 @@ const COLONY_DATA = {
       desc: "web → Electron overlay, safety, a prototype that runs",
       items: [
         { name: "Engine path — web stack → Electron / Tauri", shards: 12 },
+        { name: "TOOLING BUDGET = ZERO — no paid AI subs; all art/asset tooling free-tier or free/open (rules out paid Midjourney/Recraft/image-gen subs as deps). Reinforces 'author rules not assets' + the procedural-creature lean (code = no per-month cost; the motion system is free forever). Generative AI = free-tier mood/reference only, never a production dependency. Aligns with the cleaner-AI's LOCAL on-device model", shards: 3 },
         { name: "Transparent / frosted overlay + sandbox safety", shards: 10 },
         { name: "Prototype 001 — wandering ants + trails", shards: 7 },
         { name: "Prototypes 002–003 — trail-following (dual pheromone, roads form) + slow ground (HDD vs SSD drag)", shards: 8 },
-        { name: "Prototype 004 (built, runs under WSLg) — the colony meets a real SANDBOXED folder: first Electron app (colony-game/app); lists a folder, nibbles an empty folder → shard ▽ (deleted in place, NO midden/new folder) + log; FS safety scaffold (main-process FS, path-guarded, sandboxed renderer). CORRECTION OWED: v1 wrongly used midden+undo — make nibble a clean consume + add sootheth-heal regrowth (midden is for real-file cleanup, not nibbling)", shards: 6 },
+        { name: "Prototype 004 (built, runs under WSLg) — the colony meets a real SANDBOXED folder: first Electron app (colony-game/app); lists a folder, nibbles an empty folder → shard ▽ (deleted in place, NO midden/new folder) + log; FS safety scaffold (main-process FS, path-guarded, sandboxed renderer). CORRECTION applied in proto-005 (midden/undo removed; midden is for real-file cleanup, not nibbling)", shards: 6 },
+        { name: "Prototype 005 (built, runs WSLg/Windows) — THE TERRARIUM: desktop icon-grid + ~10 ants + a Tab-flip vertical file-tree, and the FORAGING LOOP (lay a pheromone road → ants chip shards off an empty folder & haul them to the hub; folder depletes, unmade, sootheth heals it back). Control = roads only (no per-ant/manual nibble). Fuses the ant-canvas (001-003) with the file-view (004). Hardened after a crash debug: main catches all exceptions (dead main = orphaned/un-closeable window), 30fps cap, debounced saves, renderer-error capture. Open: chase an intermittent WSLg crash; add in-app behavior menu + real-file moves", shards: 7 },
         { name: "Low-resource idle background", shards: 4 },
         { name: "Learning path", shards: 3 },
       ],
