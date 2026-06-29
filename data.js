@@ -227,13 +227,13 @@ const COLONY_DATA = {
     },
     {
       name: "Aesthetics",
-      desc: "parked — minimalist, procedural, skinnable",
+      desc: "minimalist · procedural · skinnable — DIRECTION LOCKED: soil & chitin (warm earthy dark)",
       items: [
         { name: "PLAYFIELD VISUAL (direction set) — the file-view is a DESKTOP-type surface: medium icons with names underneath (familiar OS icon-grid, out-competes Explorer on legibility) WITH ants running around among the icons. Files/folders = icons the colony lives on & HAULS (the co-op-haul spectacle on the grid). Fuses the ant-canvas (v001–v003) with the file-view (004); the desktop IS the terrarium. Supersedes 004's gray-box list", shards: 4 },
         { name: "Direction options — muted flat · liminal fog · mono terminal. NOT the direction: bioluminescence (we'll have bioluminescent ELEMENTS — glowing accents — but 'biolum dark' is dropped as the overall style)", shards: 3 },
         { name: "Principle — minimalist + procedural (solo-sustainable)", shards: 2 },
         { name: "Ants look like ants · each insect unique", shards: 2 },
-        { name: "Mood axis — uncanny ↔ bucolic (undecided)", shards: 1 },
+        { name: "Mood axis — LOCKED: SOIL & CHITIN (warm earthy dark). loam ground · bone text · amber = the colony's single signature light · coral brood · water the one cool note. Palette-driven & flat — no glass/retro/bevel gimmickry (frosted-glass & a Win9x/2000 retro skin were both trialled & rejected as reading 'cheap'/off); the underground colony lit warm against dark earth. Resolves uncanny↔bucolic → warm/grounded. Built + shipped (v011 skin pass, colony-game)", shards: 6 },
       ],
     },
     {
