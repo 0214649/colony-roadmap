@@ -54,6 +54,7 @@
   .legkey{display:grid;grid-template-columns:repeat(auto-fill,minmax(196px,1fr));gap:2px 18px;padding:4px 18px 18px}
   .legrow{display:flex;align-items:baseline;gap:10px;padding:7px 0;border-top:1px solid var(--line)}
   .legrow .lg{font-family:var(--mono);font-size:13px;color:var(--grain);min-width:30px;text-align:center;flex:none}
+  .legrow .lg.flip{display:inline-block;transform:scaleX(-1)} /* heft = a reversed scruple (no codepoint exists; mirror the real ℈) */
   .legrow .ln{font-size:13.5px;color:var(--bone);flex:none}
   .legrow .ld{font-size:12px;color:var(--muted);line-height:1.4}
 
@@ -162,7 +163,7 @@
       html += '<details class="legend"><summary>units · the shorthand below'
             + '<span class="chev">›</span></summary><div class="legkey">';
       d.legend.forEach(function (u) {
-        html += '<div class="legrow"><span class="lg">' + esc(u.g) + '</span>'
+        html += '<div class="legrow"><span class="lg' + (u.flip ? " flip" : "") + '">' + esc(u.g) + '</span>'
               + '<span class="ln">' + esc(u.name) + '</span>'
               + '<span class="ld">' + esc(u.note || "") + "</span></div>";
       });

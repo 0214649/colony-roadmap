@@ -33,7 +33,7 @@ const COLONY_DATA = {
     { g: "Σ", name: "census",    note: "the population ceiling" },
     { g: "⌇", name: "pheromone", note: "commands · roads · reach" },
     { g: "℈", name: "scruple",   note: "data-mass · the pay-weight of a claim" },
-    { g: "℈", name: "heft",      note: "build mass · the hold-weight of a material (a reversed scruple) · 6 types ◗∥ ◾◆ ◉⬚" },
+    { g: "℈", flip: true, name: "heft", note: "build mass · the hold-weight of a material (a reversed scruple) · 6 types ◗∥ ◾◆ ◉⬚" },
     { g: "⁘", name: "seeds",     note: "the food / life ledger" },
     { g: "꩜", name: "sate",      note: "nourishment — the kcal of COLONY" },
     { g: "⬡", name: "honey",     note: "glue · catalyst · healing" },
