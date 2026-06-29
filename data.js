@@ -22,6 +22,23 @@ const COLONY_DATA = {
   lede:    'Every chamber is open, none of them finished. Depth is counted in <b>shards</b> (▽) — more shards means more actually built.',
   note:    "still mostly shallow, and that's the honest part",
   foot:    "a snapshot — we add shards as we dig",
+  updated: "2026-06-29",
+
+  // Glyph key — the units/currencies the chambers below are written in.
+  // Purely a reader aid; the site works without it. Add a line as a unit is coined.
+  legend: [
+    { g: "▽", name: "shards",    note: "territory · cleanup yield · depth" },
+    { g: "●", name: "plasm",     note: "birth substance, from full folders" },
+    { g: "≣", name: "marrow",    note: "genetics · unlocks · evolves" },
+    { g: "Σ", name: "census",    note: "the population ceiling" },
+    { g: "⌇", name: "pheromone", note: "commands · roads · reach" },
+    { g: "℈", name: "scruple",   note: "data-mass — what a claim costs" },
+    { g: "heft", name: "heft",   note: "build mass · 6 types ◗∥ ◾◆ ◉⬚" },
+    { g: "⁘", name: "seeds",     note: "the food / life ledger" },
+    { g: "꩜", name: "sate",      note: "nourishment — the kcal of COLONY" },
+    { g: "⬡", name: "honey",     note: "glue · catalyst · healing" },
+    { g: "𓁿", name: "sorrow",    note: "the colony's moral weight (the one meter you see)" },
+  ],
 
   chambers: [
     {
