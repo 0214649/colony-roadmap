@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <!-- COLONY field-log favicon — the shard ▽ in amber on dark loam (soil & chitin palette) -->
+  <defs>
+    <linearGradient id="loam" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#241a0f"/>
+      <stop offset="1" stop-color="#120d07"/>
+    </linearGradient>
+    <linearGradient id="shard" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f0b85a"/>
+      <stop offset="1" stop-color="#d2902c"/>
+    </linearGradient>
+  </defs>
+  <rect x="1" y="1" width="30" height="30" rx="7" fill="url(#loam)" stroke="#3a2c19" stroke-width="1"/>
+  <!-- the shard: a downward triangle ▽ -->
+  <path d="M8 10 H24 L16 24 Z" fill="url(#shard)"/>
+  <path d="M8 10 H24 L16 24 Z" fill="none" stroke="#7a531a" stroke-width="0.8" stroke-linejoin="round"/>
+  <!-- a faceted inner line for a little gem depth -->
+  <path d="M8 10 L16 16 L24 10 M16 16 V24" fill="none" stroke="#fbdd9a" stroke-width="0.9" stroke-linejoin="round" opacity="0.55"/>
+</svg>
