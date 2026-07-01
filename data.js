@@ -32,12 +32,12 @@ const COLONY_DATA = {
     { g: "≣", name: "marrow",    note: "genetics · unlocks · evolves" },
     { g: "Σ", name: "census",    note: "the population ceiling" },
     { g: "⌇", name: "pheromone", note: "commands · roads · reach" },
-    { g: "♄", name: "scruple",   note: "data-mass · the pay-weight of a claim (alchemical lead — what you hold weighs on you)" },
-    { g: "℈", name: "heft",      note: "build mass · the hold-weight of a material · 6 types ◗∥ ◾◆ ◉⬚" },
+    { g: "♄", name: "scruple",   note: "data-mass · the pay-weight of a claim" },
+    { g: "℈", name: "heft",      note: "build mass · 6 types in 3 bands — ◗ chitin · ∥ fiber | ◾ stone · ◆ gem | ◉ alloy · ⬚ plastic" },
     { g: "⁘", name: "seeds",     note: "the food / life ledger" },
     { g: "꩜", name: "sate",      note: "nourishment — the kcal of COLONY" },
     { g: "⬡", name: "honey",     note: "glue · catalyst · healing" },
-    { g: "𓁿", name: "sorrow",    note: "the colony's moral weight (the one meter you see)" },
+    { g: "𓁿", name: "sorrow",    note: "the colony's moral weight — the one meter you see" },
   ],
 
   chambers: [
