@@ -63,6 +63,11 @@
   .legrow .lg{font-family:var(--mono);font-size:13px;color:var(--grain);min-width:30px;text-align:center;flex:none}
   .legrow .ln{font-size:13.5px;color:var(--bone);flex:none}
   .legrow .ld{font-size:12px;color:var(--muted);line-height:1.4}
+  .legrow.wide{grid-column:1/-1}
+  .legbands{display:flex;gap:28px;flex-wrap:wrap;margin-top:7px}
+  .legband{display:flex;flex-direction:column;gap:2px}
+  .lbn{color:var(--grain);font-size:11px;font-weight:600;letter-spacing:0.02em;margin-bottom:1px}
+  .lbt{color:var(--muted);font-size:12px}
 
   details.ch{border:1px solid var(--line);border-radius:12px;background:var(--chamber);margin:0 0 12px;overflow:hidden;scroll-margin-top:64px}
   details.ch[open]{border-color:var(--line-2)}
@@ -170,9 +175,18 @@
       html += '<details class="legend"><summary>units · the shorthand below'
             + '<span class="chev">›</span></summary><div class="legkey">';
       d.legend.forEach(function (u) {
-        html += '<div class="legrow"><span class="lg">' + esc(u.g) + '</span>'
+        var nd = esc(u.note || "");
+        if (u.bands) {
+          nd += '<span class="legbands">';
+          u.bands.forEach(function (b) {
+            nd += '<span class="legband"><span class="lbn">' + esc(b[0]) + '</span>'
+                + '<span class="lbt">' + esc(b[1]) + '</span><span class="lbt">' + esc(b[2]) + '</span></span>';
+          });
+          nd += '</span>';
+        }
+        html += '<div class="legrow' + (u.bands ? ' wide' : '') + '"><span class="lg">' + esc(u.g) + '</span>'
               + '<span class="ln">' + esc(u.name) + '</span>'
-              + '<span class="ld">' + esc(u.note || "") + "</span></div>";
+              + '<span class="ld">' + nd + "</span></div>";
       });
       html += "</div></details>";
     }
