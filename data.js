@@ -18,7 +18,7 @@
 const COLONY_DATA = {
   eyebrow: "roadMap",
   title:   "colony",
-  sub:     "project roadmap",
+  sub:     "",
   lede:    'Every chamber is open, none of them finished. Depth is counted in <b>shards</b> ▽ — more shards means more actually built.',
   note:    "still mostly shallow, and that's the honest part",
   foot:    "a snapshot — we add shards as we dig",
