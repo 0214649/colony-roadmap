@@ -16,10 +16,10 @@
    ============================================================ */
 
 const COLONY_DATA = {
-  eyebrow: "field log",
+  eyebrow: "roadMap",
   title:   "colony",
   sub:     "project roadmap",
-  lede:    'Every chamber is open, none of them finished. Depth is counted in <b>shards</b> (▽) — more shards means more actually built.',
+  lede:    'Every chamber is open, none of them finished. Depth is counted in <b>shards</b> ▽ — more shards means more actually built.',
   note:    "still mostly shallow, and that's the honest part",
   foot:    "a snapshot — we add shards as we dig",
   updated: "2026-07-01",
@@ -44,7 +44,6 @@ const COLONY_DATA = {
     {
       name: "Concept & loop",
       desc: "the idle engine the whole game runs on",
-      open: true,
       items: [
         { name: "Core idle / incremental loop", shards: 12 },
         { name: "Gather · build · tidy", shards: 12 },

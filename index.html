@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>COLONY — field log</title>
-<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/svg+xml" href="logo.svg">
 <meta name="theme-color" content="#15110b">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,8 +23,11 @@
   .wrap{max-width:680px;margin:0 auto}
   .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:0.32em;text-transform:uppercase;color:var(--grain);margin:0 0 14px}
   h1{font-weight:600;font-size:34px;letter-spacing:0.02em;margin:0 0 6px}
+  .masthead{display:flex;align-items:center;gap:14px;margin:0 0 6px}
+  .masthead h1{margin:0}
+  .logo{width:42px;height:42px;flex:0 0 auto;filter:drop-shadow(0 0 5px rgba(224,162,58,0.35))}
   .sub{font-family:var(--mono);font-size:12px;color:var(--muted);letter-spacing:0.2em;text-transform:uppercase;margin:0 0 16px}
-  .lede{color:var(--muted);font-size:15px;max-width:54ch;margin:0 0 4px}
+  .lede{color:var(--muted);font-size:15px;max-width:54ch;margin:0 0 4px;font-style:italic}
   .lede b{color:var(--grain);font-weight:400}
   .tally{font-family:var(--mono);font-size:12px;color:var(--faint);margin:14px 0 0;border-top:1px solid var(--line);padding-top:14px}
   .tally b{color:var(--grain);font-weight:500}
@@ -49,7 +52,7 @@
 
   /* glyph legend — decode the unit symbols the chambers are written in */
   .legend{border:1px solid var(--line);border-radius:12px;background:var(--chamber);margin:0 0 12px;overflow:hidden}
-  .legend > summary{list-style:none;cursor:pointer;padding:14px 18px;display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--grain)}
+  .legend > summary{list-style:none;cursor:pointer;padding:14px 18px;display:flex;align-items:center;gap:12px;font-family:var(--sans);font-size:13.5px;font-weight:500;letter-spacing:0.01em;color:var(--grain)}
   .legend > summary::-webkit-details-marker{display:none}
   .legend > summary .chev{margin-left:auto;color:var(--faint);transition:transform .25s ease;font-family:var(--mono);font-size:13px}
   .legend[open] > summary .chev{transform:rotate(90deg)}
@@ -145,7 +148,7 @@
 
     var html = "";
     html += '<p class="eyebrow">' + esc(d.eyebrow) + "</p>";
-    html += "<h1>" + esc(d.title) + "</h1>";
+    html += '<div class="masthead"><img class="logo" src="logo.svg" alt="" width="46" height="46"><h1>' + esc(d.title) + "</h1></div>";
     html += '<p class="sub">' + esc(d.sub) + "</p>";
     html += '<p class="lede">' + (d.lede || "") + "</p>"; // lede allows inline HTML on purpose
     html += '<p class="tally"><b>' + total + " ▽</b> carried so far · across "
@@ -221,7 +224,7 @@
     var footTxt = esc(d.foot) + (d.updated ? "  ·  updated " + esc(d.updated) : "");
     html += '<p class="foot">' + footTxt + "</p>";
     document.getElementById("app").innerHTML = html;
-    document.title = d.title + " — " + d.eyebrow;
+    document.title = d.title + " roadMap";
 
     // ---- interaction: deep-links, search filter, expand/collapse ----
     var allCh = Array.prototype.slice.call(document.querySelectorAll("details.ch"));
@@ -247,7 +250,10 @@
       });
     });
     window.addEventListener("hashchange", openHash);
-    openHash();
+    if ("scrollRestoration" in history) history.scrollRestoration = "manual";   // the browser must NOT restore scroll on reload
+    // on every load/refresh: land at the TOP with everything closed — drop any stale hash left by browsing
+    if (location.hash) { try { history.replaceState(null, "", location.pathname + location.search); } catch (e) {} }
+    window.scrollTo(0, 0);
 
     document.getElementById("expand").onclick = function () { allCh.forEach(function (c) { if (!c.classList.contains("hide")) c.open = true; }); };
     document.getElementById("collapse").onclick = function () { allCh.forEach(function (c) { c.open = false; }); };
@@ -276,9 +282,8 @@
       if (!raw) {
         items.forEach(function (it) { it.classList.remove("hide"); });
         allCh.forEach(function (c) { c.classList.remove("hide"); });
-        // restore the data.js default open-state
-        allCh.forEach(function (c) { c.open = c.id === "ch-" + slug((d.chambers[0] || {}).name || ""); });
-        chambers.forEach(function (c, i) { if (c.open) allCh[i].open = true; });
+        // clearing the filter returns everything to CLOSED (matches a fresh load)
+        allCh.forEach(function (c) { c.open = false; });
         nohit.style.display = "none"; countEl.textContent = "";
         return;
       }
