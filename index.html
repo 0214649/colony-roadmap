@@ -174,7 +174,8 @@
     if (d.legend && d.legend.length) {
       html += '<details class="legend"><summary>units · the shorthand below'
             + '<span class="chev">›</span></summary><div class="legkey">';
-      d.legend.forEach(function (u) {
+      // wide (band) rows render LAST so a full-width row never splits the grid mid-list
+      d.legend.slice().sort(function (a, b) { return (a.bands ? 1 : 0) - (b.bands ? 1 : 0); }).forEach(function (u) {
         var nd = esc(u.note || "");
         if (u.bands) {
           nd += '<span class="legbands">';
