@@ -59,15 +59,14 @@
   .legend > summary .chev{margin-left:auto;color:var(--faint);transition:transform .25s ease;font-family:var(--mono);font-size:13px}
   .legend[open] > summary .chev{transform:rotate(90deg)}
   .legkey{display:grid;grid-template-columns:repeat(auto-fill,minmax(196px,1fr));gap:2px 18px;padding:4px 18px 18px}
-  .legrow{display:flex;align-items:baseline;gap:10px;padding:7px 0;border-top:1px solid var(--line)}
-  .legrow .lg{font-family:var(--mono);font-size:13px;color:var(--grain);min-width:30px;text-align:center;flex:none}
-  .legrow .ln{font-size:13.5px;color:var(--bone);flex:none}
+  .legrow{display:flex;align-items:flex-start;gap:10px;padding:9px 0;border-top:1px solid var(--line);min-height:62px;box-sizing:border-box}   /* every unit = an equal-height slot */
+  .legrow .lg{font-family:var(--mono);font-size:13px;color:var(--grain);min-width:22px;text-align:center;flex:none;line-height:1.5}
+  .legrow .ln{font-size:13.5px;color:var(--bone);flex:none;min-width:62px;line-height:1.4}   /* fixed name column → notes align */
   .legrow .ld{font-size:12px;color:var(--muted);line-height:1.4}
-  .legrow.wide{grid-column:1/-1}
-  .legbands{display:flex;gap:28px;flex-wrap:wrap;margin-top:7px}
-  .legband{display:flex;flex-direction:column;gap:2px}
-  .lbn{color:var(--grain);font-size:11px;font-weight:600;letter-spacing:0.02em;margin-bottom:1px}
-  .lbt{color:var(--muted);font-size:12px}
+  .legbands{display:flex;flex-direction:column;gap:2px;margin-top:5px}
+  .legband{font-size:11px;line-height:1.4}
+  .lbn{color:var(--grain);font-weight:600;margin-right:7px}
+  .lbt{color:var(--muted);margin-right:9px;white-space:nowrap}
 
   details.ch{border:1px solid var(--line);border-radius:12px;background:var(--chamber);margin:0 0 12px;overflow:hidden;scroll-margin-top:64px}
   details.ch[open]{border-color:var(--line-2)}
@@ -174,8 +173,7 @@
     if (d.legend && d.legend.length) {
       html += '<details class="legend"><summary>units · the shorthand below'
             + '<span class="chev">›</span></summary><div class="legkey">';
-      // wide (band) rows render LAST so a full-width row never splits the grid mid-list
-      d.legend.slice().sort(function (a, b) { return (a.bands ? 1 : 0) - (b.bands ? 1 : 0); }).forEach(function (u) {
+      d.legend.forEach(function (u) {
         var nd = esc(u.note || "");
         if (u.bands) {
           nd += '<span class="legbands">';
@@ -185,7 +183,7 @@
           });
           nd += '</span>';
         }
-        html += '<div class="legrow' + (u.bands ? ' wide' : '') + '"><span class="lg">' + esc(u.g) + '</span>'
+        html += '<div class="legrow"><span class="lg">' + esc(u.g) + '</span>'
               + '<span class="ln">' + esc(u.name) + '</span>'
               + '<span class="ld">' + nd + "</span></div>";
       });
