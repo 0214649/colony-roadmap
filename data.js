@@ -33,7 +33,7 @@ const COLONY_DATA = {
     { g: "Σ", name: "census",    note: "the population ceiling" },
     { g: "⌇", name: "pheromone", note: "commands · roads · reach" },
     { g: "♄", name: "scruple",   note: "data-mass · the pay-weight of a claim" },
-    { g: "℈", name: "heft",      note: "build mass", bands: [["bioheft", "◗ chitin", "∥ fiber"], ["geoheft", "■ stone", "◆ gem"], ["heftium", "◉ alloy", "⬚ plastic"]] },
+    { g: "℈", name: "heft",      note: "build mass · 6 types in 3 bands", bands: [["organic", "bioheft", "heftoid"], ["neutral", "geoheft", "heftite"], ["synthetic", "heftium", "polyheft"]] },
     { g: "⁘", name: "seeds",     note: "the food / life ledger" },
     { g: "꩜", name: "sate",      note: "nourishment — the kcal of COLONY" },
     { g: "⬡", name: "honey",     note: "glue · catalyst · healing" },
