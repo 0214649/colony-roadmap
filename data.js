@@ -231,13 +231,14 @@ const COLONY_DATA = {
     },
     {
       name: "Aesthetics",
-      desc: "minimalist · procedural · skinnable — DIRECTION LOCKED: soil & chitin (warm earthy dark)",
+      desc: "minimalist · procedural · skinnable — shipped skin: soil & chitin · next generation: the glass desk at 38° (w0XX hunt)",
       items: [
         { name: "PLAYFIELD VISUAL (direction set) — the file-view is a DESKTOP-type surface: medium icons with names underneath (familiar OS icon-grid, out-competes Explorer on legibility) WITH ants running around among the icons. Files/folders = icons the colony lives on & HAULS (the co-op-haul spectacle on the grid). Fuses the ant-canvas (v001–v003) with the file-view (004); the desktop IS the terrarium. Supersedes 004's gray-box list", shards: 4 },
         { name: "Direction options — muted flat · liminal fog · mono terminal. NOT the direction: bioluminescence (we'll have bioluminescent ELEMENTS — glowing accents — but 'biolum dark' is dropped as the overall style)", shards: 3 },
         { name: "Principle — minimalist + procedural (solo-sustainable)", shards: 2 },
         { name: "Ants look like ants · each insect unique", shards: 2 },
         { name: "Mood axis — LOCKED: SOIL & CHITIN (warm earthy dark). loam ground · bone text · amber = the colony's single signature light · coral brood · water the one cool note. Palette-driven & flat — no glass/retro/bevel gimmickry (frosted-glass & a Win9x/2000 retro skin were both trialled & rejected as reading 'cheap'/off); the underground colony lit warm against dark earth. Resolves uncanny↔bucolic → warm/grounded. Built + shipped (v011 skin pass, colony-game)", shards: 6 },
+        { name: "THE w0XX STYLE HUNT (w021–w028, 2026-07-04) — the NEXT visual generation, built as a live hand-rolled 3D renderer over 8 iterated mock cards. LOCKED: product = a floating GLASS WINDOW over the desktop (not fullscreen, breadcrumb + dots etched in the chrome) · the frost recipe ('more transparent AND more frosted': bright milky heavy-blur, wallpaper color blooming through — glass redeemed) · true-perspective camera at 38° (27°/50° toggle, sway parallax) · THE MODELED ANT (tiny true-3D model pre-rendered to 8 pixel views at the camera's own pitch, runtime-lit outline = the 'dynamic sprite', one cast shadow per light, glass mirror — LOCKED w027) · modeled ladybug (w028) · explorer grid 5-per-line reading order · files = standing dog-eared pages · etched-in-glass UI ('close to impeccable'). OPEN: the folder OBJECT — a 5-territory reference hunt delivered a 6-direction mood board (ember coffer · pedestal-pile · replete pod · gabled reliquary · comb caddy · chimney granary), pick pending; pixel tab-boxes hold the grid as placeholders. Port to colony-game owed once the folder locks (soil & chitin stays the shipped skin till then)", shards: 12 },
       ],
     },
     {
