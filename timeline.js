@@ -154,5 +154,11 @@ const TIMELINE_DATA = {
       body: "this site grows from a single roadmap page into a full hub — hub, roadMap, timeLine, codex — wearing the game's next visual generation: cold slate, milky frost, etched UI, amber the one light. the codex ships sealed-first: 42 plates in asemic marks, unsealing here as the game reveals them.",
       tag: "site",
     },
+    {
+      date: "2026-07-05",
+      title: "three gods, and a machine to make the rest",
+      body: "the portrait line becomes a repeatable pipeline — each god generated on a chroma screen, keyed in one pass, set on a backdrop, kept desaturated so the edge never haloes, and always appealing with the wrongness on the body. itRedeth is re-forged as cold pure glass (the amber goes back to the ants); itYoketh keeps her mask and chains; itEfneth arrives a full cyborg. and the shapes become lore: the gods have no bodies — itRedeth lends them forms you can bear to look at, a translation like their words.",
+      tag: "art",
+    },
   ],
 };

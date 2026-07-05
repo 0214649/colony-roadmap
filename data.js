@@ -171,6 +171,7 @@ const COLONY_DATA = {
         { name: "the queen — visible, not hidden", shards: 3 },
         { name: "caste roster (v012) — forager (gather/explore/tidy) · brood (feed queen / rear) · worker (dig/build/destroy) · cropAnt (the social-crop FEEDER — fills mangers / mouth-to-mouth; 3 → a chariot) · janitorAnt (antCorpse → shank food + tidy/help) · soldier (forward stub). Each ant now has a per-ant sate bar (it can STARVE)", shards: 5 },
         { name: "other species — the rival spawns", shards: 2 },
+        { name: "the god portraits — 3 of the 42 have faces (itRedeth the glass · itYoketh the yoke · itEfneth the machine) via a repeatable chroma-screen → one-pass key → desaturated-on-a-backdrop pipeline; the anime forms are itRedeth's kindness (she lends the formless gods shapes) — new canon", shards: 8 },
       ],
     },
     {
