@@ -42,7 +42,7 @@ const COLONY_DATA = {
 
   chambers: [
     {
-      name: "Concept & loop",
+      name: "concept & loop",
       desc: "the idle engine the whole game runs on",
       items: [
         { name: "Core idle / incremental loop", shards: 12 },
@@ -55,7 +55,7 @@ const COLONY_DATA = {
       ],
     },
     {
-      name: "Cosmology",
+      name: "cosmology",
       desc: "a wheel of 6 liquid wedges on a radial ruler, framed by 2 ultra powers — the 42-god codex",
       items: [
         { name: "The wheel — 6 liquid wedges (tears·nectar·blood·ichor·fuel·ether), each a mode of automation", shards: 14 },
@@ -111,7 +111,7 @@ const COLONY_DATA = {
       ],
     },
     {
-      name: "Resources & units",
+      name: "resources & units",
       desc: "economy restarted god-first — units derive from gods, one currency per god",
       items: [
         { name: "Old matter/dew/signal/lumen table — scrapped (god-first restart)", shards: 1 },
@@ -140,7 +140,7 @@ const COLONY_DATA = {
       ],
     },
     {
-      name: "Themes & morality",
+      name: "themes & morality",
       desc: "organic vs synthetic, and whether good is reachable",
       items: [
         { name: "Pro-AI vs pro-human thesis", shards: 12 },
@@ -151,7 +151,7 @@ const COLONY_DATA = {
       ],
     },
     {
-      name: "Routes & endings",
+      name: "routes & endings",
       desc: "many deductions, no true end, no restart",
       items: [
         { name: "Reversible choices — no new game", shards: 7 },
@@ -162,7 +162,7 @@ const COLONY_DATA = {
       ],
     },
     {
-      name: "Characters",
+      name: "characters",
       desc: "the queen, the species, the soul of your machine",
       bridge: true,
       items: [
@@ -174,7 +174,7 @@ const COLONY_DATA = {
       ],
     },
     {
-      name: "Desktop & explorer",
+      name: "desktop & explorer",
       desc: "the playfield — your real files, made alive",
       items: [
         { name: "Pheromone ⌇ interface — guide-point → roads → command verbs (build/tidy/forage/attack/avoid); the primary control, multi-genre", shards: 8 },
@@ -196,7 +196,7 @@ const COLONY_DATA = {
       ],
     },
     {
-      name: "Onboarding / first run",
+      name: "onboarding / first run",
       desc: "the day-one empty desktop — the colony invites itself in",
       items: [
         { name: 'First-run questionnaire — warm hello + safety promise (never delete · reversible · opt-in) · "where may we forage?" folder consent as granting territory (sandbox-only start) · "how should we live here?" startup · multi-monitor · wallpaper · soft landing that becomes the first descent', shards: 6 },
@@ -206,7 +206,7 @@ const COLONY_DATA = {
       ],
     },
     {
-      name: "Build & tech",
+      name: "build & tech",
       desc: "web → Electron overlay, safety, a build that runs",
       items: [
         { name: "Engine path — web stack → Electron / Tauri", shards: 12 },
@@ -232,7 +232,7 @@ const COLONY_DATA = {
       ],
     },
     {
-      name: "Aesthetics",
+      name: "aesthetics",
       desc: "minimalist · procedural · skinnable — shipped skin: soil & chitin · next generation: the glass desk at 38° (w0XX hunt)",
       items: [
         { name: "PLAYFIELD VISUAL (direction set) — the file-view is a DESKTOP-type surface: medium icons with names underneath (familiar OS icon-grid, out-competes Explorer on legibility) WITH ants running around among the icons. Files/folders = icons the colony lives on & HAULS (the co-op-haul spectacle on the grid). Fuses the ant-canvas (v001–v003) with the file-view (004); the desktop IS the terrarium. Supersedes 004's gray-box list", shards: 4 },
@@ -248,7 +248,7 @@ const COLONY_DATA = {
       ],
     },
     {
-      name: "Workflow & tooling",
+      name: "workflow & tooling",
       desc: "how the project is actually built across chats",
       items: [
         { name: "Two-repo loop — design chats emit ONE consolidated changeset at session close → Claude Code applies & pushes (one thing per turn; no mid-design dumps)", shards: 6 },

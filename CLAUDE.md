@@ -43,6 +43,12 @@ Claude-minted. See the `colony-website` skill before touching private pages.
 
 ## Conventions
 - unit = ▽ shard · `open: true` = chamber starts expanded · `bridge: true` = coral dot.
+- Chamber names are lowercase voice (camelCase law). The roadMap groups chambers under
+  3 bands (the game / the world / the work) via the `BANDS` slug map in `tab-roadmap.js` —
+  a new chamber lands in a trailing "the dig" band until mapped there (one line).
+- Long item details auto-fold to 2 lines (>240 chars) with a more/less toggle; the
+  shipped/planned/locked/banked chips filter on patterns in the item text (LOCKED
+  uppercase = the lock convention).
 - `data.js` reader-aids: `updated` (footer date) + `legend` (units key) — keep current.
 - Build-status line + shipped/planned/parked pills auto-derive from `vNNN (...)` names.
 - Legacy `#ch-<slug>` deep links still work (router maps them into the roadMap tab).

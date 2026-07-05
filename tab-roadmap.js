@@ -26,6 +26,26 @@
 
   var keysBound = false;
 
+  // presentation bands (template concern — an unmapped chamber lands in "the dig")
+  var BANDS = [
+    { label: "the game",  slugs: ["concept-loop", "desktop-explorer", "onboarding-first-run"] },
+    { label: "the world", slugs: ["cosmology", "resources-units", "themes-morality", "routes-endings", "characters"] },
+    { label: "the work",  slugs: ["build-tech", "aesthetics", "workflow-tooling"] },
+  ];
+  var CLAMP_AT = 240; // details longer than this fold to two lines
+
+  // quick-filter kinds, derived from the item text itself
+  function kindsOf(name) {
+    var k = [];
+    if (/^v\d{3}\b/.test(name) || /\by000\b/.test(name)) {
+      if (/SHIPPED|\bBUILT\b|\bDONE\b/.test(name)) k.push("ship");
+      else if (/PLANNED/.test(name)) k.push("plan");
+    }
+    if (/\bLOCKED\b/.test(name)) k.push("lock");
+    if (/\b(banked|parked|deferred)\b/i.test(name)) k.push("bank");
+    return k.join(" ");
+  }
+
   SITE.tab({
     id: "roadMap",
     label: "roadMap",
@@ -96,19 +116,35 @@
             + '<button class="tbtn" id="expand">expand</button>'
             + '<button class="tbtn" id="collapse">collapse</button>'
             + '</div>'
+            + '<div class="rm-chips"><button class="chip on" data-k="">all</button>'
+            + '<button class="chip" data-k="ship">shipped</button>'
+            + '<button class="chip" data-k="plan">planned</button>'
+            + '<button class="chip" data-k="lock">locked</button>'
+            + '<button class="chip" data-k="bank">banked</button></div>'
             + '<div class="count" id="count"></div>';
 
+      // group chambers under the presentation bands (data order kept within a band)
+      var banded = BANDS.map(function (b) { return { label: b.label, list: [] }; });
+      var leftover = { label: "the dig", list: [] };
       chambers.forEach(function (c) {
+        var s = slug(c.name), hit = null;
+        BANDS.forEach(function (b, i) { if (b.slugs.indexOf(s) >= 0) hit = i; });
+        (hit === null ? leftover : banded[hit]).list.push(c);
+      });
+      if (leftover.list.length) banded.push(leftover);
+
+      function chamberHtml(c) {
+        var h = "";
         var openAttr = c.open ? " open" : "";
         var bridgeClass = c.bridge ? " bridge" : "";
-        html += '<details class="ch frost' + bridgeClass + '" id="ch-' + slug(c.name) + '"' + openAttr + ">";
-        html += '<summary><span class="dot"></span>'
-              + '<span class="head"><div class="name">' + esc(c.name) + "</div>"
-              + '<div class="desc">' + esc(c.desc) + "</div></span>"
-              + '<span class="g" style="color:' + heat(maxChamber ? c._total / maxChamber : 0) + '">'
-              + c._total + ' ▽</span><span class="chev">›</span></summary>';
-        html += '<div class="bar"><i style="width:' + clamp(c._total) + '%"></i></div>';
-        html += '<div class="subs">';
+        h += '<details class="ch frost' + bridgeClass + '" id="ch-' + slug(c.name) + '"' + openAttr + ">";
+        h += '<summary><span class="dot"></span>'
+           + '<span class="head"><div class="name">' + esc(c.name) + "</div>"
+           + '<div class="desc">' + esc(c.desc) + "</div></span>"
+           + '<span class="g" style="color:' + heat(maxChamber ? c._total / maxChamber : 0) + '">'
+           + c._total + ' ▽</span><span class="chev">›</span></summary>';
+        h += '<div class="bar"><i style="width:' + clamp(c._total) + '%"></i></div>';
+        h += '<div class="subs">';
         (c.items || []).forEach(function (it) {
           // Split "Label — detail" into a bold label + a muted detail line (first dash only).
           var m = String(it.name).match(/^([\s\S]*?)\s+[—–]\s+([\s\S]*)$/);
@@ -124,15 +160,23 @@
             else if (/PLANNED/.test(it.name)) pill = '<span class="pill planned">planned</span>';
             else if (/parked|banked|deferred/i.test(it.name)) pill = '<span class="pill parked">parked</span>';
           }
-          html += '<div class="item"><div class="ibody">'
-                + '<div class="sname">' + pill + label + "</div>"
-                + (detail ? '<div class="sdetail">' + detail + "</div>" : "")
-                + '</div><div class="smeta">'
-                + '<span class="sg" style="color:' + col + '">' + s + "</span>"
-                + '<span class="sbar"><i style="width:' + w + '%;background:' + col + '"></i></span>'
-                + "</div></div>";
+          var long = (m ? m[2] : "").length > CLAMP_AT;
+          h += '<div class="item" data-k="' + kindsOf(String(it.name)) + '"><div class="ibody">'
+             + '<div class="sname">' + pill + label + "</div>"
+             + (detail ? '<div class="sdetail' + (long ? " clamp" : "") + '">' + detail + "</div>" : "")
+             + (long ? '<button class="morebtn" type="button">more ⌄</button>' : "")
+             + '</div><div class="smeta">'
+             + '<span class="sg" style="color:' + col + '">' + s + "</span>"
+             + '<span class="sbar"><i style="width:' + w + '%;background:' + col + '"></i></span>'
+             + "</div></div>";
         });
-        html += "</div></details>";
+        h += "</div></details>";
+        return h;
+      }
+
+      banded.forEach(function (b, bi) {
+        html += '<div class="bandhead" data-band="' + bi + '">' + esc(b.label) + "</div>";
+        b.list.forEach(function (c) { html += chamberHtml(c); });
       });
 
       html += '<div class="nohit" id="nohit">nothing matches — clear the filter</div>';
@@ -147,6 +191,29 @@
       var nohit = document.getElementById("nohit");
       var countEl = document.getElementById("count");
       var q = document.getElementById("q");
+      var kFilter = ""; // active quick-filter kind ("" = all)
+
+      // long details fold to two lines; the button unfolds them
+      view.querySelectorAll(".morebtn").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          var det = btn.previousElementSibling;
+          var folded = det.classList.toggle("clamp");
+          btn.textContent = folded ? "more ⌄" : "less ⌃";
+        });
+      });
+
+      // band headers hide when everything under them is hidden
+      var bandHeads = Array.prototype.slice.call(view.querySelectorAll(".bandhead"));
+      function syncBands() {
+        bandHeads.forEach(function (bh) {
+          var el = bh.nextElementSibling, any = false;
+          while (el && !el.classList.contains("bandhead")) {
+            if (el.classList.contains("ch") && !el.classList.contains("hide")) any = true;
+            el = el.nextElementSibling;
+          }
+          bh.style.display = any ? "" : "none";
+        });
+      }
 
       var ready = false; // suppress URL rewrites from the initial programmatic open
       var bulk = false;  // …and from the expand/collapse buttons (toggle fires for those too)
@@ -197,27 +264,53 @@
       function filter() {
         var raw = q.value.trim();
         items.forEach(unmark);
-        if (!raw) {
-          items.forEach(function (it) { it.classList.remove("hide"); });
+        var idle = !raw && !kFilter;
+        if (idle) {
+          items.forEach(function (it) {
+            it.classList.remove("hide");
+            var det = it.querySelector(".sdetail"), btn = it.querySelector(".morebtn");
+            if (btn && det) { det.classList.add("clamp"); btn.textContent = "more ⌄"; } // re-fold
+          });
           allCh.forEach(function (c) { c.classList.remove("hide"); c.open = false; });
           nohit.style.display = "none"; countEl.textContent = "";
+          syncBands();
           return;
         }
-        var re = new RegExp(raw.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "gi");
+        var re = raw ? new RegExp(raw.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "gi") : null;
         var hits = 0;
         allCh.forEach(function (c) {
           var any = 0;
           c.querySelectorAll(".item").forEach(function (it) {
-            var match = re.test(it.textContent); re.lastIndex = 0;
-            if (match) { it.classList.remove("hide"); markText(it, re); re.lastIndex = 0; any++; hits++; }
-            else it.classList.add("hide");
+            var ok = true;
+            if (kFilter) ok = (" " + (it.getAttribute("data-k") || "") + " ").indexOf(" " + kFilter + " ") >= 0;
+            if (ok && re) { ok = re.test(it.textContent); re.lastIndex = 0; }
+            if (ok) {
+              it.classList.remove("hide");
+              if (re) {
+                markText(it, re); re.lastIndex = 0;
+                // a hit may sit in the folded part — unfold so the mark is visible
+                var det = it.querySelector(".sdetail"), btn = it.querySelector(".morebtn");
+                if (btn && det) { det.classList.remove("clamp"); btn.textContent = "less ⌃"; }
+              }
+              any++; hits++;
+            } else it.classList.add("hide");
           });
           if (any) { c.classList.remove("hide"); c.open = true; } else c.classList.add("hide");
         });
         nohit.style.display = hits ? "none" : "block";
         countEl.textContent = hits + (hits === 1 ? " line" : " lines") + " matched";
+        syncBands();
       }
       q.addEventListener("input", filter);
+
+      view.querySelectorAll(".rm-chips .chip").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          view.querySelectorAll(".rm-chips .chip").forEach(function (b) { b.classList.remove("on"); });
+          btn.classList.add("on");
+          kFilter = btn.getAttribute("data-k") || "";
+          filter();
+        });
+      });
 
       // "/" jumps to the filter · Escape clears — bound once, inert off this tab
       if (!keysBound) {
