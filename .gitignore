@@ -1,0 +1,6 @@
+# vault plaintext must NEVER live in this public repo — private rooms ship
+# only as ciphertext (private/*.enc.js, produced by tools/encrypt.mjs)
+*.vault.md
+*.plain.*
+design-bible*.md
+heroes-artifacts*.md

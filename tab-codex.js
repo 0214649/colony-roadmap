@@ -33,20 +33,6 @@
     },
   });
 
-  // the sealed private views (placeholders until the encrypted blobs ship)
-  function sealedTab(id, label, gapAfter) {
-    SITE.tab({
-      id: id, label: label, sealed: true, gapAfter: !!gapAfter,
-      render: function (view) {
-        view.innerHTML = '<div id="sealed" class="frost"><canvas width="240" height="110"></canvas>'
-          + "<h2>" + esc(label) + " — sealed</h2>"
-          + "<p>this room exists, but the key has not been spoken here.</p>"
-          + "<p>what lies behind ships only as ciphertext — nothing readable ever touches the public repo.</p>"
-          + '<p class="old">still in the old tongue.</p></div>';
-        SITE.asemic(view.querySelector("canvas"), "sealed-" + id, { rows: 2, cols: 6, w: 240, h: 110 });
-      },
-    });
-  }
-  sealedTab("manuscript", "manuscript");
-  sealedTab("heroes", "heroes");
+  // the private rooms (manuscript · heroes) register from their own tab files,
+  // behind the encrypted gate in crypt.js
 })();

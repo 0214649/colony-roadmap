@@ -180,6 +180,7 @@ var SITE = (function () {
     var t = byId[id];
     if (current === id) { if (t.onHash) t.onHash(); return; } // in-tab hash moves (roadMap chambers)
     current = id;
+    SITE.seq = (SITE.seq || 0) + 1; // render token — async work checks it before touching #view
     var view = document.getElementById("view");
     view.innerHTML = "";
     if (SITE._teardown) { SITE._teardown(); SITE._teardown = null; }
