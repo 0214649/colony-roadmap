@@ -170,13 +170,15 @@ nav#tabs a.sealed.on{color:var(--amber)}   /* the active pill stays amber even o
 .tbtn:hover{border-color:var(--frost-line-2);color:var(--bone)}
 .count{font-size:11.5px;color:var(--faint);white-space:nowrap;margin:0 0 10px}
 
-.legend{margin:0 0 12px;overflow:hidden}
-.legend > summary{list-style:none;cursor:pointer;padding:14px 18px;display:flex;align-items:center;gap:12px;
-  font-size:13.5px;font-weight:500;color:var(--amber)}
+.legend{margin:0 0 14px}
+.legend > summary{list-style:none;cursor:pointer;padding:6px 2px;display:flex;align-items:center;gap:12px;
+  font-size:12.5px;font-weight:500;letter-spacing:.04em;color:var(--amber);opacity:.85}
+.legend > summary:hover,.legend[open] > summary{opacity:1}
 .legend > summary::-webkit-details-marker{display:none}
 .legend > summary .chev{margin-left:auto;color:var(--faint);transition:transform .25s ease;font-size:13px}
 .legend[open] > summary .chev{transform:rotate(90deg)}
-.legkey{display:grid;grid-template-columns:repeat(auto-fill,minmax(196px,1fr));gap:2px 18px;padding:4px 18px 18px}
+.legkey{display:grid;grid-template-columns:repeat(auto-fill,minmax(196px,1fr));gap:2px 18px;
+  padding:10px 2px 4px;margin-top:6px;border-top:1px solid var(--frost-line)}
 .legrow{display:flex;align-items:flex-start;gap:10px;padding:9px 0;border-top:1px solid var(--frost-line);min-height:62px}
 .legrow .lg{font-size:13px;color:var(--amber);min-width:22px;text-align:center;flex:none;line-height:1.5}
 .legrow .ln{font-size:13.5px;color:var(--bone);flex:none;min-width:62px;line-height:1.4}

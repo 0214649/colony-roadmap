@@ -92,7 +92,7 @@
 
       // glyph legend (optional data) — collapsible key so the unit symbols read
       if (d.legend && d.legend.length) {
-        html += '<details class="legend frost"><summary>units · the shorthand below'
+        html += '<details class="legend"><summary>units · the shorthand below'
               + '<span class="chev">›</span></summary><div class="legkey">';
         d.legend.forEach(function (u) {
           var nd = esc(u.note || "");
