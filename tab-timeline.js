@@ -4,8 +4,8 @@
   var esc = SITE.esc;
 
   SITE.tab({
-    id: "timeline",
-    label: "timeline",
+    id: "timeLine",
+    label: "timeLine",
     render: function (view) {
       var evs = (TIMELINE_DATA.events || []).slice().sort(function (a, b) {
         return a.date < b.date ? 1 : a.date > b.date ? -1 : 0;
@@ -14,7 +14,7 @@
       var tags = [];
       evs.forEach(function (e) { if (e.tag && tags.indexOf(e.tag) < 0) tags.push(e.tag); });
 
-      var html = '<div id="tl"><p class="eyebrow">timeline</p>'
+      var html = '<div id="tl"><p class="eyebrow">timeLine</p>'
                + '<p class="lede">how the colony grew — the dig, dated.</p>';
       if (tags.length > 1) {
         html += '<div class="tl-chips"><button class="chip on" data-tag="">all</button>';

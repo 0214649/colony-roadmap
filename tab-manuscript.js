@@ -26,7 +26,7 @@
       body = body.indexOf("</h1>") >= 0 ? body.replace("</h1>", "</h1>\n" + tocHtml) : tocHtml + body;
     }
     var html = '<div id="ms">';
-    html += '<div class="ms-bar"><p class="eyebrow">manuscript</p>'
+    html += '<div class="ms-bar"><p class="eyebrow">manuScript</p>'
           + '<button class="tbtn" id="ms-seal">seal the room</button></div>';
     html += '<div class="ms-duel"><span>font duel ·</span>' + FONTS.map(function (f) {
       return '<button class="chip' + (window.msFont() === f.k ? " on" : "") + '" data-f="' + f.k + '">' + esc(f.n) + "</button>";
@@ -51,7 +51,7 @@
 
     document.getElementById("ms-seal").addEventListener("click", function () {
       SITE_CRYPT.seal();
-      SITE_CRYPT.gate(view, "bible", "manuscript", function (p) { room(view, p); });
+      SITE_CRYPT.gate(view, "bible", "manuScript", function (p) { room(view, p); });
     });
     // toc links jump within the page without fighting the router
     view.querySelectorAll(".ms-toc a").forEach(function (a) {
@@ -64,11 +64,11 @@
   }
 
   SITE.tab({
-    id: "manuscript",
-    label: "manuscript",
+    id: "manuScript",
+    label: "manuScript",
     sealed: true,
     render: function (view) {
-      SITE_CRYPT.gate(view, "bible", "manuscript", function (p) { room(view, p); });
+      SITE_CRYPT.gate(view, "bible", "manuScript", function (p) { room(view, p); });
     },
   });
 })();

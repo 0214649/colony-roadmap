@@ -12,7 +12,7 @@
       });
       return "<b>" + total + " ▽</b> carried · <b>" + n + "</b> chambers";
     }
-    if (tabId === "timeline" && typeof TIMELINE_DATA !== "undefined")
+    if (tabId === "timeLine" && typeof TIMELINE_DATA !== "undefined")
       return "<b>" + (TIMELINE_DATA.events || []).length + "</b> events";
     if (tabId === "codex" && typeof CODEX_DATA !== "undefined") {
       var es = CODEX_DATA.entries || [], rev = es.filter(function (e) { return e.state === "revealed"; }).length;

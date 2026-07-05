@@ -16,9 +16,14 @@ near-one-line change. NEVER hardcode content or a sprite path in a template.
 |--------------------|-----------------------------------------------------------|
 | `data.js`          | the roadMap — chambers/shards (totals/bars/status AUTO-compute; never hand-edit those) |
 | `hub.js`           | the hub/presentation — itRedeth's greeting + pitch blocks |
-| `timeline.js`      | dated project events                                      |
+| `timeline.js`      | dated project events (the timeLine tab)                   |
 | `codex.js`         | the 42 — `state:"locked"` → flip to `"revealed"` + fields  |
+| `wledger.js`       | the w ledger (renders inside the gated heroes room)       |
 | `assets.js`        | the sprite manifest: logical name → `assets/` path        |
+
+Tab names are camelCase: hub · roadMap · timeLine · codex · manuScript · heroes.
+Browser title = `▽` + section (no site name — style first). The ants on the top layer
+live in PAGE space (antLayer in site.js, sheet via the manifest).
 
 | templates (layout/style work only) |
 |------------------------------------|

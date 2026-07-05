@@ -122,41 +122,6 @@ var SITE = (function () {
     var motes = [], glints = [];
     for (var i = 0; i < 30; i++) motes.push({ x: Math.random(), y: Math.random(), r: .6 + Math.random() * 1.4, s: 6 + Math.random() * 13, a: .05 + Math.random() * .11, ph: Math.random() * 6.28 });
     for (var g = 0; g < 14; g++) glints.push({ x: Math.random(), y: Math.random(), a: .04 + Math.random() * .08, ph: Math.random() * 6.28 });
-
-    // THE ANTS — the locked modeled ant (via the asset manifest) wandering the glass
-    var antMeta = (typeof COLONY_ASSETS !== "undefined" && COLONY_ASSETS.antSheet) || null;
-    var antImg = null, ants = [];
-    if (antMeta && !reduced) {
-      antImg = new Image(); antImg.src = antMeta.src;
-      for (var an = 0; an < 4; an++) ants.push({
-        x: Math.random(), y: .15 + Math.random() * .8,
-        tx: Math.random(), ty: .15 + Math.random() * .8,
-        pause: Math.random() * 5, trav: Math.random() * 40, ang: Math.random() * 6.28,
-      });
-    }
-    function paintAnts(dt) {
-      if (!antImg || !antImg.complete || !antImg.naturalWidth) return;
-      var m = antMeta, S = 1.5;
-      x.imageSmoothingEnabled = false;
-      for (var i = 0; i < ants.length; i++) {
-        var a2 = ants[i], px = a2.x * W, py = a2.y * H;
-        var dx = a2.tx * W - px, dy = a2.ty * H - py, dist = Math.sqrt(dx * dx + dy * dy);
-        if (a2.pause > 0) a2.pause -= dt;
-        else if (dist < 6) { a2.pause = 2 + Math.random() * 6; a2.tx = Math.random(); a2.ty = .15 + Math.random() * .8; }
-        else {
-          var sp = 20; // px/s — ambient, unhurried
-          a2.x += (dx / dist) * sp * dt / W; a2.y += (dy / dist) * sp * dt / H;
-          a2.trav += sp * dt; a2.ang = Math.atan2(dy, dx);
-        }
-        var dir = Math.round((((a2.ang * 180 / Math.PI) + 90 + 360) % 360) / 45) % 8; // 0=up, cw
-        var fr = Math.floor(a2.trav / 6) % m.frames;
-        x.globalAlpha = .92;
-        x.drawImage(antImg, dir * m.cw, fr * m.ch, m.cw, m.ch,
-                    Math.round(px - m.cw * S / 2), Math.round(py - m.ch * S / 2), m.cw * S, m.ch * S);
-        x.globalAlpha = 1;
-      }
-      x.imageSmoothingEnabled = true;
-    }
     function paint(t) {
       x.clearRect(0, 0, W, H);
       var grad = x.createLinearGradient(0, 0, 0, H);
@@ -183,11 +148,62 @@ var SITE = (function () {
       }
     }
     if (reduced) { paint(0); return; }                             // one still frame
-    var lastT = 0;
     (function tick(t) {                                            // idle-cheap: never paint unseen
+      if (!document.hidden) paint(t || 0);
+      requestAnimationFrame(tick);
+    })(0);
+  }
+
+  // ---- THE ANTS — the locked modeled ant, living in PAGE space, above everything ----
+  // fixed in the document (they scroll with the content), drawn on the top layer
+  function antLayer() {
+    var meta = (typeof COLONY_ASSETS !== "undefined" && COLONY_ASSETS.antSheet) || null;
+    if (!meta || reduced) return;
+    var c = document.getElementById("antlayer"), x = c.getContext("2d"), W, H;
+    function size() { W = c.width = window.innerWidth; H = c.height = window.innerHeight; }
+    size(); window.addEventListener("resize", size);
+    var img = new Image(); img.src = meta.src;
+    var docH = 1200, docTick = 0;
+    var ants = [];
+    for (var i = 0; i < 4; i++) ants.push({
+      x: Math.random() * 1200, y: 120 + Math.random() * 900,
+      tx: 0, ty: 0, pause: Math.random() * 4, trav: Math.random() * 40, ang: Math.random() * 6.28, has: false,
+    });
+    var lastT = 0;
+    (function tick(t) {
       t = t || 0;
       var dt = Math.min(.06, (t - lastT) / 1000); lastT = t;
-      if (!document.hidden) { paint(t); paintAnts(dt); }
+      if (!document.hidden) {
+        if (--docTick <= 0) { docH = Math.max(600, document.documentElement.scrollHeight); docTick = 90; }
+        x.clearRect(0, 0, W, H);
+        if (img.complete && img.naturalWidth) {
+          var S = 1.5, sy = window.scrollY || 0;
+          x.imageSmoothingEnabled = false;
+          for (var i = 0; i < ants.length; i++) {
+            var a = ants[i];
+            if (a.x > W) a.x = Math.random() * W;                 // window shrank
+            if (a.y > docH) a.y = Math.random() * docH;
+            if (!a.has) { a.tx = 20 + Math.random() * (W - 40); a.ty = 60 + Math.random() * (docH - 120); a.has = true; }
+            var dx = a.tx - a.x, dy = a.ty - a.y, dist = Math.sqrt(dx * dx + dy * dy);
+            if (a.pause > 0) a.pause -= dt;
+            else if (dist < 6) { a.pause = 2 + Math.random() * 6; a.has = false; }
+            else {
+              var sp = 20; // px/s — ambient, unhurried
+              a.x += (dx / dist) * sp * dt; a.y += (dy / dist) * sp * dt;
+              a.trav += sp * dt; a.ang = Math.atan2(dy, dx);
+            }
+            var vy = a.y - sy;                                     // page space → screen
+            if (vy < -40 || vy > H + 40) continue;
+            var dir = Math.round((((a.ang * 180 / Math.PI) + 90 + 360) % 360) / 45) % 8; // 0=up, cw
+            var fr = Math.floor(a.trav / 6) % meta.frames;
+            x.globalAlpha = .95;
+            x.drawImage(img, dir * meta.cw, fr * meta.ch, meta.cw, meta.ch,
+                        Math.round(a.x - meta.cw * S / 2), Math.round(vy - meta.ch * S / 2), meta.cw * S, meta.ch * S);
+            x.globalAlpha = 1;
+          }
+          x.imageSmoothingEnabled = true;
+        }
+      }
       requestAnimationFrame(tick);
     })(0);
   }
@@ -210,10 +226,14 @@ var SITE = (function () {
     n.innerHTML = html;
   }
 
+  // legacy hash aliases (renames + the ledger's move into heroes)
+  var ALIAS = { timeline: "timeLine", manuscript: "manuScript", wLedger: "heroes", wledger: "heroes" };
+
   var current = null;
   function route() {
     var h = (location.hash || "#hub").slice(1);
     var id = h.indexOf("ch-") === 0 ? "roadMap" : h;          // legacy chamber deep-links
+    if (ALIAS[id]) id = ALIAS[id];
     if (!byId[id]) id = "hub";
     var t = byId[id];
     if (current === id) { if (t.onHash) t.onHash(); return; } // in-tab hash moves (roadMap chambers)
@@ -223,8 +243,7 @@ var SITE = (function () {
     view.innerHTML = "";
     if (SITE._teardown) { SITE._teardown(); SITE._teardown = null; }
     nav(id);
-    var siteName = (typeof COLONY_DATA !== "undefined" && COLONY_DATA.title) || "colony";
-    document.title = siteName + "▽" + t.label;
+    document.title = "▽" + t.label;   // {logo}{section}, no space — style first
     window.scrollTo(0, 0);
     t.render(view);
     if (t.onHash) t.onHash();
@@ -232,6 +251,7 @@ var SITE = (function () {
 
   function boot() {
     ground();
+    antLayer();
     if ("scrollRestoration" in history) history.scrollRestoration = "manual";
     // the wordmark speaks data.js (never hardcode the name)
     if (typeof COLONY_DATA !== "undefined" && COLONY_DATA.title)

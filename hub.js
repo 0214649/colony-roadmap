@@ -55,7 +55,7 @@ const HUB_DATA = {
   // the explore row (tab cards; counts are computed live by the template)
   explore: [
     { tab: "roadMap",  p: "the live dig ledger — every chamber of the design, depth counted in shard ▽." },
-    { tab: "timeline", p: "how the colony grew — the project's evolution as dated events." },
-    { tab: "codex",    p: "the 42 — sealed in the old tongue. entries appear here as the game reveals them." },
+    { tab: "timeLine", p: "how the colony grew — the project's evolution as dated events." },
+    { tab: "codex",    p: "the 42 — the read ones legible, the rest sealed in the old tongue." },
   ],
 };

@@ -38,6 +38,8 @@ a:hover{color:var(--amber-hot)}
 
 /* the cold ground behind the glass */
 #ground{position:fixed;inset:0;z-index:0;pointer-events:none}
+/* the ants live in PAGE space, drawn on the top layer (they scroll with content) */
+#antlayer{position:fixed;inset:0;z-index:70;pointer-events:none}
 
 /* ---- etched-in-glass text (the locked etch treatment) ---- */
 .etch{text-shadow:0 1px 0 rgba(0,0,0,.55), 0 0 14px rgba(238,242,248,.10)}
@@ -255,8 +257,25 @@ mark{background:rgba(224,168,90,.3);color:var(--bone);border-radius:2px}
 .plate canvas{position:absolute;inset:0;width:100%;height:100%}
 .plate .st{position:absolute;left:0;right:0;bottom:9px;text-align:center;font-size:9.5px;font-weight:600;
   letter-spacing:.18em;color:var(--faint);text-transform:lowercase}
-.plate.revealed{border-color:rgba(224,162,58,.4)}
-.plate.revealed .st{color:var(--amber)}
+.plate.revealed{border-color:rgba(224,162,58,.4);cursor:pointer;transition:border-color .25s ease, transform .2s ease}
+.plate.revealed:hover{border-color:rgba(224,162,58,.7);transform:translateY(-2px)}
+.plate.revealed .st{color:var(--mist)}
+.cx-sprite{position:absolute;inset:8% 14% 20%;width:72%;height:auto;margin:auto;object-fit:contain;opacity:.9}
+.cx-face{position:absolute;left:10px;right:10px;top:50%;transform:translateY(-60%);text-align:center}
+.cx-face.over{top:auto;bottom:26px;transform:none;text-shadow:0 1px 3px rgba(0,0,0,.8)}
+.cx-call{font-size:15px;font-weight:600;color:var(--amber);text-shadow:0 0 12px rgba(224,162,58,.3)}
+.cx-gloss{font-size:10.5px;font-style:italic;letter-spacing:.08em;color:var(--teal);margin-top:4px}
+#cx-box{position:fixed;inset:0;z-index:80;background:rgba(8,10,14,.88);cursor:zoom-out;
+  display:flex;align-items:center;justify-content:center;padding:5vh 5vw;
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.cx-entry{max-width:440px;text-align:center;padding:34px 36px 26px}
+.cx-entry img{height:180px;width:auto;margin:0 auto 14px;display:block;
+  filter:drop-shadow(0 10px 20px rgba(0,0,0,.5))}
+.cx-entry .cx-call{font-size:22px}
+.cx-entry .cx-gloss{font-size:12.5px;margin-top:6px}
+.cx-seat{font-size:10.5px;letter-spacing:.14em;color:var(--faint);margin-top:8px}
+.cx-entry p{font-size:13.5px;color:var(--mist);line-height:1.7;margin:16px 0 0;text-align:left}
+.cx-close{font-size:10.5px;color:var(--faint);letter-spacing:.08em;margin-top:20px}
 
 /* ========================= w ledger ========================== */
 #wl .lede{margin-bottom:6px}
