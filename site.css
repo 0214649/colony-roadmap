@@ -266,10 +266,10 @@ mark{background:rgba(224,168,90,.3);color:var(--bone);border-radius:2px}
   font-size:11px;color:var(--faint);letter-spacing:.04em;padding:0 130px;text-shadow:0 1px 6px rgba(6,9,14,.85)}
 #cx-wheel{display:block;width:100%;height:100%;user-select:none;cursor:grab;touch-action:none}
 #cx-wheel.dragging{cursor:grabbing}
-/* the themed constellations — resolve out of a star as you zoom (opacity driven in js) */
-.cx-figure{opacity:0;transition:opacity .28s ease}
-.cxf-line{stroke-width:.9;stroke-linecap:round}
-.cxf-star{filter:drop-shadow(0 0 2px rgba(234,242,255,.5))}
+/* the cursed runic rings — asemic marks turning slowly around the void */
+.cx-runering line{stroke-width:1;stroke-linecap:round}
+.cx-runering.inner line{stroke:rgba(150,176,216,.24)}
+.cx-runering.outer line{stroke:rgba(158,146,196,.15)}
 /* pan/zoom controls */
 #cx-nav{position:absolute;left:12px;bottom:12px;display:flex;gap:5px;z-index:2}
 #cx-nav button{width:30px;height:30px;padding:0;font:400 16px/1 var(--ui);color:var(--mist);
@@ -310,23 +310,42 @@ mark{background:rgba(224,168,90,.3);color:var(--bone);border-radius:2px}
 .cxw-node .dim-ring{fill:none;stroke-opacity:.4;stroke-width:1;transition:stroke-opacity .22s ease}
 .cxw-node.sealed:hover .dim{opacity:.9}
 .cxw-node.sealed:hover .dim-ring{stroke-opacity:.85}
-#cx-legend{text-align:center;font-size:11px;color:var(--faint);letter-spacing:.04em;margin:16px 0 0;line-height:2}
-.cx-lg-lit{color:var(--amber-hot)}
-.cx-lg-seal{color:var(--mist);opacity:.6}
-.cx-call{font-size:15px;font-weight:600;color:var(--amber);text-shadow:0 0 14px rgba(224,162,58,.35)}
-.cx-gloss{font-size:10.5px;font-style:italic;letter-spacing:.08em;color:var(--teal);margin-top:4px}
-.cx-plate{width:220px;height:150px;display:block;margin:0 auto 8px;opacity:.85}
-#cx-box{position:fixed;inset:0;z-index:80;background:rgba(8,10,14,.88);cursor:zoom-out;
-  display:flex;align-items:center;justify-content:center;padding:5vh 5vw;
-  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
-.cx-entry{max-width:440px;text-align:center;padding:34px 36px 26px}
-.cx-entry img{height:180px;width:auto;margin:0 auto 14px;display:block;
-  filter:drop-shadow(0 10px 20px rgba(0,0,0,.5))}
-.cx-entry .cx-call{font-size:22px}
-.cx-entry .cx-gloss{font-size:12.5px;margin-top:6px}
-.cx-seat{font-size:10.5px;letter-spacing:.14em;color:var(--faint);margin-top:8px}
-.cx-entry p{font-size:13.5px;color:var(--mist);line-height:1.7;margin:16px 0 0;text-align:left}
-.cx-close{font-size:10.5px;color:var(--faint);letter-spacing:.08em;margin-top:20px}
+/* ===== the deity pane — a frosted glass panel over the living wheel =====
+   z BELOW the ants (#antlayer z70) so they walk across the glass; ABOVE the map,
+   which keeps turning, blurred, behind the pane (backdrop-filter re-samples each frame). */
+#cx-deity{position:fixed;inset:0;z-index:55;display:flex;align-items:center;justify-content:center;
+  padding:6vh 5vw;cursor:zoom-out;background:rgba(4,6,11,.3)}
+.cx-deity-pane{position:relative;overflow:hidden;cursor:auto;
+  max-width:780px;width:100%;max-height:88vh;display:flex;gap:28px;align-items:center;padding:30px 36px;
+  border-radius:18px;border:1px solid var(--frost-line-2);
+  background:linear-gradient(rgba(20,26,36,.58),rgba(11,16,25,.7));
+  -webkit-backdrop-filter:blur(26px) saturate(1.4) brightness(1.04);
+  backdrop-filter:blur(26px) saturate(1.4) brightness(1.04);
+  box-shadow:0 30px 80px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,255,255,.07)}
+.cx-deity-glow{position:absolute;left:25%;top:50%;transform:translate(-50%,-50%);
+  width:360px;height:360px;border-radius:50%;pointer-events:none;
+  background:radial-gradient(circle, var(--gh) 0%, transparent 60%);opacity:.16}
+.cx-deity-fig{position:relative;z-index:1;flex:0 0 auto;min-width:190px;max-width:50%;
+  display:flex;align-items:center;justify-content:center}
+.cx-deity-sprite{max-height:min(60vh,440px);max-width:100%;width:auto;
+  filter:drop-shadow(0 16px 30px rgba(0,0,0,.6))}
+.cx-deity-fig .cx-rune{width:150px;height:230px;opacity:.72}
+.cx-deity-info{position:relative;z-index:1;flex:1;min-width:0;text-align:left}
+.cx-deity-eyebrow{font-size:11px;font-weight:600;letter-spacing:.24em;color:var(--faint);margin:0 0 6px}
+.cx-deity-call{font-size:30px;font-weight:600;letter-spacing:.02em;margin:0;text-shadow:0 0 22px rgba(0,0,0,.55)}
+.cx-deity-call.sealed{color:var(--mist);font-style:italic;font-size:21px;opacity:.72}
+.cx-deity-gloss{font-size:13.5px;font-style:italic;letter-spacing:.1em;color:var(--teal);margin:8px 0 0}
+.cx-deity-seat{font-size:11px;letter-spacing:.18em;color:var(--faint);margin:10px 0 0}
+.cx-deity-body{font-size:14px;color:var(--bone);opacity:.9;line-height:1.72;margin:16px 0 0;max-width:46ch}
+.cx-deity-body.sealed{color:var(--mist);font-style:italic;opacity:.78}
+.cx-deity-close{font-size:10.5px;letter-spacing:.12em;color:var(--faint);margin:22px 0 0;opacity:.7}
+@media (max-width:680px){
+  .cx-deity-pane{flex-direction:column;gap:16px;padding:24px 22px;text-align:center;max-height:90vh;overflow-y:auto}
+  .cx-deity-fig{max-width:74%}
+  .cx-deity-info{text-align:center}
+  .cx-deity-glow{left:50%;top:32%}
+  .cx-deity-body{margin-left:auto;margin-right:auto}
+}
 
 /* ===== the w ledger — rendered ON the vellum (witness room) ===== */
 .wv-note{font-size:12.5px;font-style:italic;color:#6a5836;margin:.4em 0 1.2em}

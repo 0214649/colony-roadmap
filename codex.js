@@ -65,10 +65,10 @@ const CODEX_DATA = {
     { id: "g09", state: "revealed", call: "itLuteth", gloss: ["lurk", "patience", "ambush"], seat: "blood · far", line: 4, depth: 2,
       body: "the mantis and the orchid mantis; the wait that is also the strike." },
     // ---- ichor spine ----
-    { id: "g10", state: "revealed", call: "itYoketh", gloss: ["yoke", "command"], seat: "ichor · close", line: 6, depth: 0,
+    { id: "g10", state: "revealed", call: "itYoketh", gloss: ["yoke", "command"], seat: "ichor · close", line: 6, depth: 0, sprite: "ityoketh",
       body: "the authority you hold; the reins run back to your hand. every pheromone ⌇ spent on an order is the yoke steering the colony — the coin is the glass's, the leash is this one's. mints $." },
     { id: "g11", state: "locked", line: 6, depth: 1 }, // ichor · between — the god-complex, unfleshed
-    { id: "g12", state: "revealed", call: "itEfneth", gloss: ["run", "even", "perfect"], seat: "ichor · far", line: 6, depth: 2,
+    { id: "g12", state: "revealed", call: "itEfneth", gloss: ["run", "even", "perfect"], seat: "ichor · far", line: 6, depth: 2, sprite: "itefneth",
       body: "authority perfected into a machine running its instruction. its termites attack on sight because they are programmed to — automation, no will, no malice. when it speaks, the words read flat, procedural, polite." },
     // ---- fuel spine (the energy trio — unnamed, sealed) ----
     { id: "g13", state: "locked", line: 8, depth: 0 },
