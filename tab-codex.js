@@ -228,8 +228,13 @@
         tx = clamp(tx, -(k - 1) * VBW, 0); ty = clamp(ty, -(k - 1) * VBH, 0);
         if (k <= ZMIN) { tx = 0; ty = 0; }
       }
-      function ratio() { var r = svg.getBoundingClientRect(); return { sx: VBW / r.width, sy: VBH / r.height, r: r }; }
-      function zoomAt(vx, vy, nk) {                        // keep the world point under (vx,vy) fixed
+      // exact screen↔viewBox mapping via the svg matrix — correct at any size / letterbox
+      function toVB(cx, cy) {
+        var m = svg.getScreenCTM(), pt = svg.createSVGPoint(); pt.x = cx; pt.y = cy;
+        var v = pt.matrixTransform(m.inverse());
+        return { x: v.x, y: v.y, s: m.a || 1 };            // s = screen px per viewBox unit
+      }
+      function zoomAt(vx, vy, nk) {                         // keep the world point under (vx,vy) fixed
         nk = clamp(nk, ZMIN, ZMAX);
         var wx = (vx - tx) / k, wy = (vy - ty) / k;
         k = nk; tx = vx - wx * k; ty = vy - wy * k; clampPan(); apply();
@@ -238,8 +243,8 @@
 
       on(svg, "wheel", function (e) {
         e.preventDefault();
-        var g = ratio(); var vx = (e.clientX - g.r.left) * g.sx, vy = (e.clientY - g.r.top) * g.sy;
-        zoomAt(vx, vy, k * (e.deltaY < 0 ? 1.16 : 0.862));
+        var g = toVB(e.clientX, e.clientY);
+        zoomAt(g.x, g.y, k * (e.deltaY < 0 ? 1.16 : 0.862));
       }, { passive: false });
 
       on(svg, "pointerdown", function (e) {
@@ -251,7 +256,7 @@
         if (!down) return;
         var dx = e.clientX - down.x, dy = e.clientY - down.y;
         if (!moved && dx * dx + dy * dy > 20) moved = true;
-        if (moved) { var g = ratio(); tx += dx * g.sx; ty += dy * g.sy; down = { x: e.clientX, y: e.clientY }; clampPan(); apply(); }
+        if (moved) { var s = toVB(e.clientX, e.clientY).s; tx += dx / s; ty += dy / s; down = { x: e.clientX, y: e.clientY }; clampPan(); apply(); }
       });
       function endDrag() { down = null; svg.classList.remove("dragging"); }
       on(svg, "pointerup", endDrag); on(svg, "pointercancel", endDrag);
