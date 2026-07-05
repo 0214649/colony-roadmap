@@ -6,7 +6,6 @@
   SITE.tab({
     id: "codex",
     label: "codex",
-    gapAfter: true,
     render: function (view) {
       var es = CODEX_DATA.entries || [];
       var rev = es.filter(function (e) { return e.state === "revealed"; }).length;
