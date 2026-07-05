@@ -226,13 +226,14 @@ var SITE = (function () {
     n.innerHTML = html;
   }
 
-  // legacy hash aliases (renames + the ledger's move into heroes)
-  var ALIAS = { timeline: "timeLine", manuscript: "manuScript", wLedger: "heroes", wledger: "heroes" };
+  // legacy hash aliases (renames + the ledger's move into the hord)
+  var ALIAS = { timeline: "timeLine", manuscript: "manuScript", heroes: "hord", wLedger: "hord", wledger: "hord" };
 
   var current = null;
   function route() {
     var h = (location.hash || "#hub").slice(1);
     var id = h.indexOf("ch-") === 0 ? "roadMap" : h;          // legacy chamber deep-links
+    if (h.indexOf("cx-") === 0) id = "codex";                 // codex star deep-links
     if (ALIAS[id]) id = ALIAS[id];
     if (!byId[id]) id = "hub";
     var t = byId[id];

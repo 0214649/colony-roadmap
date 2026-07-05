@@ -166,7 +166,8 @@ var SITE_CRYPT = (function () {
         while (listStack.length < depth) { out.push("<ul>"); listStack.push(1); }
         closeLists(depth);
         var lead = li[2] === "-" ? "" : '<span class="ms-num">' + esc(li[2]) + "</span> ";
-        out.push("<li>" + lead + inline(esc(li[3])) + "</li>");
+        // numbered items carry their own amber numeral — the disc bullet would double the marker
+        out.push("<li" + (lead ? ' class="num"' : "") + ">" + lead + inline(esc(li[3])) + "</li>");
         continue;
       }
 
