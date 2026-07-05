@@ -25,6 +25,9 @@ NEVER hand-edit those). Extend the pattern to EVERY new page:
 - **assets** → an **asset manifest** (`assets.js`: logical name → sprite file path). Swapping an
   old sprite for a new one = drop the new file + repoint the manifest; every page updates.
   **NEVER hardcode a sprite path in a page.**
+- **w ledger** → `wledger.js` + `assets/w/wNNN.jpg` — every artifact render for the game is a
+  wXXX and gets ONE entry here (the law lives in `y000-play/.claude/skills/colony-w-artifacts`).
+  Adding a w = one entry + one screenshot.
 
 Litmus test: adding a tab, a timeline event, a codex entry, or swapping a sprite must each be a
 **one-file, near-one-line change.** If a change touches many files, the structure is wrong —

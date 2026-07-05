@@ -122,6 +122,41 @@ var SITE = (function () {
     var motes = [], glints = [];
     for (var i = 0; i < 30; i++) motes.push({ x: Math.random(), y: Math.random(), r: .6 + Math.random() * 1.4, s: 6 + Math.random() * 13, a: .05 + Math.random() * .11, ph: Math.random() * 6.28 });
     for (var g = 0; g < 14; g++) glints.push({ x: Math.random(), y: Math.random(), a: .04 + Math.random() * .08, ph: Math.random() * 6.28 });
+
+    // THE ANTS — the locked modeled ant (via the asset manifest) wandering the glass
+    var antMeta = (typeof COLONY_ASSETS !== "undefined" && COLONY_ASSETS.antSheet) || null;
+    var antImg = null, ants = [];
+    if (antMeta && !reduced) {
+      antImg = new Image(); antImg.src = antMeta.src;
+      for (var an = 0; an < 4; an++) ants.push({
+        x: Math.random(), y: .15 + Math.random() * .8,
+        tx: Math.random(), ty: .15 + Math.random() * .8,
+        pause: Math.random() * 5, trav: Math.random() * 40, ang: Math.random() * 6.28,
+      });
+    }
+    function paintAnts(dt) {
+      if (!antImg || !antImg.complete || !antImg.naturalWidth) return;
+      var m = antMeta, S = 1.5;
+      x.imageSmoothingEnabled = false;
+      for (var i = 0; i < ants.length; i++) {
+        var a2 = ants[i], px = a2.x * W, py = a2.y * H;
+        var dx = a2.tx * W - px, dy = a2.ty * H - py, dist = Math.sqrt(dx * dx + dy * dy);
+        if (a2.pause > 0) a2.pause -= dt;
+        else if (dist < 6) { a2.pause = 2 + Math.random() * 6; a2.tx = Math.random(); a2.ty = .15 + Math.random() * .8; }
+        else {
+          var sp = 20; // px/s — ambient, unhurried
+          a2.x += (dx / dist) * sp * dt / W; a2.y += (dy / dist) * sp * dt / H;
+          a2.trav += sp * dt; a2.ang = Math.atan2(dy, dx);
+        }
+        var dir = Math.round((((a2.ang * 180 / Math.PI) + 90 + 360) % 360) / 45) % 8; // 0=up, cw
+        var fr = Math.floor(a2.trav / 6) % m.frames;
+        x.globalAlpha = .92;
+        x.drawImage(antImg, dir * m.cw, fr * m.ch, m.cw, m.ch,
+                    Math.round(px - m.cw * S / 2), Math.round(py - m.ch * S / 2), m.cw * S, m.ch * S);
+        x.globalAlpha = 1;
+      }
+      x.imageSmoothingEnabled = true;
+    }
     function paint(t) {
       x.clearRect(0, 0, W, H);
       var grad = x.createLinearGradient(0, 0, 0, H);
@@ -148,8 +183,11 @@ var SITE = (function () {
       }
     }
     if (reduced) { paint(0); return; }                             // one still frame
+    var lastT = 0;
     (function tick(t) {                                            // idle-cheap: never paint unseen
-      if (!document.hidden) paint(t || 0);
+      t = t || 0;
+      var dt = Math.min(.06, (t - lastT) / 1000); lastT = t;
+      if (!document.hidden) { paint(t); paintAnts(dt); }
       requestAnimationFrame(tick);
     })(0);
   }
