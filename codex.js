@@ -40,15 +40,8 @@ const CODEX_DATA = {
     { key: "ether",         kind: "spine" },
     { key: "tears↔ether",   kind: "seam"  },   // the mind/meaning seam — forces the adjacency
   ],
-  // wedge hues — whispers only (hue from the wedge, value from depth; the map keeps the glass cold)
-  wedges: {
-    tears:  "#6d83a8",
-    nectar: "#7da77a",
-    blood:  "#b25f5f",
-    ichor:  "#8f7ab5",
-    fuel:   "#bd8a55",
-    ether:  "#86a3a6",
-  },
+  // the wheel's colour lives in the renderer (tab-codex.js HUE) — hue from the wedge,
+  // seams blend, value from depth; the glass keeps it soft.
   entries: [
     // ---- tears spine (the organic-good spine — three who care, failing three ways) ----
     { id: "g01", state: "revealed", call: "itHousleth", gloss: ["pain", "offer"], seat: "tears · close", line: 0, depth: 0,
