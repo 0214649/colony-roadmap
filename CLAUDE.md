@@ -31,9 +31,13 @@ gloss/meta lines; coral for shipped/bridge. camelCase everywhere, units singular
 The manuscript (private bible view, when built) = the one warm vellum room.
 
 ## Security (LOCKED): private views ship ONLY as client-side AES-GCM blobs
-Bible/heroes content NEVER touches this repo readable. Encrypt locally from
-`~/colony/colony-design` (source of truth) → commit ciphertext only. One passphrase,
-Claude-minted. See the `colony-website` skill before touching private pages.
+Bible/heroes content NEVER touches this repo readable. Sources of truth live in
+`~/colony/colony-design` (`design-bible.md` · `heroes-artifacts.md`); the site ships
+ciphertext only (`private/*.enc.js`, lazy-loaded on first knock).
+**Update flow (after any vault edit):** `COLONY_PASS='<the passphrase>' node tools/encrypt.mjs`
+→ commit the blobs. One Claude-minted passphrase for both rooms (never write it in this
+repo; it lives in Claude's local memory + with dirty rat). Rotation = rerun with a new
+passphrase. `.gitignore` backstops vault filenames; the leak-scan before commit is law.
 
 ## Protocol
 1. `git pull` (a browser edit may have landed).
