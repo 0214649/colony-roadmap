@@ -8,7 +8,7 @@
     var html = '<div id="ms">';
     html += '<div class="ms-bar"><p class="eyebrow">heroes &amp; artifacts</p>'
           + '<button class="tbtn" id="ms-seal">seal the room</button></div>';
-    html += '<div class="vellum">';
+    html += '<div class="vellum f-' + esc(window.msFont ? window.msFont() : "garamond") + '">';
     html += '<p class="ms-meta">transcribed from the vault · ' + esc(payload.meta.vault || "")
           + " · " + esc(payload.meta.generated || "") + "</p>";
     html += '<article class="ms-body">' + r.html + "</article>";

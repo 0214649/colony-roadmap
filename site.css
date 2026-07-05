@@ -84,8 +84,6 @@ nav#tabs a.sealed{color:var(--faint)}
 nav#tabs a.sealed svg{width:10px;height:10px;margin-right:5px;vertical-align:-.5px;opacity:.8}
 nav#tabs a.sealed:hover{color:var(--mist)}
 nav#tabs a.sealed.on{color:var(--amber)}   /* the active pill stays amber even on sealed rooms */
-#chrome .dots{flex:none;display:flex;gap:6px;margin-left:8px}
-#chrome .dots i{width:7px;height:7px;border-radius:50%;background:rgba(238,242,248,.16)}
 
 /* ---- layout ---- */
 #view{position:relative;z-index:1;width:100%;max-width:900px;margin:0 auto;padding:44px 22px 90px;flex:1 0 auto}
@@ -286,6 +284,16 @@ mark{background:rgba(224,168,90,.3);color:var(--bone);border-radius:2px}
   box-shadow:0 24px 60px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.5), inset 0 -14px 40px rgba(120,90,40,.14);
   font-family:"EB Garamond",Georgia,serif;font-size:17px;line-height:1.62;
 }
+/* manuscript FONT DUEL — sizes tuned per x-height; losers strip once one locks */
+.vellum.f-garamond{font-family:"EB Garamond",Georgia,serif;font-size:17px}
+.vellum.f-cormorant{font-family:"Cormorant Garamond",Georgia,serif;font-size:18.5px}
+.vellum.f-lora{font-family:"Lora",Georgia,serif;font-size:15.5px;line-height:1.66}
+.vellum.f-crimson{font-family:"Crimson Pro",Georgia,serif;font-size:17.5px}
+.vellum.f-source{font-family:"Source Serif 4",Georgia,serif;font-size:15.5px;line-height:1.66}
+.vellum.f-spectral{font-family:"Spectral",Georgia,serif;font-size:15px;line-height:1.7}
+.vellum.f-inter{font-family:var(--ui);font-size:14.5px;line-height:1.72}
+.ms-duel{display:flex;align-items:center;flex-wrap:wrap;gap:7px;margin:0 0 14px}
+.ms-duel > span{font-size:11px;font-weight:600;letter-spacing:.14em;color:var(--faint)}
 .ms-meta{font-family:var(--ui);font-size:10.5px;letter-spacing:.14em;text-transform:lowercase;
   color:#8a744c;text-align:center;margin:0 0 26px}
 .ms-toc{column-count:2;column-gap:34px;border:1px solid rgba(110,84,40,.3);border-radius:8px;
