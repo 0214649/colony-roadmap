@@ -47,8 +47,13 @@ passphrase. `.gitignore` backstops vault filenames; the leak-scan before commit 
 ## Protocol
 1. `git pull` (a browser edit may have landed).
 2. Edit the DATA file (or add a module).
-3. `git commit -am "..." && git push` → Pages redeploys in ~30s.
-4. When design depth changes: bible (dated, flagged) + `data.js` shards + codex together.
+3. **If any .js/.css changed: bump `SITE_V` in index.html** (the inline constant AND every
+   `?v=` on the asset tags — one number). Pages caches everything for 10 min
+   (`max-age=600`, not configurable); the stamp keeps each HTML refresh atomic.
+   Tell dirty rat to hard-refresh (Ctrl+Shift+R) when he's checking right after a deploy.
+4. `git commit -am "..." && git push` → Pages builds in ~30s (check:
+   `gh api repos/0214649/colony-roadmap/pages/builds/latest`).
+5. When design depth changes: bible (dated, flagged) + `data.js` shards + codex together.
 
 ## Conventions
 - unit = ▽ shard · `open: true` = chamber starts expanded · `bridge: true` = coral dot.

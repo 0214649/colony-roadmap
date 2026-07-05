@@ -21,7 +21,7 @@ var SITE_CRYPT = (function () {
     if (loading[key]) return loading[key];
     loading[key] = new Promise(function (res, rej) {
       var sc = document.createElement("script");
-      sc.src = "private/" + key + ".enc.js";
+      sc.src = "private/" + key + ".enc.js" + (window.SITE_V ? "?v=" + window.SITE_V : "");
       sc.onload = function () {
         // a 200 that isn't a real blob (host fallback page, truncation) must not
         // masquerade as a wrong passphrase forever
