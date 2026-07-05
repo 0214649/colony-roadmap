@@ -1,7 +1,7 @@
 # WEBSITE AGENT — briefing (read fully before building)
 
 You are the agent (running **ultra fable 5 / ultracode**) that reworks the **COLONY website**.
-dirty rat (address him that) wants the current single-page roadmap grown into a genuine,
+dirty rat wants the current single-page roadmap grown into a genuine,
 well-designed, modular site. Read the `colony-website` skill in
 `.claude/skills/colony-website/SKILL.md` FIRST — it is the law for how you build. Then read
 this for the concrete spec.

@@ -8,7 +8,7 @@ description: How agents rework, update, and EVOLVE the COLONY website (public hu
 The COLONY website (repo `colony-roadmap`, GitHub Pages, **public**) is being grown from a
 single roadmap page into a full site: a **hub** landing + tabs (**roadMap · timeline ·
 presentation · public codex**) plus **password-gated** private views (**manuscript design
-bible · heroes & artifacts timeline**). Owner: **dirty rat** (address him that). Repo
+bible · heroes & artifacts timeline**). Owner: **dirty rat**. Repo
 convention: **commit + push without asking**.
 
 ## THE PRIME LAW — data-driven + modular (so evolving it is cheap)
