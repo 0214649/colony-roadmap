@@ -25,7 +25,7 @@ const TIMELINE_DATA = {
     {
       date: "2026-06-25",
       title: "the old tongue — naming + the codex schema",
-      body: "gods are verbs: an unknown power wears its old-tongue name, and comprehension drags it up into the legible it…eth form — translation IS understanding, and every translation costs a small loss. each power becomes one codex entry of six independently-unsealing fields; what is sealed shows only asemic marks. the codex this site carries is written in that grammar.",
+      body: "gods are verbs: an unknown power wears its old-tongue name, and comprehension drags it up into the legible it…eth form — translation is understanding, and every translation costs a small loss. each power becomes one codex entry of six independently-unsealing fields; what is sealed shows only asemic marks. the codex this site carries is written in that grammar.",
       tag: "cosmology",
     },
     {
@@ -55,13 +55,13 @@ const TIMELINE_DATA = {
     {
       date: "2026-06-27",
       title: "morality without a meter",
-      body: "the good/bad allegiance bar dies. in its place: conduct the gods READ off your recent behavior and a slow lifetime trajectory — nothing stated, you infer your standing from how the powers treat you. one exception is visible: sorrow 𓁿, the colony's moral weight, the one meter you ever see.",
+      body: "the good/bad allegiance bar dies. in its place: conduct the gods read off your recent behavior and a slow lifetime trajectory — nothing stated, you infer your standing from how the powers treat you. one exception is visible: sorrow 𓁿, the colony's moral weight, the one meter you ever see.",
       tag: "concept",
     },
     {
       date: "2026-06-27",
       title: "the skeptic guard + the safety spine",
-      body: "the game opens in its OWN bundled folder by default — forages its own files, morally clean, zero consent needed — and only then asks for territory, folder by folder. real files are never deleted; every action previews, logs, reverses. low-resource is elevated to a non-negotiable pillar the same day.",
+      body: "the game opens in its own bundled folder by default — forages its own files, morally clean, zero consent needed — and only then asks for territory, folder by folder. real files are never deleted; every action previews, logs, reverses. low-resource is elevated to a non-negotiable pillar the same day.",
       tag: "concept",
     },
     {
@@ -103,7 +103,7 @@ const TIMELINE_DATA = {
     {
       date: "2026-06-30",
       title: "v012 — hunger arrives",
-      body: "sate ꩜ becomes a lived metabolism: every ant carries a hunger bar, slows when starving, dies at zero — the expansion brake is attrition. berry bushes and trash heaps feed mangers; the cropAnt (three of them pull a chariot) and the janitorAnt join the roster; a zero-population wipe plays a revival cutscene. MOVE lets a worker relocate nearly anything — including a claimed folder, as a real on-disk move.",
+      body: "sate ꩜ becomes a lived metabolism: every ant carries a hunger bar, slows when starving, dies at zero — the expansion brake is attrition. berry bushes and trash heaps feed mangers; the cropAnt (three of them pull a chariot) and the janitorAnt join the roster; a zero-population wipe plays a revival cutscene. move lets a worker relocate nearly anything — including a claimed folder, as a real on-disk move.",
       tag: "build",
     },
     {
@@ -127,7 +127,7 @@ const TIMELINE_DATA = {
     {
       date: "2026-07-03",
       title: "y000 reaches selfTidy",
-      body: "the tutorial now plays START through selfTidy: dig a room, build a maw and watch what it grows, and then the autonomy beat — a scrap seeded in the tunnel, every other option exhausted, and the forager tidies it unasked. 'you didn't ask. it did it anyway.' the demo's ending is locked the same day: a combat beat, then the curtain.",
+      body: "the tutorial now plays start through selfTidy: dig a room, build a maw and watch what it grows, and then the autonomy beat — a scrap seeded in the tunnel, every other option exhausted, and the forager tidies it unasked. 'you didn't ask. it did it anyway.' the demo's ending is locked the same day: a combat beat, then the curtain.",
       tag: "tutorial",
     },
     {
@@ -151,7 +151,7 @@ const TIMELINE_DATA = {
     {
       date: "2026-07-05",
       title: "the website reborn as the glass",
-      body: "this site grows from a single roadmap page into a full hub — hub, roadMap, timeline, codex — wearing the game's next visual generation: cold slate, milky frost, etched ui, amber the one light. the codex ships sealed-first: 42 plates in asemic marks, unsealing here as the game reveals them.",
+      body: "this site grows from a single roadmap page into a full hub — hub, roadMap, timeLine, codex — wearing the game's next visual generation: cold slate, milky frost, etched ui, amber the one light. the codex ships sealed-first: 42 plates in asemic marks, unsealing here as the game reveals them.",
       tag: "site",
     },
   ],

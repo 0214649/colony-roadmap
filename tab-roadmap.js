@@ -34,14 +34,15 @@
   ];
   var CLAMP_AT = 240; // details longer than this fold to two lines
 
-  // quick-filter kinds, derived from the item text itself
+  // quick-filter kinds, derived from the item text itself (case-law: markers are
+  // lowercase now, so status anchors to the version's own parenthesis)
+  var ST_SHIP = /^[vy]\d{3}[^(]*\(\s*(shipped|built|done)\b/i;
+  var ST_PLAN = /^[vy]\d{3}[^(]*\(\s*planned\b/i;
   function kindsOf(name) {
     var k = [];
-    if (/^v\d{3}\b/.test(name) || /\by000\b/.test(name)) {
-      if (/SHIPPED|\bBUILT\b|\bDONE\b/.test(name)) k.push("ship");
-      else if (/PLANNED/.test(name)) k.push("plan");
-    }
-    if (/\bLOCKED\b/.test(name)) k.push("lock");
+    if (ST_SHIP.test(name)) k.push("ship");
+    else if (ST_PLAN.test(name)) k.push("plan");
+    if (/[(—]\s*lock(ed)?\b/i.test(name)) k.push("lock"); // a lock MARKER — "(locked)" or "— locked:" — not prose "a locked folder"
     if (/\b(banked|parked|deferred)\b/i.test(name)) k.push("bank");
     return k.join(" ");
   }
@@ -63,8 +64,8 @@
           var vm = String(it.name).match(/^v(\d{3})\b/);
           if (vm) {
             var v = parseInt(vm[1], 10);
-            if (/SHIPPED|SHIPPED ✓|\bDONE\b|\bBUILT\b/.test(it.name) && v > shippedV) shippedV = v;
-            if (/PLANNED/.test(it.name) && (nextPlanned === 0 || v < nextPlanned)) nextPlanned = v;
+            if (ST_SHIP.test(it.name) && v > shippedV) shippedV = v;
+            if (ST_PLAN.test(it.name) && (nextPlanned === 0 || v < nextPlanned)) nextPlanned = v;
           }
         });
       });
@@ -155,10 +156,10 @@
           var col = heat(t);
           var w = Math.max(6, Math.round(t * 100)); // min nub so shallow items still read
           var pill = "";
-          if (/^v\d{3}\b/.test(it.name)) {
-            if (/SHIPPED|\bBUILT\b|\bDONE\b/.test(it.name)) pill = '<span class="pill shipped">shipped</span>';
-            else if (/PLANNED/.test(it.name)) pill = '<span class="pill planned">planned</span>';
-            else if (/parked|banked|deferred/i.test(it.name)) pill = '<span class="pill parked">parked</span>';
+          if (/^[vy]\d{3}\b/.test(it.name)) {
+            if (ST_SHIP.test(it.name)) pill = '<span class="pill shipped">shipped</span>';
+            else if (ST_PLAN.test(it.name)) pill = '<span class="pill planned">planned</span>';
+            else if (/^[vy]\d{3}[^(]*\(\s*(parked|banked|deferred)/i.test(it.name)) pill = '<span class="pill parked">parked</span>';
           }
           var long = (m ? m[2] : "").length > CLAMP_AT;
           h += '<div class="item" data-k="' + kindsOf(String(it.name)) + '"><div class="ibody">'
@@ -180,7 +181,7 @@
       });
 
       html += '<div class="nohit" id="nohit">nothing matches — clear the filter</div>';
-      var footTxt = esc(d.foot) + (d.updated ? "  ·  updated " + esc(d.updated) : "");
+      var footTxt = esc(d.foot) + (d.updated ? " · updated " + esc(d.updated) : "");
       html += '<p class="rm-foot">' + footTxt + "</p>";
       html += "</div>";
       view.innerHTML = html;
