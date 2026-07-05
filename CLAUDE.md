@@ -35,7 +35,7 @@ live in PAGE space (antLayer in site.js, sheet via the manifest).
 The site is itRedeth's interface. Cold slate ground (`#0c0f14`), milky-frost panels,
 etched UI, **Inter**, amber `#e0a23a` = the single signature light; bone text; teal for
 gloss/meta lines; coral for shipped/bridge. camelCase everywhere, units singular.
-The manuscript (private bible view, when built) = the one warm vellum room.
+The manuscript (private bible view) = the one warm vellum room.
 
 ## Security (LOCKED): private views ship ONLY as client-side AES-GCM blobs
 Bible/heroes content NEVER touches this repo readable. Sources of truth live in

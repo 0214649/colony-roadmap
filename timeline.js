@@ -13,7 +13,7 @@ const TIMELINE_DATA = {
     {
       date: "2026-06-25",
       title: "genesis — the pitch",
-      body: "colony is founded: an idle · incremental game where an ant colony lives on your real file system — forages your actual folders, builds, grows, tidies. triple dopamine: a colony to watch, a creature that lives on your pc, a cleaner that's genuinely useful. beneath it, a cosmology you deduce, never get told. the design vault and this site are born the same day.",
+      body: "colony is founded: an idle · incremental game where an ant colony lives on your real file system — forages your actual folders, builds, grows, tidies. triple dopamine: a colony to watch, a creature that lives on your PC, a cleaner that's genuinely useful. beneath it, a cosmology you deduce, never get told. the design vault and this site are born the same day.",
       tag: "concept",
     },
     {
@@ -66,7 +66,7 @@ const TIMELINE_DATA = {
     },
     {
       date: "2026-06-27",
-      title: "v004 — the first electron build",
+      title: "v004 — the first Electron build",
       body: "colony becomes a real desktop app: the colony meets a sandboxed folder and nibbles an empty folder into its first shard ▽. the whole safety scaffold — main-process fs, path guards, sandboxed renderer — lands on day one, before any feature that could need it.",
       tag: "build",
     },
@@ -79,13 +79,13 @@ const TIMELINE_DATA = {
     {
       date: "2026-06-28",
       title: "v007 · v008 · v009 — the queen, the base, the opening",
-      body: "one ant, cold-open: full folders yield plasm ●, hauled to the queen, who lays new ants at climbing cost. roads are banked in a decisive pivot — foraging goes direct, control becomes selection + standing behavior. the world resolves into surface · tunnels · anthill with the first castes and the bank/tank/clank stores; then the narrative opening arrives — the queen's lost nymph, recovered from a deep folder, opens the lay pipeline. locomotion law: nothing ever teleports.",
+      body: "one ant, cold-open: full folders yield plasm ●, hauled to the queen, who lays new ants at climbing cost. roads are banked in a decisive pivot — foraging goes direct, control becomes selection + standing behavior. the world resolves into surface · tunnels · antHill with the first castes and the bank/tank/clank stores; then the narrative opening arrives — the queen's lost nymph, recovered from a deep folder, opens the lay pipeline. locomotion law: nothing ever teleports.",
       tag: "build",
     },
     {
-      date: "2026-06-29",
+      date: "2026-06-30",
       title: "v010 — construction: heft, the workShop, the maw",
-      body: "building arrives: heft ℈ gnawed non-destructively from real files by type, the workShop and worker-built buildings hauled by two ants, and the maw — the first logistics organism, routing loot to tentacled outmaws. floating islands open real folder contents as in-world peeks: the first literal 'beats explorer' moment.",
+      body: "building arrives: heft ℈ gnawed non-destructively from real files by type, the workShop and worker-built buildings hauled by two ants, and the maw — the first logistics organism, routing loot to tentacled outmaws. floating islands open real folder contents as in-world peeks: the first literal 'beats Explorer' moment.",
       tag: "build",
     },
     {
@@ -145,13 +145,13 @@ const TIMELINE_DATA = {
     {
       date: "2026-07-05",
       title: "the first goddess has a face",
-      body: "itRedeth's full-body sprite locks — the first of the 42 powers rendered, translucent robes and six amber orbs against a glyph-ring seal. she takes over this site's landing the same day; the other 41 stay sealed in the codex.",
+      body: "itRedeth's full-body sprite locks — the first of the 42 powers rendered, translucent robes and six amber orbs against a glyph-ring seal. she takes over this site's landing the same day; the other 41 have no face yet.",
       tag: "art",
     },
     {
       date: "2026-07-05",
       title: "the website reborn as the glass",
-      body: "this site grows from a single roadmap page into a full hub — hub, roadMap, timeLine, codex — wearing the game's next visual generation: cold slate, milky frost, etched ui, amber the one light. the codex ships sealed-first: 42 plates in asemic marks, unsealing here as the game reveals them.",
+      body: "this site grows from a single roadmap page into a full hub — hub, roadMap, timeLine, codex — wearing the game's next visual generation: cold slate, milky frost, etched UI, amber the one light. the codex ships sealed-first: 42 plates in asemic marks, unsealing here as the game reveals them.",
       tag: "site",
     },
   ],

@@ -22,13 +22,13 @@ const HUB_DATA = {
   blocks: [
     {
       k: "the game",
-      t: "an ant colony lives on your pc",
+      t: "an ant colony lives on your PC",
       p: "colony is an idle · incremental game where an ant colony settles into your <b>real file system</b> — it forages your actual folders, builds chambers, grows, and genuinely tidies your files. the desktop is the terrarium.",
     },
     {
       k: "triple dopamine",
       t: "watch · ambient · useful",
-      p: "a colony to watch, pikmin-style. a creature that lives quietly on your pc for weeks. a cleaner that actually organizes your real files. three pleasures, one loop.",
+      p: "a colony to watch, Pikmin-style. a creature that lives quietly on your PC for weeks. a cleaner that actually organizes your real files. three pleasures, one loop.",
     },
     {
       k: "the loop",
@@ -48,7 +48,7 @@ const HUB_DATA = {
     {
       k: "the law",
       t: "low-resource, or not at all",
-      p: "colony runs for weeks alongside your real work, so idle-cheap is a design law, not an optimization. windows-first. a solo project, built rule by rule.",
+      p: "colony runs for weeks alongside your real work, so idle-cheap is a design law, not an optimization. Windows-first. a solo project, built rule by rule.",
     },
   ],
 

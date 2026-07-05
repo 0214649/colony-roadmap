@@ -27,7 +27,7 @@ NEVER hand-edit those). Extend the pattern to EVERY new page:
   **NEVER hardcode a sprite path in a page.**
 - **w ledger** → `wledger.js` + `assets/w/wNNN.jpg` — every artifact render for the game is a
   wXXX and gets ONE entry here (the law lives in `y000-play/.claude/skills/colony-w-artifacts`).
-  Adding a w = one entry + one screenshot. **It renders inside the HEROES & ARTIFACTS room**
+  Adding a w = one entry + one screenshot. **It renders inside the witness room**
   (gated) — no standalone tab; the jpgs themselves are public repo files.
 
 Litmus test: adding a tab, a timeline event, a codex entry, or swapping a sprite must each be a
