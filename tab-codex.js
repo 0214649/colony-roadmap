@@ -1,41 +1,36 @@
-/* colony — public codex template: the wheel of the 42, a frosted GLASS DISC.
-   the glass is the hero — colour is a soft tie-dye tint diffused within it, the
-   six wedge-hues bleeding into each other at the seams. an annulus of 6 wedges
-   in seam-fixed ring order, 12 radial lines × 3 depth bands = 36 grid seats, plus
-   the two wildcard triangles ORBITING between the grid and the limits. sealed = a
-   faint frosted star in its region's hue · revealed = a lit gem. deep links: #cx-<id>. */
+/* colony — public codex template: the wheel of the 42, a constellation read
+   through glass. a dark star-chart — delicate lines, a field of stars, and the
+   revealed gods glowing as coloured stars; the six wedge-hues are faint nebulae
+   that bleed into each other, a thin frosted lens catching the light over it all.
+   annulus of 6 wedges (ring order tears–nectar–blood–ichor–fuel–ether), 12 radial
+   lines × 3 depths = 36 grid seats + the two wildcard triangles ORBITING between
+   the grid and the limits. sealed = a faint star in its region's hue. deep links: #cx-<id>. */
 (function () {
   "use strict";
   var esc = SITE.esc;
 
-  // ---- geometry (viewBox 940 square, centre 470 — spread wide) ----
-  var C = 470;
-  var R_HOLE = 100;                      // thusNearen — the inner hole
-  var R_IN = 138, R_OUT = 398;           // the glass disc
-  var R_DEPTH = [186, 280, 368];         // close · between · far (spread; value deep → bright toward the rim)
-  var R_ORBIT = { inner: 118, outer: 438 }; // the wildcard orbits — inside the hole-lip · beyond the rim
-  var BASE = { inner: [45, 165, 285], outer: [15, 135, 255] }; // triangle vertices (0 = top, cw), off-spine
+  // ---- geometry (viewBox 1040 × 940; disc centred at 520,470 with side room) ----
+  var CX = 520, CY = 470;
+  var R_HOLE = 96, R_IN = 134, R_OUT = 396;
+  var R_DEPTH = [184, 278, 366];
+  var R_ORBIT = { inner: 116, outer: 436 };
+  var BASE = { inner: [45, 165, 285], outer: [15, 135, 255] };
   var TAU = Math.PI * 2;
 
-  // ---- jewel palette (soft, diffused — the glass shows through) ----
   var HUE = {
-    tears:  "#5aa6ff",  // sapphire — emotion / the mind seam
-    nectar: "#4fd694",  // emerald — life / growth
-    blood:  "#ff6a7e",  // crimson-rose — destruction
-    ichor:  "#b98bff",  // amethyst — magic / authority
-    fuel:   "#ffb352",  // amber-gold — the machine
-    ether:  "#6fe0d6",  // aqua — the unknown
+    tears:  "#5aa6ff", nectar: "#4fd694", blood:  "#ff6a7e",
+    ichor:  "#b98bff", fuel:   "#ffb352", ether:  "#6fe0d6",
   };
-  var WILD = "#ffce74";  // the wildcards wear no wedge — a warm gold, outside the wheel (her light)
+  var WILD = "#ffce74";
 
   function hx(c) { c = c.replace("#", ""); return [parseInt(c.slice(0, 2), 16), parseInt(c.slice(2, 4), 16), parseInt(c.slice(4, 6), 16)]; }
   function rgb(a) { return "rgb(" + Math.round(a[0]) + "," + Math.round(a[1]) + "," + Math.round(a[2]) + ")"; }
   function mix(a, b, t) { return [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t]; }
   var WHITE = [255, 255, 255], PIT = [10, 13, 20];
 
-  function degPt(deg, r) {                // 0° = top, clockwise
+  function degPt(deg, r) {
     var a = (deg - 90) * Math.PI / 180;
-    return { x: C + r * Math.cos(a), y: C + r * Math.sin(a) };
+    return { x: CX + r * Math.cos(a), y: CY + r * Math.sin(a) };
   }
   function fmt(n) { return Math.round(n * 100) / 100; }
   function arcPath(centerDeg, spread, r, cw) {
@@ -46,7 +41,7 @@
   var SPINE_IDX = { tears: 0, nectar: 2, blood: 4, ichor: 6, fuel: 8, ether: 10 };
   var IDX_WEDGE = { 0: "tears", 2: "nectar", 4: "blood", 6: "ichor", 8: "fuel", 10: "ether" };
 
-  function nodeBase(e) {                  // the god's own hue: spine = wedge, seam = blend
+  function nodeBase(e) {
     if (e.orbit) return hx(WILD);
     var ln = CODEX_DATA.lines[e.line];
     if (ln.kind === "spine") return hx(HUE[IDX_WEDGE[e.line]]);
@@ -54,8 +49,8 @@
     var after = HUE[IDX_WEDGE[(e.line + 1) % 12]];
     return mix(hx(before), hx(after), 0.5);
   }
-  function depthShade(base, depth, isVoid) {   // value from depth: close deep, far bright
-    if (isVoid) return mix(base, PIT, 0.42);     // itSwelgeth — the lone far-god darkening toward black (§4 rule-break)
+  function depthShade(base, depth, isVoid) {
+    if (isVoid) return mix(base, PIT, 0.42);          // itSwelgeth — the far-god darkening toward black (§4)
     var amt = [-0.06, 0.12, 0.30][depth == null ? 1 : depth];
     return amt < 0 ? mix(base, PIT, -amt) : mix(base, WHITE, amt);
   }
@@ -88,10 +83,7 @@
         + '<div class="cx-seat">' + esc(derivedSeat(e)) + "</div>"
         + '<div class="cx-close">click anywhere to close</div></div>';
     }
-    box.addEventListener("click", function () {
-      box.remove();
-      history.replaceState(null, "", "#codex");
-    });
+    box.addEventListener("click", function () { box.remove(); history.replaceState(null, "", "#codex"); });
     document.body.appendChild(box);
     var plate = box.querySelector(".cx-plate");
     if (plate) SITE.asemic(plate, e.id, { rows: 3, cols: 4 });
@@ -113,97 +105,96 @@
                + '<div style="height:12px"></div>'
                + '<p id="cx-count"><b>' + rev + "</b> of <b>" + es.length + "</b> read</p></div>";
 
-      // ================= the frosted glass disc =================
-      var s = '<div id="cx-wheelwrap"><svg id="cx-wheel" viewBox="0 0 940 940" role="img" aria-label="the wheel of the 42">';
+      // ================= the constellation, read through glass =================
+      var s = '<div id="cx-wheelwrap"><svg id="cx-wheel" viewBox="0 0 1040 940" role="img" aria-label="the wheel of the 42">';
 
       s += "<defs>";
-      // the frosted glass BODY — milky, brightest toward the rim (the glass is the hero)
-      s += '<radialGradient id="cxfrost" gradientUnits="userSpaceOnUse" cx="470" cy="470" r="' + R_OUT + '">'
-         +   '<stop offset="0" stop-color="#0a0d13" stop-opacity="0.5"/>'
-         +   '<stop offset="0.26" stop-color="#dbe8ff" stop-opacity="0.03"/>'
-         +   '<stop offset="0.62" stop-color="#dbe8ff" stop-opacity="0.075"/>'
-         +   '<stop offset="0.9" stop-color="#eaf3ff" stop-opacity="0.13"/>'
-         +   '<stop offset="0.985" stop-color="#f4f9ff" stop-opacity="0.2"/>'
-         +   '<stop offset="1" stop-color="#f4f9ff" stop-opacity="0"/>'
+      // real glow — a gaussian bloom any star can wear
+      s += '<filter id="cxbloom" x="-140%" y="-140%" width="380%" height="380%"><feGaussianBlur stdDeviation="4.2"/></filter>';
+      s += '<filter id="cxbloomlg" x="-160%" y="-160%" width="420%" height="420%"><feGaussianBlur stdDeviation="8"/></filter>';
+      // a thin frosted lens — subtle, so the star-field carries it (constellation, not canvas)
+      s += '<radialGradient id="cxfrost" gradientUnits="userSpaceOnUse" cx="' + CX + '" cy="' + CY + '" r="' + R_OUT + '">'
+         +   '<stop offset="0" stop-color="#0a0d13" stop-opacity="0.42"/>'
+         +   '<stop offset="0.42" stop-color="#cfe0ff" stop-opacity="0.015"/>'
+         +   '<stop offset="0.84" stop-color="#dbe8ff" stop-opacity="0.05"/>'
+         +   '<stop offset="0.975" stop-color="#eef5ff" stop-opacity="0.13"/>'
+         +   '<stop offset="1" stop-color="#eef5ff" stop-opacity="0"/>'
          + "</radialGradient>";
-      // the tie-dye — 6 soft colour clouds bleeding into each other (subtle; the glass shows through)
+      // faint nebulae — the wedge-hues bleeding into each other
       Object.keys(SPINE_IDX).forEach(function (w) {
         var c = degPt(SPINE_IDX[w] * 30, 262);
-        s += '<radialGradient id="cxw-' + w + '" gradientUnits="userSpaceOnUse" cx="' + fmt(c.x) + '" cy="' + fmt(c.y) + '" r="248">'
-           +   '<stop offset="0" stop-color="' + HUE[w] + '" stop-opacity="0.2"/>'
-           +   '<stop offset="0.55" stop-color="' + HUE[w] + '" stop-opacity="0.09"/>'
+        s += '<radialGradient id="cxw-' + w + '" gradientUnits="userSpaceOnUse" cx="' + fmt(c.x) + '" cy="' + fmt(c.y) + '" r="250">'
+           +   '<stop offset="0" stop-color="' + HUE[w] + '" stop-opacity="0.15"/>'
+           +   '<stop offset="0.55" stop-color="' + HUE[w] + '" stop-opacity="0.06"/>'
            +   '<stop offset="1" stop-color="' + HUE[w] + '" stop-opacity="0"/>'
            + "</radialGradient>";
       });
-      // specular sheen — a tight lens catch, upper-left (glass curvature)
-      var sheen = degPt(320, 176);
-      s += '<radialGradient id="cxsheen" gradientUnits="userSpaceOnUse" cx="' + fmt(sheen.x) + '" cy="' + fmt(sheen.y) + '" r="252">'
-         +   '<stop offset="0" stop-color="#ffffff" stop-opacity="0.2"/>'
-         +   '<stop offset="0.28" stop-color="#ffffff" stop-opacity="0.07"/>'
-         +   '<stop offset="0.62" stop-color="#ffffff" stop-opacity="0.02"/>'
+      var sheen = degPt(320, 178);
+      s += '<radialGradient id="cxsheen" gradientUnits="userSpaceOnUse" cx="' + fmt(sheen.x) + '" cy="' + fmt(sheen.y) + '" r="250">'
+         +   '<stop offset="0" stop-color="#ffffff" stop-opacity="0.14"/>'
+         +   '<stop offset="0.3" stop-color="#ffffff" stop-opacity="0.045"/>'
+         +   '<stop offset="0.65" stop-color="#ffffff" stop-opacity="0.012"/>'
          +   '<stop offset="1" stop-color="#ffffff" stop-opacity="0"/>'
          + "</radialGradient>";
-      // the hole — a well that deepens toward the centre
-      s += '<radialGradient id="cxhole" gradientUnits="userSpaceOnUse" cx="470" cy="470" r="' + R_HOLE + '">'
-         +   '<stop offset="0" stop-color="#03050a" stop-opacity="0.95"/>'
-         +   '<stop offset="0.7" stop-color="#090c13" stop-opacity="0.82"/>'
-         +   '<stop offset="1" stop-color="#111621" stop-opacity="0.5"/>'
-         + "</radialGradient>";
-      s += '<radialGradient id="cxrim" gradientUnits="userSpaceOnUse" cx="470" cy="470" r="' + (R_OUT + 30) + '">'
-         +   '<stop offset="0.87" stop-color="#dfeeff" stop-opacity="0"/>'
-         +   '<stop offset="0.96" stop-color="#dfeeff" stop-opacity="0.16"/>'
+      s += '<radialGradient id="cxrim" gradientUnits="userSpaceOnUse" cx="' + CX + '" cy="' + CY + '" r="' + (R_OUT + 30) + '">'
+         +   '<stop offset="0.88" stop-color="#dfeeff" stop-opacity="0"/>'
+         +   '<stop offset="0.965" stop-color="#dfeeff" stop-opacity="0.13"/>'
          +   '<stop offset="1" stop-color="#dfeeff" stop-opacity="0"/>'
          + "</radialGradient>";
-      s += '<clipPath id="cxclip"><circle cx="470" cy="470" r="' + R_OUT + '"/></clipPath>';
+      s += '<radialGradient id="cxhole" gradientUnits="userSpaceOnUse" cx="' + CX + '" cy="' + CY + '" r="' + R_HOLE + '">'
+         +   '<stop offset="0" stop-color="#03050a" stop-opacity="0.9"/>'
+         +   '<stop offset="0.72" stop-color="#090c13" stop-opacity="0.66"/>'
+         +   '<stop offset="1" stop-color="#111621" stop-opacity="0.2"/>'
+         + "</radialGradient>";
+      s += '<clipPath id="cxclip"><circle cx="' + CX + '" cy="' + CY + '" r="' + R_OUT + '"/></clipPath>';
       s += "</defs>";
 
-      s += '<circle cx="470" cy="470" r="' + (R_OUT + 30) + '" fill="url(#cxrim)"/>';        // rim halo
+      s += '<circle cx="' + CX + '" cy="' + CY + '" r="' + (R_OUT + 30) + '" fill="url(#cxrim)"/>';
       s += '<g clip-path="url(#cxclip)">';
-      s += '<circle cx="470" cy="470" r="' + R_OUT + '" fill="url(#cxfrost)"/>';               // frosted body
-      Object.keys(SPINE_IDX).forEach(function (w) {                                            // tie-dye clouds
+      s += '<circle cx="' + CX + '" cy="' + CY + '" r="' + R_OUT + '" fill="url(#cxfrost)"/>';
+      Object.keys(SPINE_IDX).forEach(function (w) {
         var c = degPt(SPINE_IDX[w] * 30, 262);
-        s += '<circle cx="' + fmt(c.x) + '" cy="' + fmt(c.y) + '" r="248" fill="url(#cxw-' + w + ')"/>';
+        s += '<circle cx="' + fmt(c.x) + '" cy="' + fmt(c.y) + '" r="250" fill="url(#cxw-' + w + ')"/>';
       });
-      for (var st = 0; st < 120; st++) {                                                       // stars in the glass
+      // the star-field — the constellation's ground, some bright, some faint
+      for (var st = 0; st < 165; st++) {
         var srr = Math.sqrt(R_HOLE * R_HOLE + rnd() * (R_OUT * R_OUT - R_HOLE * R_HOLE));
-        var sa = rnd() * TAU;
-        s += '<circle class="cxw-star" cx="' + fmt(C + srr * Math.cos(sa)) + '" cy="' + fmt(C + srr * Math.sin(sa))
-           + '" r="' + fmt(0.4 + rnd() * 1.0) + '" opacity="' + fmt(0.05 + rnd() * 0.1) + '"/>';
+        var sa = rnd() * TAU, big = rnd() < 0.1;
+        s += '<circle class="cxw-star" cx="' + fmt(CX + srr * Math.cos(sa)) + '" cy="' + fmt(CY + srr * Math.sin(sa))
+           + '" r="' + fmt(big ? 1.1 + rnd() * 0.9 : 0.35 + rnd() * 0.75) + '" opacity="' + fmt((big ? 0.2 : 0.06) + rnd() * 0.14) + '"/>';
       }
-      s += '<circle cx="470" cy="470" r="' + R_OUT + '" fill="url(#cxsheen)"/>';                // sheen on top
-      // the top highlight — light kissing the glass edge
-      s += '<path class="cxw-hi" d="' + arcPath(0, 62, R_OUT - 2, true) + '" fill="none"/>';
+      s += '<circle cx="' + CX + '" cy="' + CY + '" r="' + R_OUT + '" fill="url(#cxsheen)"/>';
+      s += '<path class="cxw-hi" d="' + arcPath(0, 60, R_OUT - 2, true) + '" fill="none"/>';
       s += "</g>";
 
-      // ---- the grid etched in the glass ----
-      R_DEPTH.forEach(function (r) { s += '<circle class="cxw-band" cx="470" cy="470" r="' + r + '"/>'; });
-      s += '<circle class="cxw-rim" cx="470" cy="470" r="' + R_OUT + '"/>';
-      s += '<circle class="cxw-band" cx="470" cy="470" r="' + R_IN + '" opacity="0.5"/>';
+      // ---- the constellation scaffold — delicate lines ----
+      R_DEPTH.forEach(function (r) { s += '<circle class="cxw-band" cx="' + CX + '" cy="' + CY + '" r="' + r + '"/>'; });
+      s += '<circle class="cxw-rim" cx="' + CX + '" cy="' + CY + '" r="' + R_OUT + '"/>';
+      s += '<circle class="cxw-band" cx="' + CX + '" cy="' + CY + '" r="' + R_IN + '" opacity="0.45"/>';
       lines.forEach(function (ln, i) {
         var p1 = degPt(i * 30, R_IN), p2 = degPt(i * 30, R_OUT);
         s += '<line class="' + (ln.kind === "spine" ? "cxw-spine" : "cxw-seam") + '" x1="' + fmt(p1.x) + '" y1="' + fmt(p1.y)
            + '" x2="' + fmt(p2.x) + '" y2="' + fmt(p2.y) + '"/>';
       });
-      s += '<circle class="cxw-hole" cx="470" cy="470" r="' + R_HOLE + '" fill="url(#cxhole)"/>';
-      s += '<path class="cxw-lip" d="' + arcPath(320, 74, R_HOLE - 1, true) + '" fill="none"/>';  // light wraps the lip
+      s += '<circle class="cxw-hole" cx="' + CX + '" cy="' + CY + '" r="' + R_HOLE + '" fill="url(#cxhole)"/>';
+      s += '<path class="cxw-lip" d="' + arcPath(320, 72, R_HOLE - 1, true) + '" fill="none"/>';
 
-      // ---- the uncounted frame — the limits, not nodes (both flat, never mirrored) ----
-      s += '<text class="cxw-ultra" x="470" y="474" text-anchor="middle">thusNearen</text>';
-      s += '<text class="cxw-ultra out" x="470" y="' + (C + R_OUT + 58) + '" text-anchor="middle">thusFaren</text>';
+      // ---- the uncounted frame — thusNearen within, thusFaren out to the side on the same axis ----
+      s += '<text class="cxw-ultra" x="' + CX + '" y="' + (CY + 4) + '" text-anchor="middle">thusNearen</text>';
+      s += '<text class="cxw-ultra out" x="' + (CX - R_OUT - 16) + '" y="' + (CY + 4) + '" text-anchor="end">thusFaren</text>';
 
-      // ---- wedge names — BIG, each in its colour, all consistently OUTSIDE the rim ----
+      // ---- wedge names — big, each in its colour, consistently outside the rim ----
       Object.keys(SPINE_IDX).forEach(function (w) {
-        var deg = SPINE_IDX[w] * 30;
-        var lp = degPt(deg, R_OUT + 26);
+        var deg = SPINE_IDX[w] * 30, lp = degPt(deg, R_OUT + 26);
         var a = ((deg % 360) + 360) % 360;
         var anchor = (a < 14 || a > 346 || (a > 166 && a < 194)) ? "middle" : (a < 180 ? "start" : "end");
-        var dy = (a > 160 && a < 200) ? 6 : (a < 20 || a > 340) ? -3 : 5;   // sit above/below/beside cleanly
-        var lit = rgb(mix(hx(HUE[w]), WHITE, 0.4));
+        var dy = (a > 160 && a < 200) ? 6 : (a < 20 || a > 340) ? -3 : 5;
+        var lit = rgb(mix(hx(HUE[w]), WHITE, 0.42));
         s += '<text class="cxw-wedge" x="' + fmt(lp.x) + '" y="' + fmt(lp.y + dy) + '" text-anchor="' + anchor
-           + '" fill="' + lit + '" style="text-shadow:0 0 14px ' + HUE[w] + ',0 0 5px ' + HUE[w] + '">' + w + "</text>";
+           + '" fill="' + lit + '" style="text-shadow:0 0 15px ' + HUE[w] + ',0 0 6px ' + HUE[w] + '">' + w + "</text>";
       });
 
-      // ---- the seats: 36 grid gems (fixed) + 6 wildcards (positioned each frame) ----
+      // ---- the seats: 36 grid stars (fixed) + 6 wildcards (positioned each frame) ----
       es.forEach(function (e, i) {
         var wild = !!e.orbit;
         var base = nodeBase(e);
@@ -211,20 +202,19 @@
         var cls = "cxw-node " + (e.state === "revealed" ? "lit" : "sealed") + (wild ? " wild" : "");
         s += '<g class="' + cls + '" data-i="' + i + '"' + (wild ? ' data-wild="1"' : "") + ">";
         if (e.state === "revealed") {
-          var vd = e.call === "itSwelgeth";                 // the void-maker wears the wrong pole
+          var vd = e.call === "itSwelgeth";
           var col = depthShade(base, e.depth, vd);
-          var glow = vd ? rgb(mix(base, PIT, 0.26)) : rgb(mix(base, WHITE, (e.depth || 0) * 0.06));
-          var core = rgb(mix(col, WHITE, vd ? 0.13 : 0.16)), lbl = rgb(mix(col, WHITE, vd ? 0.62 : 0.55));
+          var glow = vd ? mix(base, PIT, 0.24) : mix(base, WHITE, (e.depth || 0) * 0.08);
+          var core = rgb(mix(col, WHITE, vd ? 0.16 : 0.28)), lbl = rgb(mix(col, WHITE, 0.72));
           var lp = wild ? { x: p.x, y: p.y + 32, anchor: "middle" } : radialLabel(e.line * 30, R_DEPTH[e.depth], e.depth);
-          s += '<circle class="halo" cx="' + fmt(p.x) + '" cy="' + fmt(p.y) + '" r="20" fill="' + glow + '"/>'
-             + '<circle class="glow" cx="' + fmt(p.x) + '" cy="' + fmt(p.y) + '" r="' + (wild ? 12 : 11) + '" fill="' + glow + '"/>'
-             + '<circle class="gem" cx="' + fmt(p.x) + '" cy="' + fmt(p.y) + '" r="' + (wild ? 7 : 6.2) + '" fill="' + core + '"/>'
-             + '<circle class="spark" cx="' + fmt(p.x - 2) + '" cy="' + fmt(p.y - 2.4) + '" r="1.9" fill="#ffffff"/>'
+          s += '<circle class="bloom-lg" cx="' + fmt(p.x) + '" cy="' + fmt(p.y) + '" r="' + (wild ? 13 : 11) + '" fill="' + rgb(glow) + '" filter="url(#cxbloomlg)"/>'
+             + '<circle class="bloom" cx="' + fmt(p.x) + '" cy="' + fmt(p.y) + '" r="' + (wild ? 8 : 7) + '" fill="' + rgb(mix(glow, WHITE, 0.2)) + '" filter="url(#cxbloom)"/>'
+             + '<circle class="gem" cx="' + fmt(p.x) + '" cy="' + fmt(p.y) + '" r="' + (wild ? 4.6 : 4) + '" fill="' + core + '"/>'
+             + '<circle class="spark" cx="' + fmt(p.x - 1.3) + '" cy="' + fmt(p.y - 1.6) + '" r="1.3" fill="#ffffff"/>'
              + '<text class="lbl" x="' + fmt(lp.x) + '" y="' + fmt(lp.y) + '" text-anchor="' + lp.anchor + '" fill="' + lbl + '">' + esc(e.call) + "</text>";
         } else {
-          var dim = rgb(mix(base, PIT, 0.4));
-          s += '<circle class="dim" cx="' + fmt(p.x) + '" cy="' + fmt(p.y) + '" r="4.6" fill="' + dim + '"/>'
-             + '<circle class="dim-ring" cx="' + fmt(p.x) + '" cy="' + fmt(p.y) + '" r="4.6" stroke="' + rgb(mix(base, WHITE, 0.2)) + '"/>';
+          s += '<circle class="dim-glow" cx="' + fmt(p.x) + '" cy="' + fmt(p.y) + '" r="5" fill="' + rgb(mix(base, PIT, 0.3)) + '" filter="url(#cxbloom)"/>'
+             + '<circle class="dim" cx="' + fmt(p.x) + '" cy="' + fmt(p.y) + '" r="2.4" fill="' + rgb(mix(base, WHITE, 0.25)) + '"/>';
         }
         s += '<circle class="hit" cx="' + fmt(p.x) + '" cy="' + fmt(p.y) + '" r="18"/>'
            + "<title>" + esc(e.state === "revealed" ? e.call + " — " + (e.seat || "") : "sealed — " + derivedSeat(e)) + "</title></g>";
@@ -242,48 +232,32 @@
         g.addEventListener("click", function () { openEntry(es[+g.getAttribute("data-i")]); });
       });
 
-      // ---- the wildcard orbits (canon: they DRIFT between the grid and the infinities) ----
       var wilds = [];
-      svg.querySelectorAll('[data-wild="1"]').forEach(function (g) {
-        wilds.push({ g: g, e: es[+g.getAttribute("data-i")] });
-      });
+      svg.querySelectorAll('[data-wild="1"]').forEach(function (g) { wilds.push({ g: g, e: es[+g.getAttribute("data-i")] }); });
       function place(t) {
         wilds.forEach(function (w) {
-          var e = w.e;
-          var drift = e.orbit === "inner" ? (t * 360 / 240000) : (-t * 360 / 360000);
-          var deg = BASE[e.orbit][e.slot] + drift;
-          var p = degPt(deg, R_ORBIT[e.orbit]);
+          var e = w.e, drift = e.orbit === "inner" ? (t * 360 / 240000) : (-t * 360 / 360000);
+          var p = degPt(BASE[e.orbit][e.slot] + drift, R_ORBIT[e.orbit]);
           w.g.setAttribute("transform", "translate(" + fmt(p.x) + " " + fmt(p.y) + ")");
         });
       }
       place(0);
-      if (!SITE.reduced) {
-        (function tick(t) {
-          if (!document.hidden) place(t || 0);
-          raf = requestAnimationFrame(tick);
-        })(0);
-      }
+      if (!SITE.reduced) { (function tick(t) { if (!document.hidden) place(t || 0); raf = requestAnimationFrame(tick); })(0); }
 
       SITE._teardown = function () {
         if (raf) { cancelAnimationFrame(raf); raf = null; }
-        var b = document.getElementById("cx-box");
-        if (b) b.remove();
+        var b = document.getElementById("cx-box"); if (b) b.remove();
       };
 
-      // radial label — the name sits just outside its gem. the three depths on one
-      // line never pile up: close & far fan OUT (tangential stagger), between flips
-      // to the INNER side, so the stack always breaks in three directions
       function radialLabel(deg, r, depth) {
         var a = ((deg % 360) + 360) % 360;
         var vert = (a < 16 || a > 344 || (a > 164 && a < 196));
-        if (depth === 1 && !vert) {                    // between god → inner side, opposite anchor
-          var pin = degPt(deg, r - 15);
-          var anch = a < 180 ? "end" : "start";
+        if (depth === 1 && !vert) {
+          var pin = degPt(deg, r - 15), anch = a < 180 ? "end" : "start";
           pin.x += a < 180 ? -3 : 3;
           return { x: pin.x, y: pin.y + 3.5, anchor: anch };
         }
-        var p = degPt(deg, r + 16);
-        var rad = (deg - 90) * Math.PI / 180;
+        var p = degPt(deg, r + 15), rad = (deg - 90) * Math.PI / 180;
         var k = ((depth == null ? 1 : depth) - 1) * 12;
         p.x += -Math.sin(rad) * k; p.y += Math.cos(rad) * k;
         var anchor = vert ? "middle" : (a < 180 ? "start" : "end");
@@ -298,10 +272,7 @@
         var id = h.slice(3);
         var e = (CODEX_DATA.entries || []).filter(function (x) { return x.id === id; })[0];
         if (e) openEntry(e);
-      } else {
-        var b = document.getElementById("cx-box");
-        if (b) b.remove();
-      }
+      } else { var b = document.getElementById("cx-box"); if (b) b.remove(); }
     },
   });
 
