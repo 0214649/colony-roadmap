@@ -285,10 +285,12 @@
         var b = document.getElementById("cx-box"); if (b) b.remove();
       };
 
+      // all three depths fan OUTWARD along the radius (never inward — that piled the
+      // between-god's name onto the close-god's). gem spacing (~94u) > name width,
+      // so radially-stacked names clear each other; a tangential nudge fans them more.
       function radialLabel(deg, r, depth) {
         var a = ((deg % 360) + 360) % 360, vert = (a < 16 || a > 344 || (a > 164 && a < 196));
-        if (depth === 1 && !vert) { var pin = degPt(deg, r - 15), anch = a < 180 ? "end" : "start"; pin.x += a < 180 ? -3 : 3; return { x: pin.x, y: pin.y + 3.5, anchor: anch }; }
-        var p = degPt(deg, r + 15), rad = (deg - 90) * Math.PI / 180, kk = ((depth == null ? 1 : depth) - 1) * 12;
+        var p = degPt(deg, r + 15), rad = (deg - 90) * Math.PI / 180, kk = ((depth == null ? 1 : depth) - 1) * 15;
         p.x += -Math.sin(rad) * kk; p.y += Math.cos(rad) * kk;
         var anchor = vert ? "middle" : (a < 180 ? "start" : "end");
         if (anchor === "start") p.x += 3; else if (anchor === "end") p.x -= 3;
