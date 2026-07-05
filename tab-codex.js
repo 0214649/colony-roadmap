@@ -196,7 +196,7 @@
           var vd = e.call === "itSwelgeth", col = depthShade(base, e.depth, vd);
           var glow = vd ? mix(base, PIT, 0.24) : mix(base, WHITE, (e.depth || 0) * 0.08);
           var core = rgb(mix(col, WHITE, vd ? 0.26 : 0.55)), lbl = rgb(mix(col, WHITE, 0.72));
-          var lp = wild ? { x: p.x, y: p.y + 32, anchor: "middle" } : radialLabel(e.line * 30, R_DEPTH[e.depth], e.depth);
+          var lp = wild ? { x: p.x, y: p.y + 32, anchor: "middle" } : radialLabel(e.line * 30, R_DEPTH[e.depth], e.depth, lines[e.line] && lines[e.line].kind === "spine");
           s += '<circle class="bloom-lg" cx="' + fmt(p.x) + '" cy="' + fmt(p.y) + '" r="' + (wild ? 14 : 12) + '" fill="' + rgb(glow) + '" filter="url(#cxbloomlg)"/>'
              + '<circle class="bloom" cx="' + fmt(p.x) + '" cy="' + fmt(p.y) + '" r="' + (wild ? 8.5 : 7.5) + '" fill="' + rgb(mix(glow, WHITE, 0.4)) + '" filter="url(#cxbloom)"/>'
              + '<circle class="ring" cx="' + fmt(p.x) + '" cy="' + fmt(p.y) + '" r="' + (wild ? 6.2 : 5.6) + '" fill="none" stroke="' + rgb(mix(glow, WHITE, 0.35)) + '"/>'
@@ -272,9 +272,14 @@
         var b = document.getElementById("cx-deity"); if (b) b.remove();
       };
 
-      function radialLabel(deg, r, depth) {
+      function radialLabel(deg, r, depth, onSpine) {
         var a = ((deg % 360) + 360) % 360, vert = (a < 16 || a > 344 || (a > 164 && a < 196));
-        var p = degPt(deg, r + 15), rad = (deg - 90) * Math.PI / 180, kk = ((depth == null ? 1 : depth) - 1) * 15;
+        // far-depth (outermost) gods ON A SPINE tuck their call INWARD — the rim belongs
+        // to the spine names, so itEmptieth/itLuteth no longer collide with ether/blood.
+        // seam far-gods keep their outward reach (no rim name there to dodge).
+        var far = depth === 2 && onSpine;
+        var p = degPt(deg, far ? r - 19 : r + 15), rad = (deg - 90) * Math.PI / 180;
+        var kk = far ? 0 : ((depth == null ? 1 : depth) - 1) * 15;
         p.x += -Math.sin(rad) * kk; p.y += Math.cos(rad) * kk;
         var anchor = vert ? "middle" : (a < 180 ? "start" : "end");
         if (anchor === "start") p.x += 3; else if (anchor === "end") p.x -= 3;
