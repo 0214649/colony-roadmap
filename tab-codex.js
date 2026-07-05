@@ -116,12 +116,11 @@
       var rev = es.filter(function (e) { return e.state === "revealed"; }).length;
       var rnd = SITE.seeded("cx-field");
 
-      var html = '<div id="cx-head"><p class="eyebrow">codex</p>'
-               + '<p class="lede" style="margin:0 auto">comprehension is translation. what the game has revealed is readable here — the rest is still in the old tongue.</p>'
-               + '<div style="height:12px"></div>'
-               + '<p id="cx-count"><b>' + rev + "</b> of <b>" + es.length + "</b> read</p></div>";
+      var html = '<div id="cx-wheelwrap"><div id="cx-head"><p class="eyebrow">codex</p>'
+               + '<p id="cx-count"><b>' + rev + "</b> of <b>" + es.length + "</b> read</p>"
+               + '<p class="lede">comprehension is translation — each read star opens into its own sky.</p></div>';
 
-      var s = '<div id="cx-wheelwrap"><svg id="cx-wheel" viewBox="0 0 ' + VBW + " " + VBH + '" role="img" aria-label="the wheel of the 42"><g id="cx-scene">';
+      var s = '<svg id="cx-wheel" viewBox="0 0 ' + VBW + " " + VBH + '" role="img" aria-label="the wheel of the 42"><g id="cx-scene">';
 
       s += "<defs>";
       s += '<filter id="cxbloom" x="-140%" y="-140%" width="380%" height="380%"><feGaussianBlur stdDeviation="4.2"/></filter>';
@@ -206,12 +205,9 @@
       s += '<div id="cx-nav"><button type="button" data-z="in" aria-label="zoom in">+</button>'
          + '<button type="button" data-z="out" aria-label="zoom out">−</button>'
          + '<button type="button" data-z="reset" aria-label="reset view">⤢</button></div>';
+      s += '<div id="cx-cap">drag to pan · scroll to zoom &nbsp;·&nbsp; <span class="cx-lg-lit">◆</span> read <span class="cx-lg-seal">◇</span> sealed &nbsp;·&nbsp; thusNearen within · thusFaren beyond · thusSceaden between</div>';
       s += "</div>";                                        // close #cx-wheelwrap
-      s += '<p id="cx-hint">drag to pan · scroll to zoom · a star opens into its own sky</p>';
       html += s;
-      html += '<p id="cx-legend">the wheel of the 42 — six wedges, twelve lines, three depths, read from the outside through the glass<br>'
-            + '<span class="cx-lg-lit">◆</span> read &nbsp; <span class="cx-lg-seal">◇</span> still sealed &nbsp;·&nbsp; and the six that drift between the grid and the limits'
-            + '<br>the frame is uncounted: thusNearen within · thusFaren beyond · thusSceaden the watershed between</p>';
       view.innerHTML = html;
 
       var svg = view.querySelector("#cx-wheel"), scene = view.querySelector("#cx-scene");
