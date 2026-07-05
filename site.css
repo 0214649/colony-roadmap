@@ -277,22 +277,24 @@ mark{background:rgba(224,168,90,.3);color:var(--bone);border-radius:2px}
 .cx-entry p{font-size:13.5px;color:var(--mist);line-height:1.7;margin:16px 0 0;text-align:left}
 .cx-close{font-size:10.5px;color:var(--faint);letter-spacing:.08em;margin-top:20px}
 
-/* ========================= w ledger ========================== */
-#wl .lede{margin-bottom:6px}
-.wl-note{font-size:11.5px;color:var(--faint);font-style:italic;margin:0 0 26px}
-#wl-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px}
-.wl-card{overflow:hidden;cursor:zoom-in;display:flex;flex-direction:column}
-.wl-card.noimg{cursor:default}
-.wl-card img{width:100%;height:190px;object-fit:cover;object-position:top;display:block;
-  border-bottom:1px solid var(--frost-line);filter:saturate(1.02)}
-.wl-lost{height:190px;display:flex;align-items:center;justify-content:center;
-  font-size:11.5px;font-style:italic;color:var(--faint);border-bottom:1px solid var(--frost-line)}
-.wl-card figcaption{padding:12px 15px 14px}
-.wl-w{font-size:11px;font-weight:700;letter-spacing:.08em;color:var(--amber);margin-right:7px}
-.wl-card b{font-size:13.5px;font-weight:600;color:var(--bone)}
-.wl-d{float:right;font-size:10.5px;color:var(--faint);padding-top:2px}
-.wl-card p{font-size:12px;color:var(--mist);line-height:1.55;margin:6px 0 0}
-#wl-box{position:fixed;inset:0;z-index:50;background:rgba(8,10,14,.9);cursor:zoom-out;
+/* ===== the w ledger — rendered ON the vellum (heroes & artifacts room) ===== */
+.wv-note{font-size:12.5px;font-style:italic;color:#6a5836;margin:.4em 0 1.2em}
+.wv{margin-top:6px}
+.wv-row{display:flex;gap:16px;align-items:flex-start;padding:13px 0;
+  border-top:1px solid rgba(110,84,40,.25);cursor:zoom-in}
+.wv-row.lost{cursor:default}
+.wv-row img{width:150px;height:96px;object-fit:cover;object-position:top;flex:none;
+  border:1px solid rgba(110,84,40,.4);border-radius:6px;
+  box-shadow:0 3px 10px rgba(60,40,15,.25)}
+.wv-stub{width:150px;height:96px;flex:none;display:flex;align-items:center;justify-content:center;
+  border:1px dashed rgba(110,84,40,.4);border-radius:6px;
+  font-size:11.5px;font-style:italic;color:#8a744c;text-align:center;padding:0 10px}
+.wv-txt{min-width:0}
+.wv-w{font-family:var(--ui);font-size:11px;font-weight:700;letter-spacing:.08em;color:#a86414;margin-right:7px}
+.wv-txt b{font-size:16.5px;font-weight:600;color:#241c10}
+.wv-d{float:right;font-family:var(--ui);font-size:10px;color:#8a744c;padding-top:4px}
+.wv-txt p{font-size:14.5px;color:#4a3a1e;line-height:1.5;margin:4px 0 0}
+#wl-box{position:fixed;inset:0;z-index:80;background:rgba(8,10,14,.9);cursor:zoom-out;
   display:flex;align-items:center;justify-content:center;padding:4vh 4vw;
   -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
 #wl-box figure{margin:0;max-width:min(1100px,92vw);max-height:92vh;display:flex;flex-direction:column;gap:10px}
@@ -324,18 +326,8 @@ mark{background:rgba(224,168,90,.3);color:var(--bone);border-radius:2px}
   background:linear-gradient(160deg,#f0e4c8 0%,#e9dab8 55%,#e2d0a9 100%);
   color:#241c10;border-radius:14px;padding:48px 56px 56px;
   box-shadow:0 24px 60px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.5), inset 0 -14px 40px rgba(120,90,40,.14);
-  font-family:"EB Garamond",Georgia,serif;font-size:17px;line-height:1.62;
+  font-family:"Crimson Pro",Georgia,serif;font-size:17.5px;line-height:1.62;   /* LOCKED: crimson */
 }
-/* manuscript FONT DUEL — sizes tuned per x-height; losers strip once one locks */
-.vellum.f-garamond{font-family:"EB Garamond",Georgia,serif;font-size:17px}
-.vellum.f-cormorant{font-family:"Cormorant Garamond",Georgia,serif;font-size:18.5px}
-.vellum.f-lora{font-family:"Lora",Georgia,serif;font-size:15.5px;line-height:1.66}
-.vellum.f-crimson{font-family:"Crimson Pro",Georgia,serif;font-size:17.5px}
-.vellum.f-source{font-family:"Source Serif 4",Georgia,serif;font-size:15.5px;line-height:1.66}
-.vellum.f-spectral{font-family:"Spectral",Georgia,serif;font-size:15px;line-height:1.7}
-.vellum.f-inter{font-family:var(--ui);font-size:14.5px;line-height:1.72}
-.ms-duel{display:flex;align-items:center;flex-wrap:wrap;gap:7px;margin:0 0 14px}
-.ms-duel > span{font-size:11px;font-weight:600;letter-spacing:.14em;color:var(--faint)}
 .ms-meta{font-family:var(--ui);font-size:10.5px;letter-spacing:.14em;text-transform:lowercase;
   color:#8a744c;text-align:center;margin:0 0 26px}
 .ms-toc{column-count:2;column-gap:34px;border:1px solid rgba(110,84,40,.3);border-radius:8px;

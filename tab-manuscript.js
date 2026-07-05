@@ -1,19 +1,7 @@
-/* colony — the manuscript (private bible view: the ONE warm vellum room) */
+/* colony — the manuscript (private bible view: the ONE warm vellum room; face = crimson, LOCKED) */
 (function () {
   "use strict";
   var esc = SITE.esc;
-
-  // FONT DUEL (temporary — losers strip once dirty rat crowns one)
-  var FONTS = [
-    { k: "garamond",  n: "garamond" },
-    { k: "cormorant", n: "cormorant" },
-    { k: "lora",      n: "lora" },
-    { k: "crimson",   n: "crimson" },
-    { k: "source",    n: "sourceSerif" },
-    { k: "spectral",  n: "spectral" },
-    { k: "inter",     n: "inter" },
-  ];
-  window.msFont = function () { try { return localStorage.getItem("ms-font") || "garamond"; } catch (e) { return "garamond"; } };
 
   function room(view, payload) {
     var r = SITE_CRYPT.mdRender(payload.md);
@@ -28,26 +16,12 @@
     var html = '<div id="ms">';
     html += '<div class="ms-bar"><p class="eyebrow">manuScript</p>'
           + '<button class="tbtn" id="ms-seal">seal the room</button></div>';
-    html += '<div class="ms-duel"><span>font duel ·</span>' + FONTS.map(function (f) {
-      return '<button class="chip' + (window.msFont() === f.k ? " on" : "") + '" data-f="' + f.k + '">' + esc(f.n) + "</button>";
-    }).join("") + "</div>";
-    html += '<div class="vellum f-' + esc(window.msFont()) + '">';
+    html += '<div class="vellum">';
     html += '<p class="ms-meta">transcribed from the vault · ' + esc(payload.meta.vault || "")
           + " · " + esc(payload.meta.generated || "") + "</p>";
     html += '<article class="ms-body">' + body + "</article>";
     html += "</div></div>";
     view.innerHTML = html;
-
-    var vel = view.querySelector(".vellum");
-    view.querySelectorAll(".ms-duel .chip").forEach(function (btn) {
-      btn.addEventListener("click", function () {
-        view.querySelectorAll(".ms-duel .chip").forEach(function (b) { b.classList.remove("on"); });
-        btn.classList.add("on");
-        var f = btn.getAttribute("data-f");
-        vel.className = "vellum f-" + f;
-        try { localStorage.setItem("ms-font", f); } catch (e) {}
-      });
-    });
 
     document.getElementById("ms-seal").addEventListener("click", function () {
       SITE_CRYPT.seal();
