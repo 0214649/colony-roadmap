@@ -230,14 +230,17 @@
       apply();
 
       on(svg, "wheel", function (e) { e.preventDefault(); var g = toVB(e.clientX, e.clientY); zoomAt(g.x, g.y, k * (e.deltaY < 0 ? 1.16 : 0.862)); }, { passive: false });
-      on(svg, "pointerdown", function (e) { down = { x: e.clientX, y: e.clientY }; moved = false; svg.setPointerCapture && svg.setPointerCapture(e.pointerId); svg.classList.add("dragging"); });
+      // NB: do NOT capture the pointer on down — that redirects the mouseup + the
+      // synthesized click to the svg, so a star's click never fires. capture only
+      // once a real DRAG begins; a plain click then stays on the node it hit.
+      on(svg, "pointerdown", function (e) { down = { x: e.clientX, y: e.clientY, id: e.pointerId }; moved = false; });
       on(svg, "pointermove", function (e) {
         if (!down) return;
         var dx = e.clientX - down.x, dy = e.clientY - down.y;
-        if (!moved && dx * dx + dy * dy > 20) moved = true;
-        if (moved) { var s2 = toVB(e.clientX, e.clientY).s; tx += dx / s2; ty += dy / s2; down = { x: e.clientX, y: e.clientY }; clampPan(); apply(); }
+        if (!moved && dx * dx + dy * dy > 20) { moved = true; svg.classList.add("dragging"); try { svg.setPointerCapture(down.id); } catch (_) {} }
+        if (moved) { var s2 = toVB(e.clientX, e.clientY).s; tx += dx / s2; ty += dy / s2; down.x = e.clientX; down.y = e.clientY; clampPan(); apply(); }
       });
-      function endDrag() { down = null; svg.classList.remove("dragging"); }
+      function endDrag() { if (down && moved) { try { svg.releasePointerCapture(down.id); } catch (_) {} } down = null; svg.classList.remove("dragging"); }
       on(svg, "pointerup", endDrag); on(svg, "pointercancel", endDrag);
 
       view.querySelector("#cx-nav").addEventListener("click", function (e) {
