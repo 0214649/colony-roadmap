@@ -103,19 +103,20 @@ nav#tabs a.sealed.on{color:var(--amber)}   /* the active pill stays amber even o
 #hub-trio{display:flex;justify-content:center;align-items:flex-end;width:100%;max-width:960px}
 .hub-god{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:flex-end}
 .hub-god img{width:auto;image-rendering:auto;filter:drop-shadow(0 16px 26px rgba(0,0,0,.5))}
+/* itRedeth is the cold glass-goddess now — PRONE + wide; she reclines as the
+   centrepiece (widest, foreground), the two gods kneel beside her */
 .hub-god.main{z-index:2;padding-bottom:30px}
-.hub-god.main img{position:relative;height:min(44vh,384px);
-  filter:drop-shadow(0 18px 34px rgba(0,0,0,.55))}
-.hub-god.side{z-index:1;margin:0 -22px;opacity:.95}
-.hub-god.side img{height:min(30vh,262px)}
+.hub-god.main img{position:relative;width:min(50vw,510px);height:auto;
+  filter:drop-shadow(0 16px 30px rgba(0,0,0,.55))}
+.hub-god.side{z-index:1;margin:0 -30px 8px;opacity:.94}
+.hub-god.side img{height:min(32vh,286px)}
 .hub-god-call{font-size:12.5px;font-weight:600;letter-spacing:.02em;margin-top:8px}
 .hub-god-gloss{font-size:10.5px;font-style:italic;color:var(--teal);letter-spacing:.08em;margin-top:1px}
 #hub-aura::before{
-  /* her emission stays TIGHT and chromatic — a wide dim wash warms the cold
-     ground into mud (ground runs cold; warm belongs to life) */
-  content:"";position:absolute;left:50%;top:42%;transform:translate(-50%,-50%);
-  width:440px;height:440px;max-width:84vw;border-radius:50%;
-  background:radial-gradient(circle, rgba(232,152,58,.30) 0%, rgba(206,118,44,.11) 32%, rgba(0,0,0,0) 56%);
+  /* her light runs COOL now (the cold glass) — a soft cyan bloom, kept tight */
+  content:"";position:absolute;left:50%;top:52%;transform:translate(-50%,-50%);
+  width:520px;height:400px;max-width:88vw;border-radius:50%;
+  background:radial-gradient(ellipse, rgba(150,212,236,.17) 0%, rgba(120,178,208,.07) 36%, rgba(0,0,0,0) 62%);
   pointer-events:none;
 }
 #hub-name{font-size:26px;font-weight:700;letter-spacing:.03em;margin:6px 0 2px;min-height:1.3em}
@@ -446,8 +447,8 @@ mark{background:rgba(224,168,90,.3);color:var(--bone);border-radius:2px}
   #chrome{padding:10px 14px;gap:10px}
   #chrome .crumb{display:none}
   #view{padding:30px 16px 70px}
-  .hub-god.main img{height:min(32vh,270px)}
-  .hub-god.side img{height:min(22vh,190px)}
-  .hub-god.side{margin:0 -14px}
-  #hub-aura::before{width:300px;height:300px}
+  .hub-god.main img{width:min(74vw,380px)}
+  .hub-god.side img{height:min(22vh,196px)}
+  .hub-god.side{margin:0 -18px 6px}
+  #hub-aura::before{width:340px;height:260px}
 }

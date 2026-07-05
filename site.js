@@ -272,7 +272,13 @@ var SITE = (function () {
   return {
     esc: esc, seeded: seeded, asemic: asemic, glyphMelt: glyphMelt,
     typeLines: typeLines, tab: tab, reduced: reduced,
-    asset: function (k) { return (typeof COLONY_ASSETS !== "undefined" && COLONY_ASSETS[k]) || ""; },
+    // string asset paths carry the cache stamp so a sprite SWAP actually reaches the browser
+    // (Pages caches 10 min; without ?v the old sprite lingers). objects (antSheet) pass through.
+    asset: function (k) {
+      var v = (typeof COLONY_ASSETS !== "undefined") ? COLONY_ASSETS[k] : "";
+      if (typeof v === "string" && v && window.SITE_V) return v + (v.indexOf("?") < 0 ? "?v=" + window.SITE_V : "");
+      return v || "";
+    },
     _teardown: null,
   };
 })();
