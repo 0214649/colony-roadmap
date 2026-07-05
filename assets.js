@@ -7,7 +7,10 @@
 
 const COLONY_ASSETS = {
   logo:     "logo.svg",
-  itredeth: "assets/itredeth-sprite.png",   // the first goddess, LOCKED 2026-07-05
+  // the three gods with faces, LOCKED 2026-07-05 (itRedeth the glass · itYoketh the yoke · itEfneth the machine)
+  itredeth: "assets/itredeth-sprite.png",
+  ityoketh: "assets/ityoketh-sprite.png",
+  itefneth: "assets/itefneth-sprite.png",
   // THE ANT — the locked modeled-ant pipeline, exported from the style card:
   // 8 pre-rendered headings (cols, 0=up, clockwise 45°) × 4 gait frames (rows)
   antSheet: { src: "assets/ant-sheet.png", cw: 28, ch: 26, dirs: 8, frames: 4 },

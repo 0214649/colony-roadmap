@@ -28,9 +28,18 @@
     render: function (view) {
       var d = HUB_DATA || {};
       var html = '<h1 class="sr-only">colony — an idle game where an ant colony lives on your real file system</h1>';
+      var flank = d.flankers || [];
+      function sideGod(g) {
+        return '<div class="hub-god side"><img src="' + SITE.asset(g.asset) + '" alt="' + esc(g.call) + '" decoding="async">'
+             + '<b class="hub-god-call etch-amber">' + esc(g.call) + '</b>'
+             + '<i class="hub-god-gloss">' + esc(g.gloss) + "</i></div>";
+      }
       html += '<div id="hub-stage">';
-      html += '<div id="hub-aura"><img src="' + SITE.asset("itredeth") + '" alt="itRedeth — the glass, the first goddess" decoding="async"></div>';
-      html += '<div id="hub-mirror" aria-hidden="true"><img src="' + SITE.asset("itredeth") + '" alt=""></div>';
+      html += '<div id="hub-trio">';
+      if (flank[0]) html += sideGod(flank[0]);
+      html += '<div id="hub-aura" class="hub-god main"><img src="' + SITE.asset("itredeth") + '" alt="itRedeth — the glass, the first goddess" decoding="async"></div>';
+      if (flank[1]) html += sideGod(flank[1]);
+      html += "</div>";                              // #hub-trio
       html += '<div id="hub-name" class="etch-amber"></div>';
       html += '<p id="hub-gloss">' + esc(d.gloss || "") + '</p>';
       html += '<div id="hub-greet" class="etch"></div>';

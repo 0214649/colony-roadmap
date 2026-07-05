@@ -11,6 +11,13 @@ const HUB_DATA = {
   name:  "itRedeth",
   gloss: "bridge · read · lens",
 
+  // the two gods who now share the stage — itRedeth stays the glass at the centre.
+  // she flanks the ichor spine: itYoketh (organic command) left · itEfneth (the machine) right.
+  flankers: [
+    { asset: "ityoketh", call: "itYoketh", gloss: "yoke · command" },
+    { asset: "itefneth", call: "itEfneth", gloss: "run · even · perfect" },
+  ],
+
   // her greeting — cryptic-warm, addressed to the visitor
   greeting: [
     "welcome. you found the glass.",

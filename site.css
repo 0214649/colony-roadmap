@@ -98,23 +98,26 @@ nav#tabs a.sealed.on{color:var(--amber)}   /* the active pill stays amber even o
 .lede b{color:var(--amber);font-weight:500}
 
 /* ============================ hub ============================ */
-#hub-stage{display:flex;flex-direction:column;align-items:center;text-align:center;padding:26px 0 8px}
-#hub-aura{position:relative;display:flex;justify-content:center;align-items:flex-end}
+#hub-stage{display:flex;flex-direction:column;align-items:center;text-align:center;padding:18px 0 8px}
+/* the three gods with faces — itRedeth centre (the glass), itYoketh + itEfneth flanking */
+#hub-trio{display:flex;justify-content:center;align-items:flex-end;width:100%;max-width:960px}
+.hub-god{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:flex-end}
+.hub-god img{width:auto;image-rendering:auto;filter:drop-shadow(0 16px 26px rgba(0,0,0,.5))}
+.hub-god.main{z-index:2;padding-bottom:30px}
+.hub-god.main img{position:relative;height:min(44vh,384px);
+  filter:drop-shadow(0 18px 34px rgba(0,0,0,.55))}
+.hub-god.side{z-index:1;margin:0 -22px;opacity:.95}
+.hub-god.side img{height:min(30vh,262px)}
+.hub-god-call{font-size:12.5px;font-weight:600;letter-spacing:.02em;margin-top:8px}
+.hub-god-gloss{font-size:10.5px;font-style:italic;color:var(--teal);letter-spacing:.08em;margin-top:1px}
 #hub-aura::before{
   /* her emission stays TIGHT and chromatic — a wide dim wash warms the cold
      ground into mud (ground runs cold; warm belongs to life) */
-  content:"";position:absolute;left:50%;top:46%;transform:translate(-50%,-50%);
-  width:460px;height:460px;max-width:88vw;border-radius:50%;
-  background:radial-gradient(circle, rgba(232,152,58,.32) 0%, rgba(206,118,44,.12) 32%, rgba(0,0,0,0) 56%);
+  content:"";position:absolute;left:50%;top:42%;transform:translate(-50%,-50%);
+  width:440px;height:440px;max-width:84vw;border-radius:50%;
+  background:radial-gradient(circle, rgba(232,152,58,.30) 0%, rgba(206,118,44,.11) 32%, rgba(0,0,0,0) 56%);
   pointer-events:none;
 }
-#hub-aura img{position:relative;height:min(46vh,400px);width:auto;image-rendering:auto;
-  filter:drop-shadow(0 18px 30px rgba(0,0,0,.5))}
-#hub-mirror{position:relative;height:64px;width:100%;display:flex;justify-content:center;overflow:hidden;
-  margin-top:-6px;pointer-events:none}
-#hub-mirror img{height:min(46vh,400px);transform:scaleY(-1);opacity:.10;filter:blur(2px);
-  -webkit-mask-image:linear-gradient(rgba(0,0,0,.8),transparent 62%);
-  mask-image:linear-gradient(rgba(0,0,0,.8),transparent 62%)}
 #hub-name{font-size:26px;font-weight:700;letter-spacing:.03em;margin:6px 0 2px;min-height:1.3em}
 #hub-gloss{font-size:13px;font-style:italic;color:var(--teal);letter-spacing:.14em;margin:0 0 20px;
   text-shadow:0 1px 0 rgba(0,0,0,.5)}
@@ -443,4 +446,8 @@ mark{background:rgba(224,168,90,.3);color:var(--bone);border-radius:2px}
   #chrome{padding:10px 14px;gap:10px}
   #chrome .crumb{display:none}
   #view{padding:30px 16px 70px}
+  .hub-god.main img{height:min(32vh,270px)}
+  .hub-god.side img{height:min(22vh,190px)}
+  .hub-god.side{margin:0 -14px}
+  #hub-aura::before{width:300px;height:300px}
 }
