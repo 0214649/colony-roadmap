@@ -1,0 +1,59 @@
+/* colony — hub template (renders HUB_DATA; itRedeth delivers the pitch) */
+(function () {
+  "use strict";
+  var esc = SITE.esc;
+
+  function stats(tabId) {
+    // ▽ stays singular (unit law) — chambers/events/entries are things, not units
+    if (tabId === "roadMap" && typeof COLONY_DATA !== "undefined") {
+      var total = 0, n = (COLONY_DATA.chambers || []).length;
+      (COLONY_DATA.chambers || []).forEach(function (c) {
+        (c.items || []).forEach(function (it) { total += it.shards || 0; });
+      });
+      return "<b>" + total + " ▽</b> carried · <b>" + n + "</b> chambers";
+    }
+    if (tabId === "timeline" && typeof TIMELINE_DATA !== "undefined")
+      return "<b>" + (TIMELINE_DATA.events || []).length + "</b> events";
+    if (tabId === "codex" && typeof CODEX_DATA !== "undefined") {
+      var es = CODEX_DATA.entries || [], rev = es.filter(function (e) { return e.state === "revealed"; }).length;
+      return "<b>" + es.length + "</b> entries · <b>" + rev + "</b> revealed";
+    }
+    return "";
+  }
+
+  SITE.tab({
+    id: "hub",
+    label: "hub",
+    gapAfter: false,
+    render: function (view) {
+      var d = HUB_DATA || {};
+      var html = '<h1 class="sr-only">colony — an idle game where an ant colony lives on your real file system</h1>';
+      html += '<div id="hub-stage">';
+      html += '<div id="hub-aura"><img src="' + SITE.asset("itredeth") + '" alt="itRedeth — the glass, the first goddess" decoding="async"></div>';
+      html += '<div id="hub-mirror" aria-hidden="true"><img src="' + SITE.asset("itredeth") + '" alt=""></div>';
+      html += '<div id="hub-name" class="etch-amber"></div>';
+      html += '<p id="hub-gloss">' + esc(d.gloss || "") + '</p>';
+      html += '<div id="hub-greet" class="etch"></div>';
+      html += "</div>";
+
+      html += '<div id="hub-blocks">';
+      (d.blocks || []).forEach(function (b) {
+        html += '<section class="block frost"><p class="k">' + esc(b.k) + '</p><h3>' + esc(b.t) + "</h3><p>" + b.p + "</p></section>";
+      });
+      html += "</div>";
+
+      html += '<div id="hub-explore">';
+      (d.explore || []).forEach(function (e) {
+        html += '<a class="explore frost" href="#' + esc(e.tab) + '"><p class="k">' + esc(e.tab) + '</p><p>' + esc(e.p) + '</p>'
+              + '<p class="n">' + stats(e.tab) + "</p></a>";
+      });
+      html += "</div>";
+
+      view.innerHTML = html;
+      SITE.glyphMelt(document.getElementById("hub-name"), String(d.call || ""), String(d.name || ""), function () {
+        var greet = document.getElementById("hub-greet"); // gone if the tab was left
+        if (greet) SITE.typeLines(greet, d.greeting || []);
+      });
+    },
+  });
+})();

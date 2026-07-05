@@ -3,348 +3,39 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>colony▽roadMap</title>
+<title>colony</title>
+<meta name="description" content="colony — an idle game where an ant colony lives on your real file system. the hub, the live roadMap, the timeline, and the codex of the 42.">
 <link rel="icon" type="image/svg+xml" href="logo.svg">
-<meta name="theme-color" content="#15110b">
+<meta name="theme-color" content="#0c0f14">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-  :root{
-    /* soil & chitin — matched to the game's palette (loam ground · bone text · amber signature light) */
-    --void:#15110b; --chamber:#211a12;
-    --line:rgba(232,201,150,0.11); --line-2:rgba(232,201,150,0.20);
-    --bone:#e8dcc0; --muted:#9a8a6e; --faint:#6f6349;
-    --grain:#e0a23a; --grain-deep:#b5793a; --bridge:#d98a6a;   /* amber accent · burnt-ochre · coral (teal dropped, per the game's soil&chitin lock) */
-    --sans:"Space Grotesk",system-ui,sans-serif; --mono:"JetBrains Mono",monospace;
-  }
-  *{box-sizing:border-box}
-  html,body{margin:0}
-  body{background:var(--void); color:var(--bone); font-family:var(--sans); line-height:1.5; padding:48px 20px 80px; -webkit-font-smoothing:antialiased}
-  .wrap{max-width:680px;margin:0 auto;position:relative;z-index:1}
-  #motes{position:fixed;inset:0;z-index:0;pointer-events:none}   /* ambient anthill earth-grit, drifting up in warm light */
-  .eyebrow{font-family:var(--sans);font-size:12.5px;font-weight:600;letter-spacing:0.03em;color:var(--grain);margin:0 0 12px}
-  h1{font-weight:600;font-size:34px;letter-spacing:0.02em;margin:0 0 6px}
-  .masthead{display:flex;align-items:center;gap:14px;margin:0 0 6px}
-  .masthead h1{margin:0}
-  .logo{width:42px;height:42px;flex:0 0 auto;filter:drop-shadow(0 0 5px rgba(224,162,58,0.35))}
-  .sub{font-family:var(--mono);font-size:12px;color:var(--muted);letter-spacing:0.2em;text-transform:uppercase;margin:0 0 16px}
-  .lede{color:var(--muted);font-size:15px;max-width:54ch;margin:0 0 4px;font-style:italic}
-  .lede b{color:var(--grain);font-weight:400}
-  .tally{font-family:var(--mono);font-size:12px;color:var(--faint);margin:14px 0 0;border-top:1px solid var(--line);padding-top:14px}
-  .tally b{color:var(--grain);font-weight:500}
-
-  /* build-status line — derived from the vNNN items, shows where the build actually is */
-  .status{font-family:var(--mono);font-size:12px;color:var(--muted);margin:10px 0 0;display:flex;flex-wrap:wrap;gap:7px;align-items:center}
-  .status .ship{color:var(--bridge)}
-  .status .dig{color:var(--grain)}
-  .status .arrow{color:var(--faint)}
-
-  /* toolbar — search + expand/collapse, sticky so it survives the long scroll */
-  .bar2{position:sticky;top:0;z-index:5;display:flex;gap:8px;align-items:center;margin:18px 0 22px;padding:10px 0;
-        background:linear-gradient(var(--void) 78%,rgba(20,17,13,0));backdrop-filter:blur(2px)}
-  .search{flex:1;min-width:0;font-family:var(--mono);font-size:12.5px;color:var(--bone);background:var(--chamber);
-          border:1px solid var(--line);border-radius:9px;padding:9px 12px;outline:none}
-  .search:focus{border-color:var(--line-2)}
-  .search::placeholder{color:var(--faint)}
-  .tbtn{font-family:var(--mono);font-size:11px;letter-spacing:0.08em;color:var(--muted);background:var(--chamber);
-        border:1px solid var(--line);border-radius:9px;padding:9px 11px;cursor:pointer;white-space:nowrap;-webkit-user-select:none;user-select:none}
-  .tbtn:hover{border-color:var(--line-2);color:var(--bone)}
-  .count{font-family:var(--mono);font-size:11px;color:var(--faint);white-space:nowrap}
-
-  /* glyph legend — decode the unit symbols the chambers are written in */
-  .legend{border:1px solid var(--line);border-radius:12px;background:var(--chamber);margin:0 0 12px;overflow:hidden}
-  .legend > summary{list-style:none;cursor:pointer;padding:14px 18px;display:flex;align-items:center;gap:12px;font-family:var(--sans);font-size:13.5px;font-weight:500;letter-spacing:0.01em;color:var(--grain)}
-  .legend > summary::-webkit-details-marker{display:none}
-  .legend > summary .chev{margin-left:auto;color:var(--faint);transition:transform .25s ease;font-family:var(--mono);font-size:13px}
-  .legend[open] > summary .chev{transform:rotate(90deg)}
-  .legkey{display:grid;grid-template-columns:repeat(auto-fill,minmax(196px,1fr));gap:2px 18px;padding:4px 18px 18px}
-  .legrow{display:flex;align-items:flex-start;gap:10px;padding:9px 0;border-top:1px solid var(--line);min-height:62px;box-sizing:border-box}   /* every unit = an equal-height slot */
-  .legrow .lg{font-family:var(--mono);font-size:13px;color:var(--grain);min-width:22px;text-align:center;flex:none;line-height:1.5}
-  .legrow .ln{font-size:13.5px;color:var(--bone);flex:none;min-width:62px;line-height:1.4}   /* fixed name column → notes align */
-  .legrow .ld{font-size:12px;color:var(--muted);line-height:1.4}
-  .legbands{display:flex;flex-direction:column;gap:2px;margin-top:5px}
-  .legband{font-size:11px;line-height:1.4}
-  .lbn{color:var(--grain);font-weight:600;margin-right:7px}
-  .lbt{color:var(--muted);margin-right:9px;white-space:nowrap}
-
-  details.ch{border:1px solid var(--line);border-radius:12px;background:var(--chamber);margin:0 0 12px;overflow:hidden;scroll-margin-top:64px}
-  details.ch[open]{border-color:var(--line-2)}
-  summary{list-style:none;cursor:pointer;padding:16px 18px;display:flex;align-items:center;gap:14px}
-  summary::-webkit-details-marker{display:none}
-  .dot{width:9px;height:9px;border-radius:50%;background:var(--grain);flex:none;opacity:.9}
-  .head{flex:1;min-width:0}
-  .name{font-size:17px;font-weight:500}
-  .desc{color:var(--muted);font-size:12.5px;margin-top:2px}
-  .g{font-family:var(--mono);font-size:12px;color:var(--grain);flex:none;width:54px;text-align:right}
-  .chev{flex:none;color:var(--faint);transition:transform .25s ease;font-family:var(--mono);font-size:13px}
-  details[open] > summary .chev{transform:rotate(90deg)}
-  .bar{height:4px;border-radius:3px;background:rgba(230,200,150,0.08);margin:0 18px 0 33px;position:relative}
-  .bar > i{position:absolute;inset:0;border-radius:3px;background:repeating-linear-gradient(90deg,var(--grain-deep) 0 2px,transparent 2px 5px),var(--grain);opacity:.9}
-  .subs{padding:8px 18px 18px 33px}
-  .item{display:flex;align-items:flex-start;gap:14px;padding:12px 0;border-top:1px solid var(--line)}
-  .item:first-child{border-top:none}
-  .ibody{flex:1;min-width:0}
-  .item .sname{font-size:14.5px;font-weight:500;color:var(--bone);line-height:1.4;letter-spacing:0;text-transform:none}
-  .item .sdetail{font-size:13px;color:var(--muted);line-height:1.55;margin-top:3px;letter-spacing:0;text-transform:none}
-  .smeta{flex:none;display:flex;flex-direction:column;align-items:flex-end;gap:5px;padding-top:2px}
-  .smeta .sg{font-family:var(--mono);font-size:11.5px;color:var(--faint);text-align:right}
-  .sbar{width:60px;height:3px;border-radius:2px;background:rgba(230,200,150,0.08);overflow:hidden}
-  .sbar > i{display:block;height:100%;border-radius:2px}
-  .bridge .dot{background:var(--bridge)}
-  /* status pill on versioned build items — shipped / planned / parked at a glance */
-  .pill{display:inline-block;font-family:var(--mono);font-size:9.5px;letter-spacing:0.1em;text-transform:uppercase;
-        padding:2px 7px;border-radius:999px;margin-right:8px;vertical-align:1.5px;border:1px solid currentColor;opacity:.95}
-  .pill.shipped{color:var(--bridge)}
-  .pill.planned{color:var(--grain)}
-  .pill.parked{color:var(--faint)}
-  mark{background:rgba(224,168,90,0.28);color:var(--bone);border-radius:2px}
-  .ch.hide,.item.hide{display:none}
-  .nohit{font-family:var(--mono);font-size:12px;color:var(--faint);text-align:center;padding:24px 0;display:none}
-  .foot{font-family:var(--mono);font-size:11px;color:var(--faint);margin-top:30px;text-align:center;letter-spacing:0.05em;line-height:1.7}
-  @media (prefers-reduced-motion: no-preference){
-    .wrap{animation:rise .5s ease both}
-    @keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-  }
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
 </head>
 <body>
-<canvas id="motes" aria-hidden="true"></canvas>
-<div class="wrap" id="app"></div>
+<canvas id="ground" aria-hidden="true"></canvas>
 
+<header id="chrome">
+  <span class="mark"><img src="logo.svg" alt="" width="22" height="22"><b>colony</b></span>
+  <span class="crumb">▸</span>
+  <nav id="tabs" aria-label="site"></nav>
+  <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+</header>
+
+<main id="view"></main>
+<footer id="foot"></footer>
+
+<!-- data (edit these) -->
+<script src="assets.js"></script>
 <script src="data.js"></script>
-<script>
-  // Render the page from COLONY_DATA. All totals + bar widths are computed
-  // here, so data.js only ever holds raw shard numbers (+ optional legend/updated).
-  (function () {
-    var d = COLONY_DATA;
-    var esc = function (s) {
-      return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-    };
-    var clamp = function (n) { return Math.max(0, Math.min(100, n)); };
-    var clamp01 = function (x) { return Math.max(0, Math.min(1, x)); };
-    var lerp = function (a, b, t) { return Math.round(a + (b - a) * t); };
-    var slug = function (s) { return String(s).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""); };
-    // depth heat ramp: faint brown (shallow) -> amber -> bright gold (deep)
-    var heat = function (t) {
-      var c0 = [111, 103, 84], c1 = [224, 168, 90], c2 = [255, 216, 138], a, b, u;
-      if (t < 0.5) { a = c0; b = c1; u = t / 0.5; } else { a = c1; b = c2; u = (t - 0.5) / 0.5; }
-      return "rgb(" + lerp(a[0], b[0], u) + "," + lerp(a[1], b[1], u) + "," + lerp(a[2], b[2], u) + ")";
-    };
-
-    var chambers = d.chambers || [];
-    var total = 0, maxItem = 0, maxChamber = 0;
-    var shippedV = 0, nextPlanned = 0; // derived build cursor
-    chambers.forEach(function (c) {
-      c._total = (c.items || []).reduce(function (a, it) { return a + (it.shards || 0); }, 0);
-      total += c._total;
-      if (c._total > maxChamber) maxChamber = c._total;
-      (c.items || []).forEach(function (it) {
-        if ((it.shards || 0) > maxItem) maxItem = it.shards || 0;
-        // build cursor: scan versioned items (e.g. "v010 (SHIPPED ✓ ...", "v011 (PLANNED ...")
-        var vm = String(it.name).match(/^v(\d{3})\b/);
-        if (vm) {
-          var v = parseInt(vm[1], 10);
-          if (/SHIPPED|SHIPPED ✓|\bDONE\b|\bBUILT\b/.test(it.name) && v > shippedV) shippedV = v;
-          if (/PLANNED/.test(it.name) && (nextPlanned === 0 || v < nextPlanned)) nextPlanned = v;
-        }
-      });
-    });
-    var itemScale = Math.max(12, maxItem); // deepest item = hot end of the ramp
-    var vlabel = function (n) { return "v" + ("00" + n).slice(-3); };
-
-    var html = "";
-    html += '<p class="eyebrow">' + esc(d.eyebrow) + "</p>";
-    html += '<div class="masthead"><img class="logo" src="logo.svg" alt="" width="46" height="46"><h1>' + esc(d.title) + "</h1></div>";
-    if (d.sub) html += '<p class="sub">' + esc(d.sub) + "</p>";
-    html += '<p class="lede">' + (d.lede || "") + "</p>"; // lede allows inline HTML on purpose
-    html += '<p class="tally"><b>' + total + " ▽</b> carried so far · across "
-          + chambers.length + " chambers" + (d.note ? " · " + esc(d.note) : "") + "</p>";
-
-    if (shippedV || nextPlanned) {
-      html += '<p class="status">';
-      if (shippedV) html += '<span class="ship">▣ build runs through ' + esc(vlabel(shippedV)) + "</span>";
-      if (shippedV && nextPlanned) html += '<span class="arrow">→</span>';
-      if (nextPlanned) html += '<span class="dig">now digging ' + esc(vlabel(nextPlanned)) + "</span>";
-      html += "</p>";
-    }
-
-    // glyph legend (optional data) — collapsible key so the unit symbols read
-    if (d.legend && d.legend.length) {
-      html += '<details class="legend"><summary>units · the shorthand below'
-            + '<span class="chev">›</span></summary><div class="legkey">';
-      d.legend.forEach(function (u) {
-        var nd = esc(u.note || "");
-        if (u.bands) {
-          nd += '<span class="legbands">';
-          u.bands.forEach(function (b) {
-            nd += '<span class="legband"><span class="lbn">' + esc(b[0]) + '</span>'
-                + '<span class="lbt">' + esc(b[1]) + '</span><span class="lbt">' + esc(b[2]) + '</span></span>';
-          });
-          nd += '</span>';
-        }
-        html += '<div class="legrow"><span class="lg">' + esc(u.g) + '</span>'
-              + '<span class="ln">' + esc(u.name) + '</span>'
-              + '<span class="ld">' + nd + "</span></div>";
-      });
-      html += "</div></details>";
-    }
-
-    // toolbar
-    html += '<div class="bar2">'
-          + '<input class="search" id="q" type="search" placeholder="filter the roadMap… (try \'maw\', \'tears\', \'v010\')" autocomplete="off">'
-          + '<button class="tbtn" id="expand">expand</button>'
-          + '<button class="tbtn" id="collapse">collapse</button>'
-          + '</div>'
-          + '<div class="count" id="count"></div>';
-
-    chambers.forEach(function (c) {
-      var openAttr = c.open ? " open" : "";
-      var bridgeClass = c.bridge ? " bridge" : "";
-      html += '<details class="ch' + bridgeClass + '" id="ch-' + slug(c.name) + '"' + openAttr + ">";
-      html += '<summary><span class="dot"></span>'
-            + '<span class="head"><div class="name">' + esc(c.name) + "</div>"
-            + '<div class="desc">' + esc(c.desc) + "</div></span>"
-            + '<span class="g" style="color:' + heat(maxChamber ? c._total / maxChamber : 0) + '">'
-            + c._total + ' ▽</span><span class="chev">›</span></summary>';
-      html += '<div class="bar"><i style="width:' + clamp(c._total) + '%"></i></div>';
-      html += '<div class="subs">';
-      (c.items || []).forEach(function (it) {
-        // Split "Label — detail" into a bold label + a muted detail line (first dash only).
-        var m = String(it.name).match(/^([\s\S]*?)\s+[—–]\s+([\s\S]*)$/);
-        var label = esc(m ? m[1] : it.name);
-        var detail = m ? esc(m[2]) : "";
-        var s = it.shards || 0;
-        var t = clamp01(s / itemScale);   // depth, 0..1
-        var col = heat(t);
-        var w = Math.max(6, Math.round(t * 100)); // min nub so shallow items still read
-        // status pill on versioned build items (shipped / planned / parked)
-        var pill = "";
-        if (/^v\d{3}\b/.test(it.name)) {
-          if (/SHIPPED|\bBUILT\b|\bDONE\b/.test(it.name)) pill = '<span class="pill shipped">shipped</span>';
-          else if (/PLANNED/.test(it.name)) pill = '<span class="pill planned">planned</span>';
-          else if (/parked|banked|deferred/i.test(it.name)) pill = '<span class="pill parked">parked</span>';
-        }
-        html += '<div class="item"><div class="ibody">'
-              + '<div class="sname">' + pill + label + "</div>"
-              + (detail ? '<div class="sdetail">' + detail + "</div>" : "")
-              + '</div><div class="smeta">'
-              + '<span class="sg" style="color:' + col + '">' + s + "</span>"
-              + '<span class="sbar"><i style="width:' + w + '%;background:' + col + '"></i></span>'
-              + "</div></div>";
-      });
-      html += "</div></details>";
-    });
-
-    html += '<div class="nohit" id="nohit">nothing matches — clear the filter</div>';
-    var footTxt = esc(d.foot) + (d.updated ? "  ·  updated " + esc(d.updated) : "");
-    html += '<p class="foot">' + footTxt + "</p>";
-    document.getElementById("app").innerHTML = html;
-    document.title = d.title + "▽roadMap";
-
-    // ---- interaction: deep-links, search filter, expand/collapse ----
-    var allCh = Array.prototype.slice.call(document.querySelectorAll("details.ch"));
-    var items = Array.prototype.slice.call(document.querySelectorAll(".item"));
-    var nohit = document.getElementById("nohit");
-    var countEl = document.getElementById("count");
-
-    // open the chamber named in the URL hash and scroll to it
-    function openHash() {
-      if (!location.hash) return;
-      var el = document.querySelector(location.hash.replace(/[^#\w-]/g, ""));
-      if (el && el.tagName === "DETAILS") {
-        el.open = true;
-        if (el.scrollIntoView) el.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
-    }
-    var ready = false; // suppress URL rewrites from the initial programmatic open
-    allCh.forEach(function (c) {
-      c.addEventListener("toggle", function () {
-        if (ready && c.open && !document.getElementById("q").value) {
-          try { history.replaceState(null, "", "#" + c.id); } catch (e) {}
-        }
-      });
-    });
-    window.addEventListener("hashchange", openHash);
-    if ("scrollRestoration" in history) history.scrollRestoration = "manual";   // the browser must NOT restore scroll on reload
-    // on every load/refresh: land at the TOP with everything closed — drop any stale hash left by browsing
-    if (location.hash) { try { history.replaceState(null, "", location.pathname + location.search); } catch (e) {} }
-    window.scrollTo(0, 0);
-
-    document.getElementById("expand").onclick = function () { allCh.forEach(function (c) { if (!c.classList.contains("hide")) c.open = true; }); };
-    document.getElementById("collapse").onclick = function () { allCh.forEach(function (c) { c.open = false; }); };
-
-    // live text filter — highlight hits, hide misses, auto-open chambers with a match
-    var q = document.getElementById("q");
-    function unmark(el) {
-      el.querySelectorAll("mark").forEach(function (mk) { var p = mk.parentNode; p.replaceChild(document.createTextNode(mk.textContent), mk); p.normalize(); });
-    }
-    function markText(el, re) {
-      // mark only inside .sname/.sdetail text nodes (keeps pills/structure intact)
-      el.querySelectorAll(".sname, .sdetail").forEach(function (node) {
-        Array.prototype.slice.call(node.childNodes).forEach(function (n) {
-          if (n.nodeType !== 3) return;
-          var txt = n.nodeValue; if (!re.test(txt)) return;
-          var span = document.createElement("span");
-          span.innerHTML = esc(txt).replace(re, function (mm) { return "<mark>" + esc(mm) + "</mark>"; });
-          while (span.firstChild) node.insertBefore(span.firstChild, n);
-          node.removeChild(n);
-        });
-      });
-    }
-    function filter() {
-      var raw = q.value.trim();
-      items.forEach(unmark);
-      if (!raw) {
-        items.forEach(function (it) { it.classList.remove("hide"); });
-        allCh.forEach(function (c) { c.classList.remove("hide"); });
-        // clearing the filter returns everything to CLOSED (matches a fresh load)
-        allCh.forEach(function (c) { c.open = false; });
-        nohit.style.display = "none"; countEl.textContent = "";
-        return;
-      }
-      var re = new RegExp(raw.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "gi");
-      var hits = 0;
-      allCh.forEach(function (c) {
-        var any = 0;
-        c.querySelectorAll(".item").forEach(function (it) {
-          var match = re.test(it.textContent); re.lastIndex = 0;
-          if (match) { it.classList.remove("hide"); markText(it, re); re.lastIndex = 0; any++; hits++; }
-          else it.classList.add("hide");
-        });
-        if (any) { c.classList.remove("hide"); c.open = true; } else c.classList.add("hide");
-      });
-      nohit.style.display = hits ? "none" : "block";
-      countEl.textContent = hits + (hits === 1 ? " line" : " lines") + " matched";
-    }
-    q.addEventListener("input", filter);
-    // press "/" to jump to the filter
-    document.addEventListener("keydown", function (e) {
-      if (e.key === "/" && document.activeElement !== q) { e.preventDefault(); q.focus(); }
-      if (e.key === "Escape" && document.activeElement === q) { q.value = ""; filter(); q.blur(); }
-    });
-    ready = true; // now live: user toggles update the URL hash
-  })();
-</script>
-<script>
-/* ambient earth-grit motes — the anthill's warm dust, drifting up (soil & chitin) */
-(function () {
-  var c = document.getElementById("motes"), x = c.getContext("2d"), W, H, motes = [];
-  function size() { W = c.width = window.innerWidth; H = c.height = window.innerHeight; }
-  size(); window.addEventListener("resize", size);
-  for (var i = 0; i < 36; i++) motes.push({ x: Math.random(), y: Math.random(), r: 0.6 + Math.random() * 1.5, s: 6 + Math.random() * 14, a: 0.05 + Math.random() * 0.13, ph: Math.random() * 6.28 });
-  function tick(t) {
-    x.clearRect(0, 0, W, H);
-    for (var i = 0; i < motes.length; i++) {
-      var m = motes[i];
-      m.y -= m.s / (H * 60); if (m.y < -0.03) { m.y = 1.03; m.x = Math.random(); }
-      var px = m.x * W + Math.sin(t * 0.0004 + m.ph) * 9, py = m.y * H;
-      x.beginPath(); x.arc(px, py, m.r, 0, 6.283); x.fillStyle = "rgba(224,162,58," + m.a + ")"; x.fill();
-    }
-    requestAnimationFrame(tick);
-  }
-  requestAnimationFrame(tick);
-})();
-</script>
+<script src="hub.js"></script>
+<script src="timeline.js"></script>
+<script src="codex.js"></script>
+<!-- templates (touch only for real layout/style work) -->
+<script src="site.js"></script>
+<script src="tab-hub.js"></script>
+<script src="tab-roadmap.js"></script>
+<script src="tab-timeline.js"></script>
+<script src="tab-codex.js"></script>
 </body>
 </html>

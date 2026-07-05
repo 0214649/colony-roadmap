@@ -1,31 +1,50 @@
-# COLONY roadmap — notes for Claude
+# colony website — notes for Claude
 
-Live **public** roadmap for the game COLONY. Served via GitHub Pages at
+Live **public** site for the game colony. Served via GitHub Pages at
 https://0214649.github.io/colony-roadmap/ (branch `main`, root). Local clone:
-`~/colony/colony-roadmap`.
+`~/colony/colony-roadmap`. **Read the `colony-website` skill first — it is the law**
+(data-driven + modular, the security rule, bible lockstep).
 
-Claude owns updates here: when dirty rat asks for a roadmap change, make it and
+Claude owns updates here: when dirty rat asks for a change, make it and
 **commit + push without asking** (same convention as the `claude-setup` repo).
 
-## Edit ONLY `data.js`
-- `data.js` holds all content — change `shards` numbers, add/remove items, or add a
-  whole chamber block.
-- Totals, bar widths, and the top tally **all auto-compute** in `index.html` — never
-  hand-edit them.
-- Touch `index.html` only for genuine layout/style changes.
+## The structure (since the glass rework, 2026-07-05)
+**Every page reads a DATA file; templates only render.** Adding content = a one-file,
+near-one-line change. NEVER hardcode content or a sprite path in a template.
+
+| data (edit these)  | what it holds                                             |
+|--------------------|-----------------------------------------------------------|
+| `data.js`          | the roadMap — chambers/shards (totals/bars/status AUTO-compute; never hand-edit those) |
+| `hub.js`           | the hub/presentation — itRedeth's greeting + pitch blocks |
+| `timeline.js`      | dated project events                                      |
+| `codex.js`         | the 42 — `state:"locked"` → flip to `"revealed"` + fields  |
+| `assets.js`        | the sprite manifest: logical name → `assets/` path        |
+
+| templates (layout/style work only) |
+|------------------------------------|
+| `index.html` (shell) · `site.css` (the glass identity tokens) · `site.js` (router · ground · shared craft) · `tab-hub.js` · `tab-roadmap.js` · `tab-timeline.js` · `tab-codex.js` |
+
+## Identity (LOCKED by dirty rat, 2026-07-05): THE GLASS
+The site is itRedeth's interface. Cold slate ground (`#0c0f14`), milky-frost panels,
+etched UI, **Inter**, amber `#e0a23a` = the single signature light; bone text; teal for
+gloss/meta lines; coral for shipped/bridge. camelCase everywhere, units singular.
+The manuscript (private bible view, when built) = the one warm vellum room.
+
+## Security (LOCKED): private views ship ONLY as client-side AES-GCM blobs
+Bible/heroes content NEVER touches this repo readable. Encrypt locally from
+`~/colony/colony-design` (source of truth) → commit ciphertext only. One passphrase,
+Claude-minted. See the `colony-website` skill before touching private pages.
 
 ## Protocol
 1. `git pull` (a browser edit may have landed).
-2. Edit `data.js`.
+2. Edit the DATA file (or add a module).
 3. `git commit -am "..." && git push` → Pages redeploys in ~30s.
+4. When design depth changes: bible (dated, flagged) + `data.js` shards + codex together.
 
 ## Conventions
-- unit = ▽ shards · `open: true` = chamber starts expanded · `bridge: true` = teal dot.
-- `data.js` also carries two optional reader-aids: `updated` (a date string, shown in
-  the footer) and `legend` (array of `{ g, name, note }` glyph rows for the units key).
-  Keep `legend` current as new units are coined; bump `updated` when you change content.
-- `index.html` auto-derives the build-status line and the shipped/planned/parked pills
-  from the `vNNN (...)` item names — don't hand-maintain those.
+- unit = ▽ shard · `open: true` = chamber starts expanded · `bridge: true` = coral dot.
+- `data.js` reader-aids: `updated` (footer date) + `legend` (units key) — keep current.
+- Build-status line + shipped/planned/parked pills auto-derive from `vNNN (...)` names.
+- Legacy `#ch-<slug>` deep links still work (router maps them into the roadMap tab).
 - The `D:\Downloads\_colony_old_snapshots\` files are STALE — ignore them.
-- Full design lives in the private `colony-design` repo. When design depth changes,
-  bump the matching chamber's shards here too.
+- Full design lives in the private `colony-design` repo.
