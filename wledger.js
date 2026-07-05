@@ -51,5 +51,6 @@ const WLEDGER_DATA = {
     { w: "w055", date: "2026-07-05", title: "the dialogue — her opening moment", note: "itRedeth manifests over the dimmed colony: aura, floating typewriter text, no box. the dialogue iterations join the w count here.", img: "w055" },
     { w: "w056", date: "2026-07-05", title: "dialogue — the name melts", note: "her name arrives archaic and glyph-melts into itRedeth; the colony stays alive behind her.", img: "w056" },
     { w: "w057", date: "2026-07-05", title: "dialogue — the canon naming", note: "se þe rædaþ, per the vault: the naming line melts on the label and the spoken text at once; the gloss line joins per the codex schema.", img: "w057" },
+    { w: "w058", date: "2026-07-05", title: "the glass — dialogue, the final faces", note: "the dialogue interface with the locked sprites: itRedeth (cold, reclining) speaks over the dimmed colony — 'you leaned close to the glass — i felt the warmth' … 'she recedes. the colony never stopped.' itEfneth's flat procedural lines join, itYoketh present; retoned glows, head-matched scale.", img: "w058" },
   ],
 };

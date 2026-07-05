@@ -103,20 +103,24 @@ nav#tabs a.sealed.on{color:var(--amber)}   /* the active pill stays amber even o
 #hub-trio{display:flex;justify-content:center;align-items:flex-end;width:100%;max-width:960px}
 .hub-god{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:flex-end}
 .hub-god img{width:auto;image-rendering:auto;filter:drop-shadow(0 16px 26px rgba(0,0,0,.5))}
-/* itRedeth is the cold glass-goddess now — PRONE + wide; she reclines as the
-   centrepiece (widest, foreground), the two gods kneel beside her */
+/* the three at their CANONICAL relative scale (dirty rat's proportions:
+   itYoketh 305×445 · itRedeth 417×260 reclining · itEfneth 267×430) — one common
+   zoom, bottom-aligned on a shared ground. the vh + px caps share the ratio so it
+   holds at every size. itRedeth is small/low (she reclines, the lens on the floor). */
+#hub-trio{gap:clamp(6px,3vw,40px)}
 .hub-god.main{z-index:2;padding-bottom:30px}
-.hub-god.main img{position:relative;width:min(50vw,510px);height:auto;
-  filter:drop-shadow(0 16px 30px rgba(0,0,0,.55))}
-.hub-god.side{z-index:1;margin:0 -30px 8px;opacity:.94}
-.hub-god.side img{height:min(32vh,286px)}
+.hub-god.main img{position:relative;filter:drop-shadow(0 14px 26px rgba(0,0,0,.55))}
+.hub-god.side{z-index:1;opacity:.95}
+.hub-god.g-ityoketh img{height:min(48vh,445px)}
+.hub-god.g-itredeth img{height:min(28vh,260px)}
+.hub-god.g-itefneth img{height:min(46.4vh,430px)}
 .hub-god-call{font-size:12.5px;font-weight:600;letter-spacing:.02em;margin-top:8px}
 .hub-god-gloss{font-size:10.5px;font-style:italic;color:var(--teal);letter-spacing:.08em;margin-top:1px}
 #hub-aura::before{
-  /* her light runs COOL now (the cold glass) — a soft cyan bloom, kept tight */
-  content:"";position:absolute;left:50%;top:52%;transform:translate(-50%,-50%);
-  width:520px;height:400px;max-width:88vw;border-radius:50%;
-  background:radial-gradient(ellipse, rgba(150,212,236,.17) 0%, rgba(120,178,208,.07) 36%, rgba(0,0,0,0) 62%);
+  /* her light runs COOL now (the cold glass) — a soft cyan bloom around the reclining form */
+  content:"";position:absolute;left:50%;top:56%;transform:translate(-50%,-50%);
+  width:400px;height:280px;max-width:80vw;border-radius:50%;
+  background:radial-gradient(ellipse, rgba(150,212,236,.18) 0%, rgba(120,178,208,.07) 40%, rgba(0,0,0,0) 66%);
   pointer-events:none;
 }
 #hub-name{font-size:26px;font-weight:700;letter-spacing:.03em;margin:6px 0 2px;min-height:1.3em}
@@ -447,8 +451,9 @@ mark{background:rgba(224,168,90,.3);color:var(--bone);border-radius:2px}
   #chrome{padding:10px 14px;gap:10px}
   #chrome .crumb{display:none}
   #view{padding:30px 16px 70px}
-  .hub-god.main img{width:min(74vw,380px)}
-  .hub-god.side img{height:min(22vh,196px)}
-  .hub-god.side{margin:0 -18px 6px}
-  #hub-aura::before{width:340px;height:260px}
+  .hub-god.g-ityoketh img{height:min(34vh,300px)}
+  .hub-god.g-itredeth img{height:min(19.9vh,175px)}
+  .hub-god.g-itefneth img{height:min(32.9vh,290px)}
+  #hub-trio{gap:clamp(2px,1.5vw,14px)}
+  #hub-aura::before{width:280px;height:200px}
 }
