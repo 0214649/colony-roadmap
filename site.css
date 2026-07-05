@@ -294,22 +294,24 @@ mark{background:rgba(224,168,90,.3);color:var(--bone);border-radius:2px}
 .cxw-ultra.out{fill:#9fb0c2;opacity:.9;paint-order:stroke;stroke:rgba(8,11,16,.85);stroke-width:2.5px}
 .cxw-node{cursor:pointer}
 .cxw-node .hit{fill:transparent;stroke:none}
-/* the lit gems */
-.cxw-node .halo{opacity:.20;transition:opacity .22s ease}
-.cxw-node .glow{opacity:.42;transition:opacity .22s ease}
+/* the lit stars — a crisp bright core + ring inside a soft glow, so each READS
+   clearly against the dark cursed field (classes match the markup) */
+.cxw-node .bloom-lg{opacity:.5;transition:opacity .22s ease}
+.cxw-node .bloom{opacity:.82;transition:opacity .22s ease}
+.cxw-node .ring{stroke-width:.9;opacity:.55;transition:opacity .22s ease}
 .cxw-node .gem{transition:opacity .22s ease}
-.cxw-node .spark{opacity:.85}
-.cxw-node.lit:hover .halo{opacity:.42}
-.cxw-node.lit:hover .glow{opacity:.7}
-.cxw-node .lbl{font:600 11px var(--ui);letter-spacing:.01em;opacity:.9;
-  paint-order:stroke;stroke:rgba(6,9,14,.9);stroke-width:2.8px;
-  transition:opacity .22s ease}
+.cxw-node .spark{opacity:1}
+.cxw-node.lit:hover .bloom-lg{opacity:.85}
+.cxw-node.lit:hover .bloom{opacity:1}
+.cxw-node.lit:hover .ring{opacity:.95}
+.cxw-node .lbl{font:600 11px var(--ui);letter-spacing:.01em;opacity:.94;
+  paint-order:stroke;stroke:rgba(4,6,11,.96);stroke-width:3px;transition:opacity .22s ease}
 .cxw-node.lit:hover .lbl{opacity:1}
-/* the sealed stars — a frosted point, faintly its region's hue */
-.cxw-node .dim{opacity:.5;transition:opacity .22s ease}
-.cxw-node .dim-ring{fill:none;stroke-opacity:.4;stroke-width:1;transition:stroke-opacity .22s ease}
-.cxw-node.sealed:hover .dim{opacity:.9}
-.cxw-node.sealed:hover .dim-ring{stroke-opacity:.85}
+/* the sealed stars — a clear faint point (not lost in the dark) */
+.cxw-node .dim-glow{opacity:.55;transition:opacity .22s ease}
+.cxw-node .dim{opacity:.9;transition:opacity .22s ease}
+.cxw-node.sealed:hover .dim-glow{opacity:.9}
+.cxw-node.sealed:hover .dim{opacity:1}
 /* ===== the deity pane — a frosted glass panel over the living wheel =====
    z BELOW the ants (#antlayer z70) so they walk across the glass; ABOVE the map,
    which keeps turning, blurred, behind the pane (backdrop-filter re-samples each frame). */

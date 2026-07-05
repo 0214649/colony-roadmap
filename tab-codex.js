@@ -195,16 +195,17 @@
         if (e.state === "revealed") {
           var vd = e.call === "itSwelgeth", col = depthShade(base, e.depth, vd);
           var glow = vd ? mix(base, PIT, 0.24) : mix(base, WHITE, (e.depth || 0) * 0.08);
-          var core = rgb(mix(col, WHITE, vd ? 0.16 : 0.28)), lbl = rgb(mix(col, WHITE, 0.72));
+          var core = rgb(mix(col, WHITE, vd ? 0.26 : 0.55)), lbl = rgb(mix(col, WHITE, 0.72));
           var lp = wild ? { x: p.x, y: p.y + 32, anchor: "middle" } : radialLabel(e.line * 30, R_DEPTH[e.depth], e.depth);
-          s += '<circle class="bloom-lg" cx="' + fmt(p.x) + '" cy="' + fmt(p.y) + '" r="' + (wild ? 13 : 11) + '" fill="' + rgb(glow) + '" filter="url(#cxbloomlg)"/>'
-             + '<circle class="bloom" cx="' + fmt(p.x) + '" cy="' + fmt(p.y) + '" r="' + (wild ? 8 : 7) + '" fill="' + rgb(mix(glow, WHITE, 0.2)) + '" filter="url(#cxbloom)"/>'
-             + '<circle class="gem" cx="' + fmt(p.x) + '" cy="' + fmt(p.y) + '" r="' + (wild ? 4.6 : 4) + '" fill="' + core + '"/>'
-             + '<circle class="spark" cx="' + fmt(p.x - 1.3) + '" cy="' + fmt(p.y - 1.6) + '" r="1.3" fill="#ffffff"/>'
+          s += '<circle class="bloom-lg" cx="' + fmt(p.x) + '" cy="' + fmt(p.y) + '" r="' + (wild ? 14 : 12) + '" fill="' + rgb(glow) + '" filter="url(#cxbloomlg)"/>'
+             + '<circle class="bloom" cx="' + fmt(p.x) + '" cy="' + fmt(p.y) + '" r="' + (wild ? 8.5 : 7.5) + '" fill="' + rgb(mix(glow, WHITE, 0.4)) + '" filter="url(#cxbloom)"/>'
+             + '<circle class="ring" cx="' + fmt(p.x) + '" cy="' + fmt(p.y) + '" r="' + (wild ? 6.2 : 5.6) + '" fill="none" stroke="' + rgb(mix(glow, WHITE, 0.35)) + '"/>'
+             + '<circle class="gem" cx="' + fmt(p.x) + '" cy="' + fmt(p.y) + '" r="' + (wild ? 5 : 4.4) + '" fill="' + core + '"/>'
+             + '<circle class="spark" cx="' + fmt(p.x - 1) + '" cy="' + fmt(p.y - 1.3) + '" r="1.9" fill="#ffffff"/>'
              + '<text class="lbl" x="' + fmt(lp.x) + '" y="' + fmt(lp.y) + '" text-anchor="' + lp.anchor + '" fill="' + lbl + '">' + esc(e.call) + "</text>";
         } else {
-          s += '<circle class="dim-glow" cx="' + fmt(p.x) + '" cy="' + fmt(p.y) + '" r="5" fill="' + rgb(mix(base, PIT, 0.3)) + '" filter="url(#cxbloom)"/>'
-             + '<circle class="dim" cx="' + fmt(p.x) + '" cy="' + fmt(p.y) + '" r="2.4" fill="' + rgb(mix(base, WHITE, 0.25)) + '"/>';
+          s += '<circle class="dim-glow" cx="' + fmt(p.x) + '" cy="' + fmt(p.y) + '" r="5.5" fill="' + rgb(mix(base, WHITE, 0.1)) + '" filter="url(#cxbloom)"/>'
+             + '<circle class="dim" cx="' + fmt(p.x) + '" cy="' + fmt(p.y) + '" r="2.9" fill="' + rgb(mix(base, WHITE, 0.55)) + '"/>';
         }
         s += '<circle class="hit" cx="' + fmt(p.x) + '" cy="' + fmt(p.y) + '" r="18"/>'
            + "<title>" + esc(e.state === "revealed" ? e.call + " — " + (e.seat || "") : "sealed — " + derivedSeat(e)) + "</title></g>";
