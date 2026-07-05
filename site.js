@@ -226,8 +226,8 @@ var SITE = (function () {
     n.innerHTML = html;
   }
 
-  // legacy hash aliases (renames + the ledger's move into the hord)
-  var ALIAS = { timeline: "timeLine", manuscript: "manuScript", heroes: "hord", wLedger: "hord", wledger: "hord" };
+  // legacy hash aliases (renames + the ledger's move into the witness room)
+  var ALIAS = { timeline: "timeLine", manuscript: "manuScript", heroes: "witness", hord: "witness", wLedger: "witness", wledger: "witness" };
 
   var current = null;
   function route() {

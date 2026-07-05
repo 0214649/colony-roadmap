@@ -306,5 +306,5 @@
     },
   });
 
-  // the private rooms (manuscript · hord) register from their own tab files, behind crypt.js
+  // the private rooms (manuscript · witness) register from their own tab files, behind crypt.js
 })();

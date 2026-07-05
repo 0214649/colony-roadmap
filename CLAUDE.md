@@ -18,12 +18,12 @@ near-one-line change. NEVER hardcode content or a sprite path in a template.
 | `hub.js`           | the hub/presentation — itRedeth's greeting + pitch blocks |
 | `timeline.js`      | dated project events (the timeLine tab)                   |
 | `codex.js`         | the 42 — `state:"locked"` → flip to `"revealed"` + fields  |
-| `wledger.js`       | the w ledger (renders inside the gated hord room)         |
+| `wledger.js`       | the w ledger (renders inside the gated witness room)      |
 | `assets.js`        | the sprite manifest: logical name → `assets/` path        |
 
-Tab names are camelCase: hub · roadMap · timeLine · codex · manuScript · hord
-(the hord = the old heroes room, renamed 2026-07-05; #heroes/#wLedger alias to it;
-the blob key + vault file stay `heroes`).
+Tab names are camelCase: hub · roadMap · timeLine · codex · manuScript · witness
+(witness = the old heroes room, renamed 2026-07-05 heroes→hord→witness;
+#heroes/#hord/#wLedger alias to it; the blob key + vault file stay `heroes`).
 Browser title = `▽` + section (no site name — style first). The ants on the top layer
 live in PAGE space (antLayer in site.js, sheet via the manifest).
 

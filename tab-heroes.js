@@ -1,8 +1,8 @@
-/* colony — the hord (private room: ONE manuscript — the vault's writings, then
+/* colony — the witness (private room: ONE manuscript — the vault's writings, then
    THE W LEDGER as the artifacts record, all on the vellum; face = crimson).
-   hord = OE treasure-store; Beowulf's "wordhord onleac" — the word-hoard,
-   unlocked. at THIS hoard's gate the unlocking is done by a word, which is
-   the joke. (was "heroes"; hashes alias; blob key + vault file stay heroes.) */
+   witness = the record of the making: the named figures + every render, and the
+   rejects that "are witnesses" (the vault's own word). (was "heroes" → "hord" →
+   "witness"; #heroes/#hord/#wLedger hashes alias; blob key + vault file stay "heroes".) */
 (function () {
   "use strict";
   var esc = SITE.esc;
@@ -44,14 +44,14 @@
     body = body.indexOf("</h1>") >= 0 ? body.replace("</h1>", "</h1>\n" + tocHtml) : tocHtml + body;
 
     var html = '<div id="ms">';
-    html += '<div class="ms-bar"><p class="eyebrow">hord</p>'
+    html += '<div class="ms-bar"><p class="eyebrow">witness</p>'
           + '<button class="tbtn" id="ms-seal">seal the room</button></div>';
-    html += '<p class="lede">the hoard — the named and the made, kept under one word.</p>';
+    html += '<p class="lede">the witness — the named and the made, and the rejects that stand for the road.</p>';
     html += '<div class="vellum unseal">';
     html += '<p class="ms-meta">transcribed from the vault · ' + esc(payload.meta.vault || "")
           + " · " + esc(payload.meta.generated || "") + "</p>";
     html += '<article class="ms-body">' + body + ledgerHtml()
-          + '<div class="orn">⁘</div><p class="ms-colophon">the hord stays open — more is carried in with every sitting.</p>'
+          + '<div class="orn">⁘</div><p class="ms-colophon">the witness keeps growing — more is carried in with every sitting.</p>'
           + "</article>";
     html += "</div></div>";
     html += '<button class="tbtn" id="ms-top">contents ⌃</button>';
@@ -59,7 +59,7 @@
 
     document.getElementById("ms-seal").addEventListener("click", function () {
       SITE_CRYPT.seal();
-      SITE_CRYPT.gate(view, "heroes", "hord", function (p) { room(view, p); });
+      SITE_CRYPT.gate(view, "heroes", "witness", function (p) { room(view, p); });
     });
     view.querySelectorAll(".ms-toc a").forEach(function (a) {
       a.addEventListener("click", function (e) {
@@ -95,11 +95,11 @@
   }
 
   SITE.tab({
-    id: "hord",
-    label: "hord",
+    id: "witness",
+    label: "witness",
     sealed: true,
     render: function (view) {
-      SITE_CRYPT.gate(view, "heroes", "hord", function (p) { room(view, p); });
+      SITE_CRYPT.gate(view, "heroes", "witness", function (p) { room(view, p); });
     },
   });
 })();

@@ -8,7 +8,7 @@
     label: "timeLine",
     render: function (view) {
       var evs = (TIMELINE_DATA.events || []).slice().sort(function (a, b) {
-        return a.date < b.date ? 1 : a.date > b.date ? -1 : 0;
+        return a.date < b.date ? -1 : a.date > b.date ? 1 : 0;   // oldest first — the growth reads forward, the v's climb
       });
       // filter chips derive from whatever tags the data carries
       var tags = [];
