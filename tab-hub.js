@@ -30,8 +30,9 @@
       var html = '<h1 class="sr-only">colony — an idle game where an ant colony lives on your real file system</h1>';
       var flank = d.flankers || [];
       function sideGod(g) {
+        // call left EMPTY (target in data-call) — it starts ciphered, itRedeth decrypts it after herself
         return '<div class="hub-god side g-' + esc(g.asset) + '"><img src="' + SITE.asset(g.asset) + '" alt="' + esc(g.call) + '" decoding="async">'
-             + '<b class="hub-god-call etch-amber">' + esc(g.call) + '</b>'
+             + '<b class="hub-god-call etch-amber" data-call="' + esc(g.call) + '"></b>'
              + '<i class="hub-god-gloss">' + esc(g.gloss) + "</i></div>";
       }
       html += '<div id="hub-stage">';
@@ -59,8 +60,21 @@
       html += "</div>";
 
       view.innerHTML = html;
+      // all three names start in the old cipher; itRedeth resolves first, then she
+      // turns and decrypts the other two, one after the other (she is the translator).
+      var CIPHER = "ΘΔΨΦΞΠΣΩþðæ";
+      function cryptStr(seed, len) { var r = SITE.seeded("crypt-" + seed), s = ""; for (var i = 0; i < len; i++) s += CIPHER[Math.floor(r() * CIPHER.length)]; return s; }
+      var flankEls = Array.prototype.slice.call(view.querySelectorAll(".hub-god-call"));
+      flankEls.forEach(function (el) {
+        var call = el.getAttribute("data-call") || "";
+        el.textContent = SITE.reduced ? call : cryptStr(call, call.length);
+      });
       SITE.glyphMelt(document.getElementById("hub-name"), String(d.call || ""), String(d.name || ""), function () {
-        var greet = document.getElementById("hub-greet"); // gone if the tab was left
+        flankEls.forEach(function (el, j) {                 // the cascade — she decrypts them in turn
+          var call = el.getAttribute("data-call") || "";
+          setTimeout(function () { if (el.isConnected) SITE.glyphMelt(el, cryptStr(call, call.length), call); }, 200 + j * 460);
+        });
+        var greet = document.getElementById("hub-greet");   // gone if the tab was left
         if (greet) SITE.typeLines(greet, d.greeting || []);
       });
     },

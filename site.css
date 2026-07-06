@@ -317,53 +317,54 @@ mark{background:rgba(224,168,90,.3);color:var(--bone);border-radius:2px}
 /* ===== the deity pane — a frosted glass panel over the living wheel =====
    z BELOW the ants (#antlayer z70) so they walk across the glass; ABOVE the map,
    which keeps turning, blurred, behind the pane (backdrop-filter re-samples each frame). */
-#cx-deity{position:fixed;inset:0;z-index:55;cursor:zoom-out;
-  background:radial-gradient(130% 95% at 42% 46%, rgba(4,6,11,.32), rgba(2,3,7,.66));
-  -webkit-backdrop-filter:blur(30px) saturate(1.32) brightness(.9);
-  backdrop-filter:blur(30px) saturate(1.32) brightness(.9);
-  animation:cxDeityIn .34s ease both}
+#cx-deity{position:fixed;inset:0;z-index:55;display:flex;align-items:center;justify-content:center;
+  padding:5vh 4vw;cursor:zoom-out;background:rgba(4,6,11,.42);animation:cxDeityIn .3s ease both}
 @keyframes cxDeityIn{from{opacity:0}to{opacity:1}}
 
-/* the sprite — big, free-standing, pinned to the left edge, bottom-anchored */
-.cx-deity-fig{position:absolute;left:0;top:0;bottom:0;width:clamp(300px,44vw,720px);
-  display:flex;align-items:flex-end;justify-content:center;pointer-events:none}
-.cx-deity-glow{position:absolute;left:50%;top:46%;transform:translate(-50%,-50%);
-  width:min(64vh,660px);height:min(64vh,660px);border-radius:50%;pointer-events:none;
-  background:radial-gradient(circle, var(--gh) 0%, transparent 62%);opacity:.22;filter:blur(6px)}
-.cx-deity-sprite{position:relative;max-height:88vh;max-width:94%;width:auto;height:auto;
-  filter:drop-shadow(0 26px 52px rgba(0,0,0,.66));animation:cxFigRise .52s cubic-bezier(.2,.7,.2,1) both}
-@keyframes cxFigRise{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
-.cx-deity-formless{position:relative;display:flex;flex-direction:column;align-items:center;gap:16px;padding-bottom:9vh}
-.cx-deity-formless .cx-rune{width:200px;height:310px;opacity:.7}
+/* one wide glass panel — sprite + intel side by side, the wheel blurred behind it */
+.cx-deity-pane{position:relative;overflow:hidden;cursor:auto;
+  width:min(1120px,94vw);max-height:88vh;display:flex;gap:42px;align-items:center;padding:38px 46px;
+  border-radius:20px;border:1px solid var(--frost-line-2);
+  background:linear-gradient(rgba(20,26,36,.6),rgba(11,16,25,.72));
+  -webkit-backdrop-filter:blur(28px) saturate(1.4) brightness(1.03);
+  backdrop-filter:blur(28px) saturate(1.4) brightness(1.03);
+  box-shadow:0 34px 90px rgba(0,0,0,.62), inset 0 1px 0 rgba(255,255,255,.07);
+  animation:cxPaneIn .42s cubic-bezier(.2,.7,.2,1) both}
+@keyframes cxPaneIn{from{opacity:0;transform:translateY(16px) scale(.986)}to{opacity:1;transform:none}}
+.cx-deity-glow{position:absolute;left:26%;top:50%;transform:translate(-50%,-50%);
+  width:min(48vh,480px);height:min(48vh,480px);border-radius:50%;pointer-events:none;
+  background:radial-gradient(circle, var(--gh) 0%, transparent 62%);opacity:.2;filter:blur(4px)}
+
+/* the sprite — big, within the panel, on the left */
+.cx-deity-fig{position:relative;z-index:1;flex:0 0 auto;width:min(42%,430px);
+  display:flex;align-items:center;justify-content:center}
+.cx-deity-sprite{max-height:min(72vh,540px);max-width:100%;width:auto;height:auto;
+  filter:drop-shadow(0 22px 42px rgba(0,0,0,.62));animation:cxFigRise .5s cubic-bezier(.2,.7,.2,1) both}
+@keyframes cxFigRise{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+.cx-deity-formless{display:flex;flex-direction:column;align-items:center;gap:14px}
+.cx-deity-formless .cx-rune{width:180px;height:280px;opacity:.7}
 .cx-deity-noface{font-size:11px;letter-spacing:.2em;color:var(--faint);font-style:italic;opacity:.8}
 
-/* the intel — right side, vertically centred, sorted by category */
-.cx-deity-info{position:absolute;right:0;top:0;bottom:0;width:min(44vw,500px);
-  padding:0 6vw 0 40px;display:flex;flex-direction:column;justify-content:center;cursor:auto;
-  text-align:left;overflow-y:auto;
-  background:linear-gradient(100deg, rgba(8,11,17,0), rgba(8,11,17,.5) 42%);
-  animation:cxInfoIn .5s ease .06s both}
-@keyframes cxInfoIn{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:none}}
+/* the intel — right column, sorted by category */
+.cx-deity-info{position:relative;z-index:1;flex:1;min-width:0;text-align:left;max-height:82vh;overflow-y:auto}
 .cx-deity-eyebrow{font-size:11px;font-weight:600;letter-spacing:.26em;text-transform:uppercase;color:var(--faint);margin:0 0 8px}
-.cx-deity-call{font-size:clamp(30px,3.6vw,46px);font-weight:600;letter-spacing:.01em;margin:0;line-height:1.03;text-shadow:0 0 30px rgba(0,0,0,.6)}
-.cx-deity-call.sealed{color:var(--mist);font-style:italic;font-size:26px;opacity:.72}
-.cx-deity-gloss{font-size:15px;font-style:italic;letter-spacing:.08em;color:var(--teal);margin:12px 0 0}
-.cx-deity-facts{margin:24px 0 0;padding:0;border-top:1px solid var(--frost-line)}
-.cx-fact{display:flex;gap:16px;align-items:baseline;padding:11px 2px;border-bottom:1px solid var(--frost-line)}
+.cx-deity-call{font-size:clamp(30px,3.4vw,44px);font-weight:600;letter-spacing:.01em;margin:0;line-height:1.04;text-shadow:0 0 26px rgba(0,0,0,.55)}
+.cx-deity-call.sealed{color:var(--mist);font-style:italic;font-size:25px;opacity:.72}
+.cx-deity-gloss{font-size:15px;font-style:italic;letter-spacing:.08em;color:var(--teal);margin:11px 0 0}
+.cx-deity-body{font-size:14.5px;color:var(--bone);opacity:.92;line-height:1.74;margin:18px 0 0;max-width:52ch}
+.cx-deity-body.sealed{color:var(--mist);font-style:italic;opacity:.78}
+.cx-deity-facts{margin:22px 0 0;padding:0;border-top:1px solid var(--frost-line)}
+.cx-fact{display:flex;gap:16px;align-items:baseline;padding:10px 2px;border-bottom:1px solid var(--frost-line)}
 .cx-fact dt{flex:0 0 78px;font-size:10.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--faint)}
 .cx-fact dd{margin:0;font-size:14.5px;color:var(--bone);letter-spacing:.02em}
-.cx-deity-nature{margin:24px 0 0}
-.cx-cat{font-size:10.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--faint);margin:0 0 9px}
-.cx-deity-body{font-size:14.5px;color:var(--bone);opacity:.92;line-height:1.74;margin:0;max-width:44ch}
-.cx-deity-body.sealed{color:var(--mist);font-style:italic;opacity:.78}
-.cx-deity-close{font-size:10.5px;letter-spacing:.14em;color:var(--faint);margin:26px 0 0;opacity:.62}
-@media (max-width:900px){
-  #cx-deity{overflow-y:auto;display:block}
-  .cx-deity-fig{position:relative;width:100%;top:auto;bottom:auto;height:auto;padding-top:6vh}
-  .cx-deity-sprite{max-height:42vh}
-  .cx-deity-formless{padding-bottom:0}
-  .cx-deity-info{position:relative;width:100%;padding:20px 26px 44px;justify-content:flex-start;
-    background:linear-gradient(rgba(8,11,17,0),rgba(8,11,17,.4))}
+.cx-deity-close{font-size:10.5px;letter-spacing:.14em;color:var(--faint);margin:24px 0 0;opacity:.62}
+@media (max-width:820px){
+  .cx-deity-pane{flex-direction:column;gap:20px;padding:26px 24px;max-height:92vh;overflow-y:auto}
+  .cx-deity-fig{width:min(70%,300px)}
+  .cx-deity-sprite{max-height:38vh}
+  .cx-deity-glow{left:50%;top:30%}
+  .cx-deity-info{max-height:none;overflow:visible}
+  .cx-deity-body{max-width:none}
 }
 
 /* ===== the w ledger — rendered ON the vellum (witness room) ===== */
