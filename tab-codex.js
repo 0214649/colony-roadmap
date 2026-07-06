@@ -59,7 +59,9 @@
     return '<canvas class="cx-rune" data-seed="' + esc(seed) + '" data-r="' + rows + '" data-c="' + cols + '"></canvas>';
   }
 
-  // ---- the deity opens on a frosted pane; the wheel keeps turning, blurred, behind it ----
+  // ---- the deity takes the whole screen: the wheel blurs behind (still turning), the
+  //      sprite stands big to one side, the intel sorted by category on the other ----
+  function fact(k, v) { return v ? '<div class="cx-fact"><dt>' + k + "</dt><dd>" + v + "</dd></div>" : ""; }
   function openDeity(e) {
     var old = document.getElementById("cx-deity"); if (old) old.remove();
     var base = nodeBase(e), hue = rgb(base), tint = rgb(depthShade(base, 2, e.call === "itSwelgeth"));
@@ -68,27 +70,28 @@
     if (e.state === "revealed") {
       fig = e.sprite
         ? '<img class="cx-deity-sprite" src="' + SITE.asset(e.sprite) + '" alt="' + esc(e.call) + '" decoding="async">'
-        : runePlate("deity-" + e.id, 6, 3);
+        : '<div class="cx-deity-formless">' + runePlate("deity-" + e.id, 8, 3) + '<div class="cx-deity-noface">no face yet — unlent</div></div>';
+      // the intel, sorted by category
+      var parts = (e.seat || derivedSeat(e) || "").split(" · ");
+      var m = e.body && e.body.match(/\bmints?\s+([^.,;—]+)/i);
+      var facts = fact("wedge", esc(parts[0] || "")) + fact("depth", esc(parts[1] || "")) + (m ? fact("mints", esc(m[1].trim())) : "");
       info = '<div class="cx-deity-eyebrow">' + (e.sprite ? "the face" : "the read power") + "</div>"
         + '<h2 class="cx-deity-call" style="color:' + tint + '">' + esc(e.call) + "</h2>"
         + (e.gloss ? '<div class="cx-deity-gloss">' + esc(e.gloss.join(" · ")) + "</div>" : "")
-        + '<div class="cx-deity-seat">' + esc(e.seat || derivedSeat(e)) + "</div>"
-        + (e.body ? '<p class="cx-deity-body">' + esc(e.body) + "</p>" : "");
+        + (facts ? '<dl class="cx-deity-facts">' + facts + "</dl>" : "")
+        + (e.body ? '<div class="cx-deity-nature"><div class="cx-cat">the nature</div><p class="cx-deity-body">' + esc(e.body) + "</p></div>" : "");
     } else {
-      fig = runePlate("deity-" + e.id, 7, 4);
+      fig = '<div class="cx-deity-formless">' + runePlate("deity-" + e.id, 9, 4) + '<div class="cx-deity-noface">still in the old tongue</div></div>';
       info = '<div class="cx-deity-eyebrow">unread</div>'
         + '<h2 class="cx-deity-call sealed">still in the old tongue</h2>'
-        + '<div class="cx-deity-seat">' + esc(derivedSeat(e)) + "</div>"
-        + '<p class="cx-deity-body sealed">this power has not been read. comprehension has not yet dragged its name up into the legible — only the asemic mark remains, turning in the dark.</p>';
+        + '<dl class="cx-deity-facts">' + fact("seat", esc(derivedSeat(e))) + "</dl>"
+        + '<div class="cx-deity-nature"><div class="cx-cat">the nature</div><p class="cx-deity-body sealed">this power has not been read. comprehension has not yet dragged its name up into the legible — only the asemic mark remains, turning in the dark.</p></div>';
     }
-    box.innerHTML = '<div class="cx-deity-pane frost" style="--gh:' + hue + '">'
-      + '<div class="cx-deity-glow"></div>'
-      + '<div class="cx-deity-fig' + (e.sprite ? " has-sprite" : "") + '">' + fig + "</div>"
-      + '<div class="cx-deity-info">' + info + '<div class="cx-deity-close">touch the dark to close</div></div>'
-      + "</div>";
-    // click the void closes; clicks on the pane are read, not dismissed
+    box.innerHTML = '<div class="cx-deity-fig' + (e.sprite ? " has-sprite" : "") + '" style="--gh:' + hue + '"><div class="cx-deity-glow"></div>' + fig + "</div>"
+      + '<div class="cx-deity-info">' + info + '<div class="cx-deity-close">touch the dark to close</div></div>';
+    // click the dark closes; clicks on the intel column are read, not dismissed
     box.addEventListener("click", function () { box.remove(); history.replaceState(null, "", "#codex"); });
-    box.querySelector(".cx-deity-pane").addEventListener("click", function (ev) { ev.stopPropagation(); });
+    box.querySelector(".cx-deity-info").addEventListener("click", function (ev) { ev.stopPropagation(); });
     document.body.appendChild(box);
     box.querySelectorAll(".cx-rune").forEach(function (c) {
       SITE.asemic(c, c.getAttribute("data-seed"), { rows: +c.getAttribute("data-r"), cols: +c.getAttribute("data-c"), ink: "rgba(198,208,236,.42)" });
