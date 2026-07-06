@@ -55,7 +55,7 @@ const TIMELINE_DATA = {
     {
       date: "2026-06-27",
       title: "morality without a meter",
-      body: "the good/bad allegiance bar dies. in its place: conduct the gods read off your recent behavior and a slow lifetime trajectory — nothing stated, you infer your standing from how the powers treat you. one exception is visible: sorrow 𓁿, the colony's moral weight, the one meter you ever see.",
+      body: "the good/bad allegiance bar dies. in its place: conduct the gods read off your recent behavior and a slow lifetime trajectory — nothing stated, you infer your standing from how the powers treat you. one exception is visible: sorrow ⊙, the colony's moral weight, the one meter you ever see.",
       tag: "concept",
     },
     {

@@ -5,10 +5,13 @@
    slot). state:"revealed" = the legible fields:
      { id, state:"revealed", call:"it…eth", gloss:["…"],
        seat:"tears · close", body:"…", sprite:"assetKey",
-       spawn:"the creature it fields", tribute:"the coin it mints" }
-   spawn/tribute are OPTIONAL — the deity pane shows them as categories when
-   present; tribute falls back to the body's "mints …" if the field is absent.
-   First pass pulled from the stated lore — dirty rat corrects/fills the rest.
+       spawn:"creature · list", touch:"world-influence · list", tribute:"the coin it mints" }
+   spawn/touch/tribute are OPTIONAL categories in the deity pane. Per the bible,
+   spawn (the creatures it fields) and touch (its slice of the many-to-many web —
+   what it acts on) are LISTS → rendered as chip rows (split on " · "), ready to
+   carry sprite icons later. tribute falls back to the body's "mints …" if absent.
+   Values pulled from the manuScript (design-bible §gods). NOTE: itYoketh's touch
+   (= the player) is DELIBERATELY VEILED here — it is the game's central reveal.
    Only powers with an AUTHORED call (se þe …aþ → it…eth) are
    revealed; named-but-uncalled powers stay sealed. FIRST PASS —
    dirty rat corrects. The codex IS the progression tree; this
@@ -48,31 +51,40 @@ const CODEX_DATA = {
   // seams blend, value from depth; the glass keeps it soft.
   entries: [
     // ---- tears spine (the organic-good spine — three who care, failing three ways) ----
-    { id: "g01", state: "revealed", call: "itHousleth", gloss: ["pain", "offer"], tribute: "sorrow 𓁿", seat: "tears · close", line: 0, depth: 0,
-      body: "the body offered to be consumed — the good-faith centre-pole. sorrow 𓁿 is carried down at its altars; only the heavy can be made light." },
+    { id: "g01", state: "revealed", call: "itHousleth", gloss: ["pain", "offer"], spawn: "honeybee · mayfly · mother spider · clione", touch: "sacrificial buildings", seat: "tears · close", line: 0, depth: 0,
+      body: "the body offered to be consumed — the good-faith centre-pole. sorrow ⊙ is carried down at its altars; only the heavy can be made light." },
     { id: "g02", state: "revealed", call: "itWliteth", gloss: ["stun", "fathom", "mislead"], spawn: "butterflies", seat: "tears · between", line: 0, depth: 1,
+      touch: "thumbnails · icons · previews · wallpaper",
       body: "hoards the meaning of beauty — a counterfeit standard. the butterfly cast; mints photon and lepton, for cosmetic is legibility at scale." },
     { id: "g03", state: "revealed", call: "itDredeth", gloss: ["ward", "worry", "smother"], spawn: "seal", seat: "tears · far", line: 0, depth: 2,
+      touch: "avoid-markers · forbidden-deep · dreamcatchers",
       body: "the grieving seal; the overprotective guardian. true love, debatable means — nothing it holds is ever allowed to be lost." },
     // ---- nectar spine ----
     { id: "g04", state: "revealed", call: "itMuleth", gloss: ["blight", "rot", "spread"], spawn: "cordyceps", seat: "nectar · close", line: 2, depth: 0,
+      touch: "the neglected · stale files",
       body: "cordyceps in the ant; claims the rot slot of the garden." },
     { id: "g05", state: "revealed", call: "itSpreoteth", gloss: ["bud", "sway", "graft"], spawn: "the cultivators", seat: "nectar · between", line: 2, depth: 1,
+      touch: "the tended · cultivated folders",
       body: "the cultivators; mints seed ⁘ — the food and life ledger, foraged wild and spent to plant." },
     { id: "g06", state: "revealed", call: "itSootheth", gloss: ["honey", "mend", "join"], seat: "nectar · far", line: 2, depth: 2,
+      spawn: "honeybees · bumblebees", touch: "combs & honey · unification",
       body: "the one mind; mints honey ⬡ — glue, catalyst, healing. it heals emptied folders back whole: the one mind cannot bear a hole staying a hole." },
     // ---- blood spine ----
     { id: "g07", state: "revealed", call: "itScatheth", gloss: ["war", "strike"], spawn: "hornets", seat: "blood · close", line: 4, depth: 0,
+      touch: "file collisions",
       body: "violence as collision; hornets. where files collide, it is already there." },
     { id: "g08", state: "revealed", call: "itYerveth", gloss: ["kin", "line"], spawn: "wild brood", seat: "blood · between", line: 4, depth: 1,
+      touch: "abandoned wild brood",
       body: "abandoned wild brood are its children; mints marrow ≣ — genetics, unlocks, evolution bought in bone." },
     { id: "g09", state: "revealed", call: "itLuteth", gloss: ["lurk", "patience", "ambush"], spawn: "mantis · orchid mantis", seat: "blood · far", line: 4, depth: 2,
+      touch: "stealth · ambushes",
       body: "the mantis and the orchid mantis; the wait that is also the strike." },
     // ---- ichor spine ----
-    { id: "g10", state: "revealed", call: "itYoketh", gloss: ["yoke", "command"], spawn: "the colony", seat: "ichor · close", line: 6, depth: 0, sprite: "ityoketh",
+    { id: "g10", state: "revealed", call: "itYoketh", gloss: ["yoke", "command"], spawn: "the ants", seat: "ichor · close", line: 6, depth: 0, sprite: "ityoketh",
       body: "the authority you hold; the reins run back to your hand. every pheromone ⌇ spent on an order is the yoke steering the colony — the coin is the glass's, the leash is this one's. mints $." },
     { id: "g11", state: "locked", line: 6, depth: 1 }, // ichor · between — the god-complex, unfleshed
     { id: "g12", state: "revealed", call: "itEfneth", gloss: ["run", "even", "perfect"], spawn: "termites", seat: "ichor · far", line: 6, depth: 2, sprite: "itefneth",
+      touch: "the automation layer",
       body: "authority perfected into a machine running its instruction. its termites attack on sight because they are programmed to — automation, no will, no malice. when it speaks, the words read flat, procedural, polite." },
     // ---- fuel spine (the energy trio — unnamed, sealed) ----
     { id: "g13", state: "locked", line: 8, depth: 0 },
@@ -82,16 +94,21 @@ const CODEX_DATA = {
     { id: "g16", state: "locked", line: 10, depth: 0 }, // plenum
     { id: "g17", state: "locked", line: 10, depth: 1 },
     { id: "g18", state: "revealed", call: "itEmptieth", gloss: ["empty"], seat: "ether · far", line: 10, depth: 2,
+      spawn: "walking husks", touch: "empty folders · dead-ends",
       body: "the far ether. lean far enough from the warm and the world empties in its name." },
     // ---- nectar↔blood seam (the evolution triad) ----
     { id: "g19", state: "revealed", call: "itTheeth", gloss: ["growth", "press"], spawn: "locusts", seat: "nectar↔blood · close", line: 3, depth: 0,
+      touch: "scale · population · capacity",
       body: "locusts; co-reigns brood; mints census Σ — the selection pressure of the evolution triad." },
     { id: "g20", state: "revealed", call: "itHwerfeth", gloss: ["turn", "again"], spawn: "crab", seat: "nectar↔blood · between", line: 3, depth: 1,
+      touch: "recycling constructs",
       body: "the crab convergence; recycles yields and corpses back into food and craft. everything returns, changed." },
     { id: "g21", state: "revealed", call: "itSwelgeth", gloss: ["swallow"], spawn: "slug · weevil · tick", seat: "nectar↔blood · far", line: 3, depth: 2,
+      touch: "black-hole consumption-points",
       body: "the visceral void-maker; slug, weevil, tick. what it swallows becomes energy; what leans on it empties the world." },
     // ---- blood↔ichor seam (depths unconfirmed — the bible owes them; placed in id order) ----
     { id: "g22", state: "revealed", call: "itOwneth", gloss: ["own", "expansion"], seat: "blood↔ichor seam", line: 5, depth: 0, depthUnconfirmed: true,
+      touch: "territory · new ground",
       body: "mints shard ▽ — the ground you hold. its lawful end is one of the three terminal deaths: grow until nothing else can reach you." },
     { id: "g23", state: "locked", line: 5, depth: 1 },
     { id: "g24", state: "locked", line: 5, depth: 2 },
@@ -105,8 +122,10 @@ const CODEX_DATA = {
     { id: "g34", state: "locked", line: 11, depth: 0 }, { id: "g35", state: "locked", line: 11, depth: 1 }, { id: "g36", state: "locked", line: 11, depth: 2 },
     // ---- the six wildcards (orbiting triangles — pole-only, no wedge) ----
     { id: "g37", state: "revealed", call: "itRedeth", gloss: ["bridge", "read", "lens"], seat: "wildcard · outer", sprite: "itredeth", orbit: "outer", slot: 0,
+      touch: "off the ring",
       body: "the glass the whole wheel is read through. every reading of any other power crosses this one first; the translation is faithful — the warmth is another matter. mints pheromone ⌇, the medium of meaning itself." },
     { id: "g38", state: "revealed", call: "itOreth", gloss: ["origin"], tribute: "plasm ●", seat: "wildcard · inner", orbit: "inner", slot: 0,
+      touch: "full folders · fertility",
       body: "the genesis wildcard; alpha of the bound pair with itEndeth. plasm ● — the mother-substance — flows under its sign." },
     { id: "g39", state: "revealed", call: "itEndeth", gloss: ["end"], seat: "wildcard · inner", orbit: "inner", slot: 1,
       body: "omega of the bound pair with itOreth; where the origin closes." },
