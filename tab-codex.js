@@ -61,7 +61,10 @@
 
   // ---- the deity takes the whole screen: the wheel blurs behind (still turning), the
   //      sprite stands big to one side, the intel sorted by category on the other ----
-  function fact(k, v) { return v ? '<div class="cx-fact"><dt>' + k + "</dt><dd>" + v + "</dd></div>" : ""; }
+  // each intel line is its own category row; spawn/tribute/touch are CHIP rows (many
+  // small values now, sprite icons later — a god may field a lot of them)
+  function catRow(k, v) { return v ? '<div class="cx-cat-row"><div class="cx-cat-k">' + k + '</div><div class="cx-cat-v">' + v + "</div></div>" : ""; }
+  function chipsOf(s) { return String(s).split(" · ").map(function (v) { return '<span class="cx-chip">' + esc(v.trim()) + "</span>"; }).join(""); }
   function openDeity(e) {
     var old = document.getElementById("cx-deity"); if (old) old.remove();
     var base = nodeBase(e), hue = rgb(base), tint = rgb(depthShade(base, 2, e.call === "itSwelgeth"));
@@ -74,18 +77,24 @@
       // tribute = the coin it mints (explicit field, else pulled from the body)
       var m = e.body && e.body.match(/\bmints?\s+([^.,;—]+)/i);
       var tribute = e.tribute || (m ? m[1].trim() : "");
-      var facts = fact("spawn", esc(e.spawn || "")) + fact("tribute", esc(tribute)) + fact("seat", esc(e.seat || derivedSeat(e)));
       info = '<div class="cx-deity-eyebrow">' + (e.sprite ? "the face" : "the read power") + "</div>"
         + '<h2 class="cx-deity-call" style="color:' + tint + '">' + esc(e.call) + "</h2>"
-        + (e.gloss ? '<div class="cx-deity-gloss">' + esc(e.gloss.join(" · ")) + "</div>" : "")
-        + (e.body ? '<p class="cx-deity-body">' + esc(e.body) + "</p>" : "")
-        + (facts ? '<dl class="cx-deity-facts">' + facts + "</dl>" : "");
+        + '<div class="cx-deity-cats">'
+          + catRow("gloss", e.gloss ? esc(e.gloss.join(" · ")) : "")
+          + catRow("body", e.body ? '<p class="cx-deity-body">' + esc(e.body) + "</p>" : "")
+          + catRow("spawn", e.spawn ? chipsOf(e.spawn) : "")
+          + catRow("tribute", tribute ? chipsOf(tribute) : "")
+          + catRow("touch", e.touch ? chipsOf(e.touch) : "")
+          + catRow("seat", esc(e.seat || derivedSeat(e)))
+        + "</div>";
     } else {
       fig = '<div class="cx-deity-formless">' + runePlate("deity-" + e.id, 9, 4) + '<div class="cx-deity-noface">still in the old tongue</div></div>';
       info = '<div class="cx-deity-eyebrow">unread</div>'
         + '<h2 class="cx-deity-call sealed">still in the old tongue</h2>'
-        + '<p class="cx-deity-body sealed">this power has not been read. comprehension has not yet dragged its name up into the legible — only the asemic mark remains, turning in the dark.</p>'
-        + '<dl class="cx-deity-facts">' + fact("seat", esc(derivedSeat(e))) + "</dl>";
+        + '<div class="cx-deity-cats">'
+          + catRow("body", '<p class="cx-deity-body sealed">this power has not been read. comprehension has not yet dragged its name up into the legible — only the asemic mark remains, turning in the dark.</p>')
+          + catRow("seat", esc(derivedSeat(e)))
+        + "</div>";
     }
     box.innerHTML = '<div class="cx-deity-pane frost" style="--gh:' + hue + '">'
       + '<div class="cx-deity-glow"></div>'
