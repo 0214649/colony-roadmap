@@ -160,5 +160,11 @@ const TIMELINE_DATA = {
       body: "the portrait line becomes a repeatable pipeline — each god generated on a chroma screen, keyed in one pass, set on a backdrop, kept desaturated so the edge never haloes, and always appealing with the wrongness on the body. itRedeth is re-forged as cold pure glass (the amber goes back to the ants); itYoketh keeps her mask and chains; itEfneth arrives a full cyborg. and the shapes become lore: the gods have no bodies — itRedeth lends them forms you can bear to look at, a translation like their words.",
       tag: "art",
     },
+    {
+      date: "2026-07-08",
+      title: "the colony gets a body, and a palette",
+      body: "the new art direction crosses from the gods into the world: a week of standing billboard sprites — the queen, the maw, the four stores, an incubator re-read as a stone ember-heater, the tunnels drawn as earthen burrow-mounds (a tunnel is a folder is a door; the antHill is the file explorer), the drive, the antHill. then a coherence reckoning: one locked 48-colour Fear & Hunger palette snapped across the whole catalog — plum-black shadows, bone lights, warm life a dried-gold smoulder. and the honest verdict that Midjourney forges pixel-styled illustration, not pixel art — good for locking the direction, wrong for production; a bake-off owed, the port handed to fresh hands.",
+      tag: "art",
+    },
   ],
 };
