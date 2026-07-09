@@ -499,3 +499,95 @@ mark{background:rgba(224,168,90,.3);color:var(--bone);border-radius:2px}
   #hub-trio{gap:clamp(2px,1.5vw,14px)}
   #hub-aura::before{width:280px;height:200px}
 }
+
+/* ============================================================
+   the gallery — the private sprite vitrine (tab-gallery.js)
+   ============================================================ */
+#gal{max-width:1180px;margin:0 auto}
+.gal-bar{display:flex;justify-content:space-between;align-items:flex-start}
+.gal-bar .eyebrow{margin:0}
+#gal .lede{margin:2px 0 20px}
+.gal-filters{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center;margin:0 0 6px}
+.gal-chips{display:flex;flex-wrap:wrap;gap:6px}
+.gal-chip{font-family:var(--ui);font-size:11.5px;font-weight:500;letter-spacing:.03em;color:var(--mist);
+  background:var(--milk-b);border:1px solid var(--frost-line);border-radius:999px;padding:5px 12px;cursor:pointer;
+  transition:.16s}
+.gal-chip:hover{border-color:var(--frost-line-2);color:var(--bone)}
+.gal-chip.on{color:var(--night);background:var(--amber);border-color:var(--amber)}
+.gal-chip.sc.on{background:var(--bone);border-color:var(--bone)}
+/* stage-coded filter dots */
+.gal-chip.sc::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:6px;
+  vertical-align:.5px;background:var(--faint)}
+.gal-chip.st-reference::before{background:var(--teal)}
+.gal-chip.st-first-shot::before{background:var(--coral)}
+.gal-chip.st-working::before{background:var(--mist)}
+.gal-chip.st-final::before{background:var(--amber)}
+.gal-chip.st-reject::before{background:#8a4a44}
+.gal-count{color:var(--faint);font-size:12px;margin:12px 0 4px}
+.gal-count b{color:var(--mist);font-weight:600}
+
+.gal-cat{margin:26px 0 0}
+.gal-cat>h2{font-size:15px;font-weight:600;letter-spacing:.04em;color:var(--bone);
+  border-bottom:1px solid var(--frost-line);padding-bottom:8px;margin:0 0 14px;text-transform:lowercase}
+.gal-cat-n{color:var(--faint);font-weight:400;font-size:12px;margin-left:4px}
+.gal-shelf{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:14px}
+
+.gal-subj{background:linear-gradient(var(--milk-a),var(--milk-b));border:1px solid var(--frost-line);
+  border-radius:12px;padding:12px 12px 14px}
+.gal-subj-head{display:flex;justify-content:space-between;align-items:baseline;margin:0 0 10px;gap:8px}
+.gal-subj-head b{color:var(--bone);font-size:13.5px;font-weight:600}
+.gal-subj-n{color:var(--faint);font-size:11px;white-space:nowrap}
+.gal-rail{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;scrollbar-width:thin;
+  scrollbar-color:var(--frost-line) transparent}
+.gal-rail::-webkit-scrollbar{height:6px}
+.gal-rail::-webkit-scrollbar-thumb{background:var(--frost-line);border-radius:3px}
+
+.gal-th{position:relative;flex:0 0 auto;height:92px;min-width:52px;max-width:220px;padding:0;cursor:pointer;
+  background:repeating-conic-gradient(#0e1218 0% 25%,#0a0d12 0% 50%) 0 0/16px 16px;
+  border:1px solid var(--frost-line);border-radius:8px;overflow:hidden;transition:.16s}
+.gal-th img{height:100%;width:auto;max-width:216px;display:block;object-fit:contain;
+  opacity:0;transition:opacity .3s}
+.gal-th img.loaded{opacity:1}
+.gal-th::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,var(--milk-a) 50%,transparent 70%);
+  background-size:220% 100%;animation:galshim 1.4s linear infinite;pointer-events:none}
+.gal-th:has(img.loaded)::after{animation:none;opacity:0}
+@keyframes galshim{to{background-position:-220% 0}}
+.gal-th:hover{border-color:var(--frost-line-2);transform:translateY(-2px)}
+.gal-th.is-final{border-color:rgba(224,162,58,.55);box-shadow:0 0 0 1px rgba(224,162,58,.25)}
+.gal-th-stage{position:absolute;top:3px;left:3px;width:14px;height:14px;border-radius:50%;
+  font-size:9px;font-weight:700;line-height:14px;text-align:center;color:var(--night);text-transform:uppercase;
+  background:var(--faint);opacity:.9}
+.gal-th.st-reference .gal-th-stage{background:var(--teal)}
+.gal-th.st-first-shot .gal-th-stage{background:var(--coral)}
+.gal-th.st-working .gal-th-stage{background:var(--mist)}
+.gal-th.st-final .gal-th-stage{background:var(--amber)}
+.gal-th.st-reject .gal-th-stage{background:#8a4a44;color:var(--bone)}
+.gal-empty{color:var(--faint);font-style:italic;text-align:center;padding:40px 0}
+
+/* the lightbox — walking a lineage */
+#gal-lb{position:fixed;inset:0;z-index:60;display:none;align-items:center;justify-content:center;
+  background:rgba(6,8,12,.94);backdrop-filter:blur(3px)}
+#gal-lb.show{display:flex}
+#gal-lb figure{margin:0;max-width:min(88vw,900px);display:flex;flex-direction:column;align-items:center;gap:16px}
+.gal-lb-imgwrap{background:repeating-conic-gradient(#0e1218 0% 25%,#0a0d12 0% 50%) 0 0/22px 22px;
+  border:1px solid var(--frost-line);border-radius:12px;padding:10px;display:flex}
+#gal-lb img{max-width:82vw;max-height:64vh;width:auto;height:auto;opacity:0;transition:opacity .22s;
+  image-rendering:auto}
+#gal-lb img.ready{opacity:1}
+#gal-lb figcaption{display:flex;flex-direction:column;align-items:center;gap:7px;text-align:center;max-width:60ch}
+.glc-subj{color:var(--bone);font-size:16px;font-weight:600}
+.glc-stage{font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--night);
+  padding:2px 10px;border-radius:999px;background:var(--faint)}
+.glc-stage.st-reference{background:var(--teal)} .glc-stage.st-first-shot{background:var(--coral)}
+.glc-stage.st-working{background:var(--mist)} .glc-stage.st-final{background:var(--amber)}
+.glc-stage.st-reject{background:#8a4a44;color:var(--bone)}
+.glc-note{color:var(--mist);font-size:13.5px;font-style:italic}
+.glc-meta{color:var(--faint);font-size:11.5px}
+.glc-src{color:#3f4650;font-size:10.5px;font-family:ui-monospace,monospace}
+.gal-lb-x{position:absolute;top:18px;right:22px;background:none;border:none;color:var(--mist);font-size:22px;cursor:pointer}
+.gal-lb-x:hover{color:var(--bone)}
+.gal-lb-nav{position:absolute;top:50%;transform:translateY(-50%);background:var(--milk-b);border:1px solid var(--frost-line);
+  color:var(--bone);width:44px;height:64px;border-radius:10px;font-size:26px;cursor:pointer;transition:.16s}
+.gal-lb-nav:hover{background:var(--milk-a);border-color:var(--frost-line-2)}
+.gal-lb-nav.prev{left:20px} .gal-lb-nav.next{right:20px}
+@media(max-width:620px){.gal-shelf{grid-template-columns:1fr}.gal-lb-nav{width:36px;height:52px;font-size:20px}}
